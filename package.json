@@ -2,6 +2,9 @@
   "name": "food-market",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=18.20.0 <19.0.0 || >=20.14.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
