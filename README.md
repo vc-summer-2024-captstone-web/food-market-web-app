@@ -31,11 +31,11 @@
 
    NVM for Windows: https://github.com/coreybutler/nvm-windows
 
-3. **Install dependencies**
+2. **Install dependencies**
    ```sh
    npm install
    ```
-4. **Start the development server**
+3. **Start the development server**
    ```sh
    npm run dev
    ```
