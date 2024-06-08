@@ -1,18 +1,58 @@
-# Astro Starter Kit: Basics
+# Food Market Web App
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e06a2847-65e4-4d6a-8b97-b38da37a32d2/deploy-status)](https://app.netlify.com/sites/food-market-web-app/deploys)
+[![Astro Studio](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/astro-studio.yml/badge.svg?branch=master)](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/astro-studio.yml)
+[![CodeQL](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/github-code-scanning/codeql)
+[![Prettier Code Formatter](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/prettier-format.yml/badge.svg)](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/prettier-format.yml)
+
 
 ```sh
 npm create astro@latest -- --template basics
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## 🚀 Quick start
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+1. **Use correct node version**
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+    ```sh
+    nvm use
+    ```
+    if you don't have nvm installed, you can install it by running the following command:
 
-## 🚀 Project Structure
+    If you don't have the correct node version installed, you can install it by running the following command:
+
+    > Note: This will install the node version specified in the `.nvmrc` file
+
+    NVM for Mac/Linux/WSL: https://github.com/nvm-sh/nvm
+    NVM for Windows: https://github.com/coreybutler/nvm-windows
+2. **Install dependencies**
+    ```sh
+    npm install
+    ```
+3. **Start the development server**
+    ```sh
+    npm run dev
+    ```
+
+
+
+## 🧞 Commands
+
+All commands are run from the root of the project, from a terminal:
+
+| Command                   | Action                                           |
+|:--------------------------|:-------------------------------------------------|
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| `npm run format`          | Run prettier formatter                           |
+| `npm run lint`            | Run prettier and astro linters                   |
+
+
+## 📁 Project Structure
 
 Inside of your Astro project, you'll see the following folders and files:
 
@@ -35,19 +75,6 @@ Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page
 There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
 
 Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
 ## 👀 Want to learn more?
 
