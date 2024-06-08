@@ -12,10 +12,14 @@
    ```sh
    nvm use
    ```
-
-   if you don't have nvm installed, you can install it by running the following command:
-
    If you don't have the correct node version installed, you can install it by running the following command:
+   ```sh
+   nvm install
+   ```
+than rerun:
+   ```sh
+   nvm use
+   ```
 
    > Note: This will install the node version specified in the `.nvmrc` file
 
