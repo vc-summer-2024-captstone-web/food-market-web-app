@@ -1,0 +1,4 @@
+/.astro
+/dist
+/.vscode
+.github/workflows
