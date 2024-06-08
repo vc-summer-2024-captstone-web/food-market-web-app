@@ -15,7 +15,7 @@ const Session= defineTable({
   columns: {
     id: column.text({optional: false, unique: true }),
     userId: column.text({ optional: false, references: () => User.columns.id }),
-    expiresAt: column.date({ optional: false }),
+    expiresAt: column.number({ optional: false }),
   }
 });
 
