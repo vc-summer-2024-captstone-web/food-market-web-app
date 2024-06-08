@@ -5,10 +5,6 @@
 [![CodeQL](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/github-code-scanning/codeql)
 [![Prettier Code Formatter](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/prettier-format.yml/badge.svg)](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/prettier-format.yml)
 
-```sh
-npm create astro@latest -- --template basics
-```
-
 ## 🚀 Quick start
 
 1. **Use correct node version**
