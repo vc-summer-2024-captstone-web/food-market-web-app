@@ -53,15 +53,17 @@ const { title } = Astro.props;
 	}
 </style>
 <script>
-  document.getElementById('sign-out').addEventListener('click', signOut);
-  function signOut() {
-    fetch('/api/auth/signout', {
+  const signOutButton = document.getElementById('sign-out')
+  if (signOutButton) {
+    signOutButton.addEventListener('click', ()=> {
+      fetch('/api/auth/signout', {
       method: 'POST',
-      headers: {
+        headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({}),
     }).then(() => {
     });
+  })
   }
 </script>
