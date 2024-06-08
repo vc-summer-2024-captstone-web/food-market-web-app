@@ -5,7 +5,6 @@
 [![CodeQL](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/github-code-scanning/codeql)
 [![Prettier Code Formatter](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/prettier-format.yml/badge.svg)](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/prettier-format.yml)
 
-
 ```sh
 npm create astro@latest -- --template basics
 ```
@@ -14,34 +13,34 @@ npm create astro@latest -- --template basics
 
 1. **Use correct node version**
 
-    ```sh
-    nvm use
-    ```
-    if you don't have nvm installed, you can install it by running the following command:
+   ```sh
+   nvm use
+   ```
 
-    If you don't have the correct node version installed, you can install it by running the following command:
+   if you don't have nvm installed, you can install it by running the following command:
 
-    > Note: This will install the node version specified in the `.nvmrc` file
+   If you don't have the correct node version installed, you can install it by running the following command:
 
-    NVM for Mac/Linux/WSL: https://github.com/nvm-sh/nvm
-    NVM for Windows: https://github.com/coreybutler/nvm-windows
+   > Note: This will install the node version specified in the `.nvmrc` file
+
+   NVM for Mac/Linux/WSL: https://github.com/nvm-sh/nvm
+   NVM for Windows: https://github.com/coreybutler/nvm-windows
+
 2. **Install dependencies**
-    ```sh
-    npm install
-    ```
+   ```sh
+   npm install
+   ```
 3. **Start the development server**
-    ```sh
-    npm run dev
-    ```
-
-
+   ```sh
+   npm run dev
+   ```
 
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
 
 | Command                   | Action                                           |
-|:--------------------------|:-------------------------------------------------|
+| :------------------------ | :----------------------------------------------- |
 | `npm install`             | Installs dependencies                            |
 | `npm run dev`             | Starts local dev server at `localhost:4321`      |
 | `npm run build`           | Build your production site to `./dist/`          |
@@ -50,7 +49,6 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 | `npm run format`          | Run prettier formatter                           |
 | `npm run lint`            | Run prettier and astro linters                   |
-
 
 ## 📁 Project Structure
 
