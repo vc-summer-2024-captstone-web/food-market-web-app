@@ -17,6 +17,9 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
+    <nav>
+      <button id="sign-out">Sign Out</button>
+    </nav>
 		<slot />
 	</body>
 </html>
@@ -49,3 +52,16 @@ const { title } = Astro.props;
 			monospace;
 	}
 </style>
+<script>
+  document.getElementById('sign-out').addEventListener('click', signOut);
+  function signOut() {
+    fetch('/api/auth/signout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({}),
+    }).then(() => {
+    });
+  }
+</script>
