@@ -12,11 +12,15 @@
    ```sh
    nvm use
    ```
+
    If you don't have the correct node version installed, you can install it by running the following command:
+
    ```sh
    nvm install
    ```
-than rerun:
+
+   than rerun:
+
    ```sh
    nvm use
    ```
