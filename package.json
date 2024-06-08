@@ -10,7 +10,9 @@
     "start": "astro dev",
     "build": "astro check && astro build --remote",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "format": "prettier --write .",
+    "lint": "prettier --check . && astro check"
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
@@ -18,5 +20,8 @@
     "@astrojs/netlify": "^5.2.1",
     "astro": "^4.9.3",
     "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "prettier": "3.3.1"
   }
 }
