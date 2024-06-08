@@ -28,13 +28,14 @@
    > Note: This will install the node version specified in the `.nvmrc` file
 
    NVM for Mac/Linux/WSL: https://github.com/nvm-sh/nvm
+
    NVM for Windows: https://github.com/coreybutler/nvm-windows
 
-2. **Install dependencies**
+3. **Install dependencies**
    ```sh
    npm install
    ```
-3. **Start the development server**
+4. **Start the development server**
    ```sh
    npm run dev
    ```
