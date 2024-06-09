@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 $columns: 12;
 $gutter: 2;
 $grid-width: math.div(98, $columns);

@@ -1,8 +1,9 @@
-@use "../variables";
+@use '../variables';
 
 * {
   box-sizing: border-box;
-  &:before, &:after {
+  &:before,
+  &:after {
     box-sizing: border-box;
   }
 }

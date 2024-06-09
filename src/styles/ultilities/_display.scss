@@ -1,39 +1,40 @@
-@use "../variables";
-@use "../mixins";
+@use '../variables';
+@use '../mixins';
 
-
-$display: 'inline' 'block' 'flex' 'grid' 'inline-block' 'inline-flex' 'inline-grid' 'inline-table' 'table' 'none' 'initial' 'inherit';
+$display: 'inline' 'block' 'flex' 'grid' 'inline-block' 'inline-flex' 'inline-grid' 'inline-table' 'table' 'none'
+  'initial' 'inherit';
 
 @each $property in $display {
   .display-#{$property} {
-    display: #{$property}
+    display: #{$property};
   }
 }
 @each $property in $display {
   .display-#{$property} {
-    @include mixins.breakpoint-min("xs") {
-    &--xs {
-      display: #{$property};
+    @include mixins.breakpoint-min('xs') {
+      &--xs {
+        display: #{$property};
+      }
+    }
+    @include mixins.breakpoint-min('sm') {
+      &--sm {
+        display: #{$property};
+      }
+    }
+    @include mixins.breakpoint-min('md') {
+      &--md {
+        display: #{$property};
+      }
+    }
+    @include mixins.breakpoint-min('lg') {
+      &--lg {
+        display: #{$property};
+      }
+    }
+    @include mixins.breakpoint-min('xl') {
+      &--xl {
+        display: #{$property};
+      }
     }
   }
-  @include mixins.breakpoint-min("sm") {
-    &--sm {
-      display: #{$property};
-    }
-  }
-  @include mixins.breakpoint-min("md") {
-    &--md {
-      display: #{$property};
-    }
-  }
-  @include mixins.breakpoint-min("lg") {
-    &--lg {
-      display: #{$property};
-    }
-  }
-  @include mixins.breakpoint-min("xl") {
-    &--xl {
-      display: #{$property};
-    }
-  }}
 }
