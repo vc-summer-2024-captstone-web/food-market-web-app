@@ -1,0 +1,16 @@
+@use "../variables"
+$breakpoint-map: ("xs": variables.$breakpoint-x-small, "sm": variables.$breakpoint-small, "md": variables.$breakpoint-medium, "lg": variables.$breakpoint-large, "xl": variables.$breakpoint-large)
+
+=breakpoint-min($breakpoint: string)
+  $breakpoint: if(map-has-key($breakpoint-map, $breakpoint), map-get($breakpoint-map, $breakpoint), $breakpoint)
+  @media (min-width: $breakpoint)
+    @content
+=breakpoint-max($breakpoint: string)
+  $breakpoint: if(map-has-key($breakpoint-map, $breakpoint), map-get($breakpoint-map, $breakpoint), $breakpoint)
+  @media (max-width: $breakpoint)
+    @content
+=breakpoint-between($breakpoint-min: string, $breakpoint-max: string)
+  $breakpoint-min: if(map-has-key($breakpoint-map, $breakpoint-min), map-get($breakpoint-map, $breakpoint-min), $breakpoint-min)
+  $breakpoint-max: if(map-has-key($breakpoint-map, $breakpoint-max), map-get($breakpoint-map, $breakpoint-max), $breakpoint-max)
+  @media (min-width: $breakpoint-min) and (max-width: $breakpoint-max)
+    @content
