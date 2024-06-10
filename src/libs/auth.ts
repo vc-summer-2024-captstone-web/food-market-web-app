@@ -1,13 +1,15 @@
-import { Lucia } from "lucia";
-import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
-import { db, Session, User } from "astro:db";
+import { Lucia, TimeSpan } from 'lucia';
+import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle';
+import { db, Session, User } from 'astro:db';
 const adapter = new DrizzleSQLiteAdapter(db as any, Session, User);
 
+const { PROD, TIME_TO_LIVE, TIME_TO_LIVE_UNIT, SESSION_SAME_SITE, SESSION_DOMAIN } = import.meta.env;
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
     attributes: {
-      // set to `true` when using HTTPS
-      secure: import.meta.env.PROD,
+      secure: PROD, // set to `true` when using HTTPS
+      sameSite: SESSION_SAME_SITE,
+      domain: SESSION_DOMAIN,
     },
   },
   getUserAttributes: (attributes) => {
@@ -16,6 +18,7 @@ export const lucia = new Lucia(adapter, {
       email: attributes.email,
     };
   },
+  sessionExpiresIn: new TimeSpan(TIME_TO_LIVE, TIME_TO_LIVE_UNIT),
 });
 
 declare module "lucia" {

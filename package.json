@@ -12,7 +12,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write .",
-    "lint": "prettier --check . && astro check"
+    "lint": "prettier --check . && astro check",
+    "generate-example-env": "npx @dotenvx/dotenvx genexample"
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
