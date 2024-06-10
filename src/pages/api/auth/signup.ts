@@ -1,7 +1,7 @@
 import type { APIContext } from 'astro';
 import { db, eq, User } from 'astro:db';
 import { generateId, Scrypt } from 'lucia';
-import { lucia } from '@libs/auth.ts'
+import { lucia } from '@libs/auth.ts';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/; // At least one letter, one number, and minimum 8 characters
@@ -46,9 +46,9 @@ export async function POST(context: APIContext): Promise<Response> {
 
   await db.insert(User).values({
     id: userId,
-    email: email,
+    email: email.toLowerCase().trim(),
     name: name,
-    password: hashPass
+    password: hashPass,
   });
   const session = await lucia.createSession(userId, {});
 
