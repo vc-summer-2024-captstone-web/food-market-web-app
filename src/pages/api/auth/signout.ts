@@ -1,5 +1,5 @@
-import {lucia} from "@libs/auth.ts";
 import type { APIContext } from 'astro';
+import { lucia } from "@services";
 
 export async function POST(context: APIContext) {
   if (!context.locals.session) {

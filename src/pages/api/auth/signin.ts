@@ -1,7 +1,7 @@
 import type { APIContext } from 'astro';
 import { db, eq, User } from 'astro:db';
 import { Scrypt } from 'lucia';
-import { lucia } from '@libs/auth.ts';
+import { lucia } from '@services';
 
 export async function POST(context: APIContext) {
   const formData = await context.request.formData();

@@ -1,7 +1,7 @@
 import type { APIContext } from 'astro';
 import { db, eq, User } from 'astro:db';
 import { generateId, Scrypt } from 'lucia';
-import { lucia } from '@libs/auth.ts';
+import { lucia } from '@services';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/; // At least one letter, one number, and minimum 8 characters
