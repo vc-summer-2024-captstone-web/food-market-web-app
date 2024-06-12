@@ -1,8 +1,13 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+
+if (Astro.locals.user) {
+  return Astro.redirect("/")
+}
+
 ---
 
-<Layout title="signup">
+<Layout title="Sign Up">
   <div class="container">
     <h1>Signup</h1>
     <form method="POST" action="/api/auth/signup">

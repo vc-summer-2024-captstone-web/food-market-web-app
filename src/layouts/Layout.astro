@@ -4,6 +4,8 @@ interface Props {
 }
 
 const { title } = Astro.props;
+const isAuth = Boolean(Astro.locals.user);
+
 ---
 
 <!doctype html>
@@ -18,7 +20,7 @@ const { title } = Astro.props;
 	</head>
 	<body>
     <nav>
-      <button id="sign-out">Sign Out</button>
+      {isAuth && <button id="sign-out">Sign Out</button>}
     </nav>
 		<slot />
 	</body>
@@ -63,6 +65,7 @@ const { title } = Astro.props;
       },
       body: JSON.stringify({}),
     }).then(() => {
+      window.location.reload();
     });
   })
   }
