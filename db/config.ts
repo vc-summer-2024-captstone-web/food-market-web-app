@@ -8,6 +8,7 @@ const User = defineTable({
     name: column.text({ optional: false }),
     email: column.text({ optional: false, unique: true }),
     password: column.text({ optional: false }),
+    verified: column.boolean({ optional: false, default: false}),
   }
 });
 
@@ -19,9 +20,18 @@ const Session= defineTable({
   }
 });
 
+const EmailVerification = defineTable({
+  columns: {
+    id: column.text({ optional: false, unique: true, primaryKey: true }),
+    userId: column.text({ optional: false, unique: true, references: () => User.columns.id }),
+    token: column.text({ optional: false }),
+    expiresAt: column.date({ optional: false }),
+  }
+});
 export default defineDb({
   tables: {
     User,
-    Session
+    Session,
+    EmailVerification,
   }
 });
