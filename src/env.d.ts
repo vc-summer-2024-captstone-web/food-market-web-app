@@ -13,6 +13,7 @@ interface ImportMetaEnv {
   readonly TIME_TO_LIVE_UNIT: TimeSpanUnit;
   readonly SESSION_SAME_SITE: String<'lax' | 'strict' | 'none'>;
   readonly SESSION_DOMAIN: string;
+  readonly DEV: boolean;
 }
 
 interface ImportMeta {
