@@ -1,7 +1,8 @@
 import type { APIContext } from 'astro';
-import { db, eq, User } from 'astro:db';
+import { db, EmailVerification, eq, User } from 'astro:db';
 import { generateId, Scrypt } from 'lucia';
-import { lucia } from '@services';
+import { lucia, generateVerificationCode, sendVerifyEmail } from '@services';
+import { createDate, TimeSpan } from 'oslo';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/; // At least one letter, one number, and minimum 8 characters
@@ -40,18 +41,35 @@ export async function POST(context: APIContext): Promise<Response> {
   if (existingUser) {
     return new Response('User Already Exists')
   }
-
   const hashPass = await new Scrypt().hash(password);
   const userId = generateId(15);
+  const token = await generateVerificationCode(userId).then((res) => {
+    return res;
+  }).catch((err) => {
+    console.error('Error generating verification code:', err);
+    return null;
+  });
 
   await db.insert(User).values({
     id: userId,
     email: email.toLowerCase().trim(),
     name: name,
     password: hashPass,
+    verified: false,
   });
-  const session = await lucia.createSession(userId, {});
 
+  if (token) {
+    sendVerifyEmail({ email, name, token })
+      .then(() => console.log('Verification email sent'))
+      .catch((err) => console.error('Error sending email:', err));
+    await db.insert(EmailVerification).values({
+      userId: userId,
+      token: token,
+      expiresAt: new Date(createDate(new TimeSpan(30, 'm'))).valueOf(),
+    });
+  }
+
+  const session = await lucia.createSession(userId, {});
   const sessionCookie = lucia.createSessionCookie(session.id)
 
   context.cookies.set(

@@ -7,7 +7,7 @@ const { PROD, TIME_TO_LIVE, TIME_TO_LIVE_UNIT, SESSION_SAME_SITE, SESSION_DOMAIN
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
     attributes: {
-      secure: PROD, // set to `true` when using HTTPS
+      secure: PROD,
       sameSite: SESSION_SAME_SITE,
       domain: SESSION_DOMAIN,
     },
@@ -15,7 +15,9 @@ export const lucia = new Lucia(adapter, {
   getUserAttributes: (attributes) => {
     return {
       // attributes has the type of DatabaseUserAttributes
+      name: attributes.name,
       email: attributes.email,
+      verified: attributes.verified,
     };
   },
   sessionExpiresIn: new TimeSpan(TIME_TO_LIVE, TIME_TO_LIVE_UNIT),
@@ -28,5 +30,7 @@ declare module "lucia" {
   }
 }
 interface DatabaseUserAttributes {
+  name: string;
   email: string;
+  verified: boolean;
 }

@@ -22,10 +22,9 @@ const Session= defineTable({
 
 const EmailVerification = defineTable({
   columns: {
-    id: column.text({ optional: false, unique: true, primaryKey: true }),
     userId: column.text({ optional: false, unique: true, references: () => User.columns.id }),
     token: column.text({ optional: false }),
-    expiresAt: column.date({ optional: false }),
+    expiresAt: column.number({ optional: false }),
   }
 });
 export default defineDb({
