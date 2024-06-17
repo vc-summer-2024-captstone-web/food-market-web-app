@@ -23,7 +23,9 @@ export async function POST(context: APIContext): Promise<Response> {
   }
 
   if (typeof password !== 'string' || !passwordRegex.test(password)) {
-    return new Response('Password must be at least 8 characters long and include at least one letter and one number', { status: 400 });
+    return new Response('Password must be at least 8 characters long and include at least one letter and one number', {
+      status: 400,
+    });
   }
 
   if (typeof email !== 'string' || !emailRegex.test(email)) {
@@ -34,21 +36,27 @@ export async function POST(context: APIContext): Promise<Response> {
     return new Response('Name must be at least 2 characters long', { status: 400 });
   }
 
-  const existingUser = await db.select().from(User).where(eq(User.email, email)).then((res) => {
-    return !!res.length;
-  });
+  const existingUser = await db
+    .select()
+    .from(User)
+    .where(eq(User.email, email))
+    .then((res) => {
+      return !!res.length;
+    });
 
   if (existingUser) {
-    return new Response('User Already Exists')
+    return new Response('User Already Exists');
   }
   const hashPass = await new Scrypt().hash(password);
   const userId = generateId(15);
-  const token = await generateVerificationCode(userId).then((res) => {
-    return res;
-  }).catch((err) => {
-    console.error('Error generating verification code:', err);
-    return null;
-  });
+  const token = await generateVerificationCode(userId)
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      console.error('Error generating verification code:', err);
+      return null;
+    });
 
   await db.insert(User).values({
     id: userId,
@@ -70,13 +78,9 @@ export async function POST(context: APIContext): Promise<Response> {
   }
 
   const session = await lucia.createSession(userId, {});
-  const sessionCookie = lucia.createSessionCookie(session.id)
+  const sessionCookie = lucia.createSessionCookie(session.id);
 
-  context.cookies.set(
-    sessionCookie.name,
-    sessionCookie.value,
-    sessionCookie.attributes,
-  );
+  context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
   return context.redirect('/');
 }

@@ -23,7 +23,7 @@ export const lucia = new Lucia(adapter, {
   sessionExpiresIn: new TimeSpan(TIME_TO_LIVE, TIME_TO_LIVE_UNIT),
 });
 
-declare module "lucia" {
+declare module 'lucia' {
   interface Register {
     Lucia: typeof lucia;
     DatabaseUserAttributes: DatabaseUserAttributes;

@@ -2,32 +2,31 @@
 import Layout from '@layouts/Layout.astro';
 
 if (Astro.locals.user) {
-  return Astro.redirect("/")
+  return Astro.redirect('/');
 }
-
 ---
 
-<Layout title="Sign Up">
-  <div class="container">
+<Layout title='Sign Up'>
+  <div class='container'>
     <h1>Signup</h1>
-    <form method="POST" action="/api/auth/signup">
-      <div class="input__group">
-        <label for="name">Full Name</label>
-        <input id="name" type="text" name="name" placeholder="Full Name" />
+    <form method='POST' action='/api/auth/signup'>
+      <div class='input__group'>
+        <label for='name'>Full Name</label>
+        <input id='name' type='text' name='name' placeholder='Full Name' />
       </div>
-      <div class="input__group">
-        <label for="email">Email</label>
-        <input id="email" type="email" name="email" placeholder="Email" />
+      <div class='input__group'>
+        <label for='email'>Email</label>
+        <input id='email' type='email' name='email' placeholder='Email' />
       </div>
-      <div class="input__group">
-        <label for="password">Password</label>
-        <input id="password" type="password" name="password" placeholder="Password" />
+      <div class='input__group'>
+        <label for='password'>Password</label>
+        <input id='password' type='password' name='password' placeholder='Password' />
       </div>
-      <div class="input__group">
-        <label for="confirm">Confirm</label>
-        <input id="confirm" type="password" name="confirm" placeholder="Confirm Password" />
+      <div class='input__group'>
+        <label for='confirm'>Confirm</label>
+        <input id='confirm' type='password' name='confirm' placeholder='Confirm Password' />
       </div>
-      <button type="submit">Signup</button>
+      <button type='submit'>Signup</button>
     </form>
   </div>
 </Layout>

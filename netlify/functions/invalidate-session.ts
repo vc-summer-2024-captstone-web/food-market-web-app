@@ -1,4 +1,4 @@
-import { lucia } from '@services'
+import { lucia } from '@services';
 export default async () => {
   await lucia.deleteExpiredSessions();
-}
+};

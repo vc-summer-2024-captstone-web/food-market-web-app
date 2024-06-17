@@ -6,7 +6,6 @@ interface Props {
 
 const { title } = Astro.props;
 const isAuth = Boolean(Astro.locals.user);
-
 ---
 
 <!doctype html>
@@ -21,7 +20,7 @@ const isAuth = Boolean(Astro.locals.user);
   </head>
   <body>
     <nav>
-      {isAuth && <button id="sign-out">Sign Out</button>}
+      {isAuth && <button id='sign-out'>Sign Out</button>}
     </nav>
     <slot />
   </body>
@@ -51,18 +50,18 @@ const isAuth = Boolean(Astro.locals.user);
   }
 </style>
 <script>
-  const signOutButton = document.getElementById('sign-out')
+  const signOutButton = document.getElementById('sign-out');
   if (signOutButton) {
-    signOutButton.addEventListener('click', ()=> {
+    signOutButton.addEventListener('click', () => {
       fetch('/api/auth/signout', {
-      method: 'POST',
+        method: 'POST',
         headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({}),
-    }).then(() => {
-      window.location.reload();
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({}),
+      }).then(() => {
+        window.location.reload();
+      });
     });
-  })
   }
 </script>
