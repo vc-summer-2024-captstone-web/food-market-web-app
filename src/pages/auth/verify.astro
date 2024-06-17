@@ -5,7 +5,7 @@ if (!Astro.locals.user) {
   return Astro.redirect("/")
 }
 
-const { verified, id, ...user } = Astro.locals.user;
+const { verified, id } = Astro.locals.user;
 let error = "";
 if (verified) {
   return Astro.redirect("/");
