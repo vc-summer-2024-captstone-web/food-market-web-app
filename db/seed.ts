@@ -1,6 +1,9 @@
-import { db } from 'astro:db';
+import { db , ExampleTable} from 'astro:db';
 
 // https://astro.build/db/seed
 export default async function seed() {
   // TODO
+   await db.insert(ExampleTable).values({
+      
+  })
 }
