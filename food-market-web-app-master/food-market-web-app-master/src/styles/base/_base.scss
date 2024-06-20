@@ -1,0 +1,16 @@
+@use '../variables';
+
+* {
+  box-sizing: border-box;
+  &:before,
+  &:after {
+    box-sizing: border-box;
+  }
+}
+html {
+  font-size: 100%;
+}
+body {
+  font: variables.$f-weight-regular variables.$f-size-sm variables.$f-family-inter;
+  line-height: 1.5;
+}
