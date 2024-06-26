@@ -3,11 +3,11 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 ---
 
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang='en'>
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <title>Food Market Web App</title>
     <style>
       body {
@@ -37,29 +37,39 @@ import Footer from '../components/Footer.astro';
       section h2 {
         margin-top: 0;
       }
-      .step1, .step2, .step3 {
+      .step1,
+      .step2,
+      .step3 {
         display: flex;
         align-items: center;
         justify-content: space-between;
         flex-wrap: wrap;
       }
-      .step1 .content, .step2 .content, .step3 .content {
+      .step1 .content,
+      .step2 .content,
+      .step3 .content {
         flex: 1;
         padding: 20px;
         max-width: 500px;
       }
-      .step1 .content h2, .step2 .content h2, .step3 .content h2 {
+      .step1 .content h2,
+      .step2 .content h2,
+      .step3 .content h2 {
         font-size: 24px;
         margin-bottom: 10px;
       }
-      .step1 .content p, .step2 .content p, .step3 .content p {
+      .step1 .content p,
+      .step2 .content p,
+      .step3 .content p {
         margin-bottom: 20px;
       }
-      .step1 .buttons, .step3 .buttons {
+      .step1 .buttons,
+      .step3 .buttons {
         display: flex;
         flex-direction: column;
       }
-      .step1 .buttons button, .step3 .buttons button {
+      .step1 .buttons button,
+      .step3 .buttons button {
         background-color: #555;
         color: #fff;
         border: none;
@@ -69,17 +79,23 @@ import Footer from '../components/Footer.astro';
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         animation: fadeIn 2s ease-in-out;
-        transition: background-color 0.3s, transform 0.3s;
+        transition:
+          background-color 0.3s,
+          transform 0.3s;
       }
-      .step1 .buttons button:hover, .step3 .buttons button:hover {
+      .step1 .buttons button:hover,
+      .step3 .buttons button:hover {
         background-color: #777;
         transform: scale(1.05);
       }
-      .step1 .buttons button:active, .step3 .buttons button:active {
+      .step1 .buttons button:active,
+      .step3 .buttons button:active {
         background-color: #999;
         transform: scale(0.95);
       }
-      .step1 img, .step2 img, .step3 img {
+      .step1 img,
+      .step2 img,
+      .step3 img {
         width: 100%;
         height: auto;
         max-width: 500px;
@@ -111,33 +127,33 @@ import Footer from '../components/Footer.astro';
   <body>
     <Header />
     <main>
-      <section class="step1">
-        <div class="content">
+      <section class='step1'>
+        <div class='content'>
           <h2>Step 1: Create an Account</h2>
           <p>Sign up for an account to start your grocery journey with us</p>
-          <div class="buttons">
+          <div class='buttons'>
             <button>Login</button>
-            <button style="background-color: #FFD700; color: #000;">Sign Up</button>
+            <button style='background-color: #FFD700; color: #000;'>Sign Up</button>
           </div>
         </div>
-        <img src="/images/market-3466906_1280.jpg" alt="Create an Account">
+        <img src='/images/market-3466906_1280.jpg' alt='Create an Account' />
       </section>
-      <section class="step2">
-        <div class="content">
+      <section class='step2'>
+        <div class='content'>
           <h2>Step 2: Explore our Products</h2>
           <p>Browse through a wide range of quality groceries</p>
-          <div class="search">
-            <input type="text" placeholder="Search Products">
+          <div class='search'>
+            <input type='text' placeholder='Search Products' />
           </div>
         </div>
-        <img src="/images/fruits-4728754_1280.jpg" alt="Explore Products">
+        <img src='/images/fruits-4728754_1280.jpg' alt='Explore Products' />
       </section>
-      <section class="step3">
-        <div class="content">
+      <section class='step3'>
+        <div class='content'>
           <h2>Step 3: Visit our Participant Stores</h2>
           <p>Browse through a wide range of quality stores through Orlando</p>
         </div>
-        <img src="/images/bowl-1844894_1280.jpg" alt="Visit Stores">
+        <img src='/images/bowl-1844894_1280.jpg' alt='Visit Stores' />
       </section>
     </main>
     <Footer />
