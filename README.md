@@ -18,6 +18,7 @@
    ```sh
    nvm install
    ```
+
    then rerun:
 
    ```sh
@@ -31,10 +32,13 @@
    NVM for Windows: https://github.com/coreybutler/nvm-windows
 
 2. **Install dependencies**
+
    ```sh
    npm install
    ```
+
    Also make sure you have the netlify-cli installed by running the following command:
+
    ```sh
    npm install -g netlify-cli
    ```
@@ -46,14 +50,14 @@
    or if you want to start the development server with the netlify functions:
    ```sh
     npm run dev:netlify
-    ```
+   ```
 
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
 
 | Command                   | Action                                                     |
-|:--------------------------|:-----------------------------------------------------------|
+| :------------------------ | :--------------------------------------------------------- |
 | `npm install`             | Installs dependencies                                      |
 | `npm run dev`             | Starts local dev server at `localhost:4321`                |
 | `npm run dev:netlify`     | Run a local dev server in a netlify like environment       |
