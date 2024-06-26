@@ -27,3 +27,6 @@ pnpm-debug.log*
 .netlify
 
 *lighthouse.*/
+deno.lock
+netlify.toml
+netlify.toml
