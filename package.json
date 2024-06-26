@@ -7,8 +7,11 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "dev:netlify": "netlify dev",
     "start": "astro dev",
-    "build": "astro check && astro build --remote",
+    "build": "astro check && astro build",
+    "build:remote": "astro check && astro build --remote",
+    "build:netlify": "netlify build",
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write .",
@@ -22,6 +25,7 @@
     "typescript": "^5.4.5"
   },
   "devDependencies": {
+    "@netlify/plugin-lighthouse": "^6.0.0",
     "prettier": "^3.3.2",
     "prettier-plugin-astro": "^0.14.0",
     "sass": "^1.77.5"
