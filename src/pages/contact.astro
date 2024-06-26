@@ -15,14 +15,14 @@ import Layout from '../layouts/Layout.astro';
         <span>Phone: 407-555-5555</span>
       </div>
       <div class="info-item">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 14.93v-4h-2v4H8.5L12 20.43 15.5 16.93zM13 10h-2V7h2v3z"/></svg>
+        <svg xmlns="http://www.w3.org/200                                                      0/svg" viewBox="0 0 24 24" width="40" height="40"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 14.93v-4h-2v4H8.5L12 20.43 15.5 16.93zM13 10h-2V7h2v3z"/></svg>
         <span>Address: 123 Mailing Address, Orlando, FL 32825</span>
       </div>
     </div>
     <div class="contact-form">
       <h2>Questions or Concerns? Fill out the form below.</h2>
       <form id="contactForm">
-        <input type="text" name="name" placeholder="Your Name*" required>
+        <input type="text" name="username" placeholder="Your Name*" required>
         <input type="tel" name="phone" placeholder="Phone Number*" required>
         <input type="email" name="email" placeholder="Email*" required>
         <textarea name="message" placeholder="Enter Message Here*" required></textarea>
@@ -156,33 +156,47 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
-  document.getElementById('contactForm').addEventListener('submit', function(event) {
+  document.getElementById('contactForm')!.addEventListener('submit', function(event) {
     event.preventDefault();
-    const form = event.target;
-    const feedback = document.getElementById('feedback');
-    
+    const form = event.target as HTMLFormElement;
+    const feedback = document.getElementById('feedback')!;
+
     // Add validation for empty fields
-    const name = form.name.value.trim();
-    const phone = form.phone.value.trim();
-    const email = form.email.value.trim();
-    const message = form.message.value.trim();
-    
+    const name = (form.elements.namedItem('userName') as HTMLInputElement).value.trim();
+    const phone = (form.elements.namedItem('phone') as HTMLInputElement).value.trim();
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
+    const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value.trim();
+
     if (!name || !phone || !email || !message) {
       alert('All fields are required!');
       return;
     }
+
     
-    // Empty function for submission logic
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    
+    const phonePattern = /^\d{10}$/;
+    if (!phonePattern.test(phone)) {
+      alert('Please enter a valid phone number.');
+      return;
+    }
+
+   
     function submitForm() {
       // Logic to be added later
       console.log('Form submitted!');
     }
+
     
-    // Show feedback and reset form
     feedback.classList.add('show');
     form.reset();
+
     
-    // Call the empty function
     submitForm();
   });
 </script>
