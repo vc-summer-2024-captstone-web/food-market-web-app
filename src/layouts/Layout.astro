@@ -1,5 +1,7 @@
 ---
 import '../styles/global.scss';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
 }
@@ -19,10 +21,14 @@ const isAuth = Boolean(Astro.locals.user);
     <title>{title}</title>
   </head>
   <body>
-    <nav>
-      {isAuth && <button id='sign-out'>Sign Out</button>}
-    </nav>
-    <slot />
+  {isAuth && <button id='sign-out'>Sign Out</button>}
+    <div class='wrapper'>
+      <Header />
+      <main>
+        <slot />
+      </main>
+      <Footer />
+    </div>
   </body>
 </html>
 <style is:global>
@@ -32,10 +38,29 @@ const isAuth = Boolean(Astro.locals.user);
     --accent-dark: 49, 10, 101;
     --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60%);
   }
-  html {
+  html,
+  body {
     font-family: system-ui, sans-serif;
     background: #13151a;
     background-size: 224px;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  main {
+    flex: 1;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1.5s ease-in-out;
   }
   code {
     font-family:
@@ -47,6 +72,14 @@ const isAuth = Boolean(Astro.locals.user);
       Bitstream Vera Sans Mono,
       Courier New,
       monospace;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 </style>
 <script>
