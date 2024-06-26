@@ -1,0 +1,220 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title='Contact Us - Food Market App'>
+  <div class='contact-container'>
+    <div class='contact-info'>
+      <h2>Contact Us</h2>
+      <div class='info-item'>
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='40' height='40'
+          ><path d='M12 12a5 5 0 100-10 5 5 0 000 10zm-1 2H8a6 6 0 00-6 6v2h18v-2a6 6 0 00-6-6h-3z'></path></svg
+        >
+        <span>Email: email@email.com</span>
+      </div>
+      <div class='info-item'>
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='40' height='40'
+          ><path
+            d='M6.62 10.79a15.66 15.66 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.27 11.36 11.36 0 004.28 1.14 1 1 0 01.89 1v3.59a1 1 0 01-.9 1 19.37 19.37 0 01-17.3-17.3 1 1 0 011-.9H6a1 1 0 011 1.11 11.36 11.36 0 001.14 4.28 1 1 0 01-.27 1.11z'
+          ></path></svg
+        >
+        <span>Phone: 407-555-5555</span>
+      </div>
+      <div class='info-item'>
+        <svg
+          xmlns='http://www.w3.org/200                                                      0/svg'
+          viewBox='0 0 24 24'
+          width='40'
+          height='40'
+          ><path d='M12 2a10 10 0 100 20 10 10 0 000-20zm1 14.93v-4h-2v4H8.5L12 20.43 15.5 16.93zM13 10h-2V7h2v3z'
+          ></path></svg
+        >
+        <span>Address: 123 Mailing Address, Orlando, FL 32825</span>
+      </div>
+    </div>
+    <div class='contact-form'>
+      <h2>Questions or Concerns? Fill out the form below.</h2>
+      <form id='contactForm'>
+        <input type='text' name='username' placeholder='Your Name*' required />
+        <input type='tel' name='phone' placeholder='Phone Number*' required />
+        <input type='email' name='email' placeholder='Email*' required />
+        <textarea name='message' placeholder='Enter Message Here*' required></textarea>
+        <button type='submit'>Submit</button>
+        <div class='feedback' id='feedback'>Thank you for your message! We will get back to you soon.</div>
+      </form>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .contact-info,
+  .contact-form {
+    flex: 1;
+    margin: 20px 0;
+    padding: 20px;
+    background: #cecccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: slideIn 1s ease-in-out;
+  }
+  .contact-info h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  .contact-info .info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .contact-info .info-item svg {
+    font-size: 40px;
+    margin-right: 15px;
+  }
+  .contact-info .info-item span {
+    font-size: 18px;
+    color: #555;
+  }
+  .contact-form h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  .contact-form form {
+    display: flex;
+    flex-direction: column;
+  }
+  .contact-form input,
+  .contact-form textarea {
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    font-size: 16px;
+    transition:
+      border-color 0.3s,
+      box-shadow 0.3s;
+  }
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+    outline: none;
+  }
+  .contact-form button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition:
+      background-color 0.3s,
+      transform 0.3s;
+    width: 100%;
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+  .contact-form button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  .contact-form button:active {
+    background-color: #003f7f;
+    transform: scale(0.95);
+  }
+  .contact-form .feedback {
+    display: none;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #e7f7e7;
+    border: 1px solid #b0d4b0;
+    color: #3a5d3a;
+    border-radius: 5px;
+  }
+  .contact-form .feedback.show {
+    display: block;
+  }
+  @media (min-width: 768px) {
+    .contact-container {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .contact-info,
+    .contact-form {
+      flex: 1;
+      margin: 0 20px;
+    }
+    .contact-form button {
+      width: auto;
+    }
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes slideIn {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  document.getElementById('contactForm')!.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const feedback = document.getElementById('feedback');
+
+    // Add validation for empty fields
+    const name = (form.elements.namedItem('username') as HTMLInputElement).value.trim();
+    const phone = (form.elements.namedItem('phone') as HTMLInputElement).value.trim();
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
+    const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value.trim();
+
+    if (!name || !phone || !email || !message) {
+      alert('All fields are required!');
+      return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    const phonePattern = /^\d{10}$/;
+    if (!phonePattern.test(phone)) {
+      alert('Please enter a valid phone number.');
+      return;
+    }
+
+    function submitForm() {
+      // Logic to be added later
+      console.log('Form submitted!');
+    }
+    if (feedback) {
+      feedback.classList.add('show');
+    }
+    
+    form.reset();
+
+    submitForm();
+  });
+</script>

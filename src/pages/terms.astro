@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Terms and Conditions - Food Market App">
+  <div class="terms-container">
+    <h1>Terms and Conditions</h1>
+    <p>Your terms and conditions content goes here.</p>
+  </div>
+</Layout>
+
+<style>
+  .terms-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1.5s ease-in-out;
+  }
+  h1 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>
