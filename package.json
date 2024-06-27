@@ -15,7 +15,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write .",
-    "lint": "prettier --check . && astro check"
+    "lint": "prettier --check . && astro check",
+    "cy:open": "cypress open"
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@netlify/plugin-lighthouse": "^6.0.0",
+    "cypress": "^13.12.0",
     "prettier": "^3.3.2",
     "prettier-plugin-astro": "^0.14.0",
     "sass": "^1.77.5"
