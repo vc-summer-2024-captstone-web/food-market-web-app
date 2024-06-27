@@ -1,5 +1,6 @@
 ---
 import Layout from '@layouts/Layout.astro';
+import FormInput from 'src/components/FormInput.astro';
 
 if (Astro.locals.user) {
   return Astro.redirect('/');
@@ -10,22 +11,10 @@ if (Astro.locals.user) {
   <div class='container'>
     <h1>Signup</h1>
     <form method='POST' action='/api/auth/signup'>
-      <div class='input__group'>
-        <label for='name'>Full Name</label>
-        <input id='name' type='text' name='name' placeholder='Full Name' />
-      </div>
-      <div class='input__group'>
-        <label for='email'>Email</label>
-        <input id='email' type='email' name='email' placeholder='Email' />
-      </div>
-      <div class='input__group'>
-        <label for='password'>Password</label>
-        <input id='password' type='password' name='password' placeholder='Password' />
-      </div>
-      <div class='input__group'>
-        <label for='confirm'>Confirm</label>
-        <input id='confirm' type='password' name='confirm' placeholder='Confirm Password' />
-      </div>
+      <FormInput type='text' name='name' required='true' label='Full Name' />
+      <FormInput type='email' name='email' required='true' label='Email' />
+      <FormInput type='password' name='password' required='true' label='Password' />
+      <FormInput type='password' name='confirm' required='true' label='Confirm Password' />
       <button type='submit'>Signup</button>
     </form>
   </div>
