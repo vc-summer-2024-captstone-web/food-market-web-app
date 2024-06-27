@@ -21,9 +21,8 @@ const isAuth = Boolean(Astro.locals.user);
     <title>{title}</title>
   </head>
   <body>
-  {isAuth && <button id='sign-out'>Sign Out</button>}
     <div class='wrapper'>
-      <Header />
+      <Header isAuthenticated={isAuth} />
       <main>
         <slot />
       </main>

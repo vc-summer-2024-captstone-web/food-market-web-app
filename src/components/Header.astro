@@ -1,5 +1,8 @@
 ---
-
+interface Props {
+  isAuthenticated: boolean;
+}
+const { isAuthenticated }: Props = Astro.props;
 ---
 
 <header>
@@ -10,6 +13,7 @@
       <li><a href='/locations'>Locations</a> |</li>
       <li><a href='/about'>About Us</a> |</li>
       <li><a href='/contact'>Contact Us</a></li>
+      {isAuthenticated && <button id='sign-out'>Sign Out</button>}
     </ul>
   </nav>
 </header>
