@@ -11,10 +11,10 @@ if (Astro.locals.user) {
   <div class='container'>
     <h1>Signup</h1>
     <form method='POST' action='/api/auth/signup'>
-      <FormInput type='text' name='name' required='true' label='Full Name' />
-      <FormInput type='email' name='email' required='true' label='Email' />
-      <FormInput type='password' name='password' required='true' label='Password' />
-      <FormInput type='password' name='confirm' required='true' label='Confirm Password' />
+      <FormInput type='text' name='name' required={true} label='Full Name' />
+      <FormInput type='email' name='email' required={true} label='Email' />
+      <FormInput type='password' name='password' required={true} label='Password' />
+      <FormInput type='password' name='confirm' required={true} label='Confirm Password' />
       <button type='submit'>Signup</button>
     </form>
   </div>

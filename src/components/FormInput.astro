@@ -1,11 +1,11 @@
 ---
 interface Props {
-  type: string | 'text';
+  type: any | 'text';
   name: string;
   required: boolean | false;
   label: string;
 }
-const { type, name, required, label } = Astro.props;
+const { type, name, required, label }: Props = Astro.props;
 ---
 
 <div class='input__group'>
