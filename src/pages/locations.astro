@@ -1,0 +1,86 @@
+---
+import AltLayout from '../layouts/AltLayout.astro'
+import locations from '../data/locations.json';
+---
+
+<AltLayout title="Food Market App - Locations">
+  <main>
+    <div class="search-container">
+      <input type="text" placeholder="Find a participating store">
+      <button>Filter</button>
+    </div>
+
+    <div id="map"></div>
+
+    <div class="locations-list">
+      {locations.map(location => (
+        <div class="location">
+          <h2>{location.storeType}</h2>
+          <p>{location.distance}</p>
+          <p>Open Hours: {location.openHours}</p>
+          <p>{location.address}</p>
+          <button>Details</button>
+        </div>
+      ))}
+    </div>
+  </main>
+</AltLayout>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.search-container input {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-container button {
+  padding: 10px;
+  margin-left: 10px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+#map {
+  width: 100%;
+  height: 300px;
+  background-color: #e9e9e9;
+}
+
+.locations-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.location {
+  background-color: #fff;
+  padding: 20px;
+  margin: 10px 0;
+  width: 80%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+</style>

@@ -30,3 +30,5 @@ pnpm-debug.log*
 deno.lock
 netlify.toml
 netlify.toml
+
+.vscode/settings.json
