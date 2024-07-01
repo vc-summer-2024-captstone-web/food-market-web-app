@@ -87,5 +87,5 @@ interface EmailContent {
   text: string;
 }
 function stripHTML(html: string) {
-  return html.replace(/<[^>]*>?/gm, '');
+  return html.replace(/<|>/g, '');
 }
