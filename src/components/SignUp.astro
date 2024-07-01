@@ -1,0 +1,22 @@
+---
+import { useState } from 'react';
+
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const response = await fetch('/api/contact', {
+    method: 'POST',
+    body: formData,
+  });
+  const result = await response.json();
+  console.log(result);
+};
+---
+
+<form onSubmit={handleSubmit}>
+  <label>
+    Your Email:
+    <textarea name="email" required></textarea>
+  </label>
+  <button type="submit">Send</button>
+</form>
