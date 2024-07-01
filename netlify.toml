@@ -1,7 +1,7 @@
 [functions."invalidate-session"]
 schedule = "@hourly"
 [dev]
-port=8080
+port=8888
 targetPort=4321
 [build]
   [context.dev]

@@ -17,7 +17,11 @@
     "astro": "astro",
     "format": "prettier --write .",
     "lint": "prettier --check . && astro check",
-    "generate-example-env": "npx @dotenvx/dotenvx genexample"
+    "generate-example-env": "npx @dotenvx/dotenvx genexample",
+    "cy:open": "cypress open",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:e2e": "cypress run"
   },
   "dependencies": {
     "@astrojs/check": "^0.7.0",
@@ -31,11 +35,13 @@
     "lucia": "^3.2.0",
     "nodemailer": "^6.9.13",
     "react-icons": "^5.2.1",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
   },
   "devDependencies": {
     "@types/nodemailer": "^6.4.15",
     "@netlify/plugin-lighthouse": "^6.0.0",
+    "cypress": "^13.12.0",
     "prettier": "^3.3.2",
     "prettier-plugin-astro": "^0.14.0",
     "sass": "^1.77.5"
