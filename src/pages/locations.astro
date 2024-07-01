@@ -10,19 +10,29 @@ import locations from '../data/locations.json';
       <button>Filter</button>
     </div>
 
-    <div id="map"></div>
+    <section class="map-container">
 
-    <div class="locations-list">
-      {locations.map(location => (
-        <div class="location">
-          <h2>{location.storeType}</h2>
-          <p>{location.distance}</p>
-          <p>Open Hours: {location.openHours}</p>
-          <p>{location.address}</p>
-          <button>Details</button>
+      <div class="left-column">
+        <div id ="map">
+          <img src="public\images\Google_Maps_Orlando_Sample.png" alt="Sample Map" />
         </div>
-      ))}
-    </div>
+      </div>
+
+      <div class="right-column">
+        <div class="locations-list">
+          {locations.map(location => (
+            <div class="location">
+              <h2>{location.storeType}</h2>
+              <p>{location.distance}</p>
+              <p>Open Hours: {location.openHours}</p>
+              <p>{location.address}</p>
+              <button style='background-color: #FFD700;'>Details</button>
+          </div>
+          ))}
+        </div>
+      </div>
+
+    </section>
   </main>
 </AltLayout>
 
@@ -37,7 +47,7 @@ body {
 nav a {
   margin: 0 10px;
   text-decoration: none;
-  color: #333;
+  color: #1b1b1b;
 }
 
 .search-container {
@@ -64,16 +74,35 @@ nav a {
 }
 
 #map {
+  background-color: #cecccc;
   width: 100%;
-  height: 300px;
-  background-color: #e9e9e9;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.left-column, .right-column {
+  flex: 1;
+  padding: 20px;
+}
+
+.left-column {
+  border-right: 1px solid #444;
+}
+
+.map-container {
+  background-color: #1b1b1b;
+  display: flex;
+  height: 100%;
 }
 
 .locations-list {
+  background-color: #cecccc;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px 0;
+  margin: 20px auto;
+  border-radius: 10px;
+
 }
 
 .location {
@@ -82,5 +111,10 @@ nav a {
   margin: 10px 0;
   width: 80%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.button {
+  border-radius: 10px;
 }
 </style>
