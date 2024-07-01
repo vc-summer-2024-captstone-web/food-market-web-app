@@ -43,7 +43,7 @@ if (Astro.request.method === 'POST') {
   {error && <p>{error}</p>}
   <h1>Email Verification</h1>
   <form method='POST'>
-    <FormInput label='Verification token' name='token' required />
+    <FormInput type='text' label='Verification token' name='token' required={true} />
     <button type='submit'>Verify</button>
   </form>
 </Layout>
