@@ -1,3 +1,5 @@
+[functions."invalidate-session"]
+schedule = "@hourly"
 [dev]
 port=8888
 targetPort=4321

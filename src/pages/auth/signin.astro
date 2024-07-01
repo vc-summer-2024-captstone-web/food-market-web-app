@@ -1,0 +1,19 @@
+---
+import Layout from '@layouts/Layout.astro';
+import FormInput from '@components/FormInput.astro';
+
+if (Astro.locals.user) {
+  return Astro.redirect('/');
+}
+---
+
+<Layout title='Sign In'>
+  <div class='container'>
+    <h1>Sign In</h1>
+    <form method='POST' action='/api/auth/signin'>
+      <FormInput type='email' name='email' required={true} label='Email' />
+      <FormInput type='password' name='password' required={false} label='Password' />
+      <button type='submit'>Sign In</button>
+    </form>
+  </div>
+</Layout>
