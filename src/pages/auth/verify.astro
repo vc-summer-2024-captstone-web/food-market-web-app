@@ -1,5 +1,6 @@
 ---
 import Layout from '@layouts/Layout.astro';
+import FormInput from '@components/FormInput.astro';
 import { db, eq, EmailVerification, User } from 'astro:db';
 if (!Astro.locals.user) {
   return Astro.redirect('/');
@@ -23,17 +24,17 @@ if (Astro.request.method === 'POST') {
     });
   console.log({ emailVerification });
 
-  if (emailVerification) {
-    if (new Date().valueOf() > emailVerification.expiresAt) {
-      error = 'Token expired';
-      // Todo: send new verification email
-    } else {
-      await db.update(User).set({ verified: true }).where(eq(User.id, id));
-      await db.delete(EmailVerification).where(eq(EmailVerification.token, token));
-      Astro.redirect('/');
-    }
-  } else {
+  if (!emailVerification) {
     error = 'Invalid token';
+    return;
+  }
+  if (new Date().valueOf() > emailVerification.expiresAt) {
+    error = 'Token expired';
+    // Todo: send new verification email
+  } else {
+    await db.update(User).set({ verified: true }).where(eq(User.id, id));
+    await db.delete(EmailVerification).where(eq(EmailVerification.token, token));
+    Astro.redirect('/');
   }
 }
 ---
@@ -42,9 +43,7 @@ if (Astro.request.method === 'POST') {
   {error && <p>{error}</p>}
   <h1>Email Verification</h1>
   <form method='POST'>
-    <div class='input__group'>
-      <label for='token'>Verification token</label>
-      <input type='text' id='token' name='token' required />
-    </div>
+    <FormInput type='text' label='Verification token' name='token' required={true} />
+    <button type='submit'>Verify</button>
   </form>
 </Layout>
