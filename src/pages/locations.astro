@@ -1,183 +1,183 @@
 ---
-import AltLayout from '../layouts/AltLayout.astro'
+import AltLayout from '../layouts/AltLayout.astro';
 import locations from '../data/locations.json';
+
+const { PUBLIC_OPEN_LAYER_KEY } = import.meta.env;
 ---
 
-<AltLayout title="Food Market App - Locations">
+<AltLayout title='Food Market App - Locations'>
   <main>
-    <div class="search-container">
-      <input type="text" placeholder="Find a participating store">
+    <div class='search-container'>
+      <input type='text' placeholder='Find a participating store' />
       <button>Filter</button>
     </div>
 
-    <section class="map-container">
-
-      <div class="left-column">
-        <div id ="map">
-        <script>
-          import { Map, View } from 'ol';
-          import TileLayer from 'ol/layer/Tile';
-          import VectorLayer from 'ol/layer/Vector';
-          import TileJSON from 'ol/source/TileJSON';
-          import VectorSource from 'ol/source/Vector';
-          import Point from 'ol/geom/Point';
-          import Feature from 'ol/Feature';
-          import Icon from 'ol/style/Icon';
-          import Style from 'ol/style/Style';
-          import { fromLonLat } from 'ol/proj';
-          import Attribution from 'ol/control/Attribution';
-          import { defaults as defaultControls } from 'ol/control';
-        
-          const key = 'Ipx9hRFcc5VDdjqPzkkj'; // not a good idea to hardcode api keys
-        
-          const attribution = new Attribution({
-            collapsible: false,
-          });
-        
-          const source = new TileJSON({
-            url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=vfUJzF21ecbY3bZi2Za0`,
-            tileSize: 512,
-            crossOrigin: 'anonymous',
-          });
-        
-          const map = new Map({
-            layers: [
-              new TileLayer({
-                source: source,
-              }),
-            ],
-            controls: defaultControls({ attribution: false }).extend([attribution]),
-            target: 'map',
-            view: new View({
-              constrainResolution: true,
-              center: fromLonLat([-81.379234, 28.538336]),
-              zoom: 15,
-            }),
-          });
-        
-          const layer = new VectorLayer({
-            source: new VectorSource({
-              features: [
-                new Feature({
-                  geometry: new Point(fromLonLat([-81.379234, 28.538336])),
-                }),
-              ],
-            }),
-            style: new Style({
-              image: new Icon({
-                anchor: [0.5, 1],
-                crossOrigin: 'anonymous',
-                src: 'marker-icon.png',
-              }),
-            }),
-          });
-        
-          map.addLayer(layer);
-        </script></div>
-        </div>
-
-      <div class="right-column">
-        <div class="locations-list">
-          {locations.map(location => (
-            <div class="location">
-              <h2>{location.storeType}</h2>
-              <p>{location.distance}</p>
-              <p>Open Hours: {location.openHours}</p>
-              <p>{location.address}</p>
-              <button style='background-color: #FFD700;'>Details</button>
-          </div>
-          ))}
-        </div>
+    <section class='map-container'>
+      <div class='left-column'>
+        <div id='map'></div>
       </div>
 
+      <div class='right-column'>
+        <div class='locations-list'>
+          {
+            locations.map((location) => (
+              <div class='location'>
+                <h2>{location.storeType}</h2>
+                <p>{location.distance}</p>
+                <p>Open Hours: {location.openHours}</p>
+                <p>{location.address}</p>
+                <button style='background-color: #FFD700;'>Details</button>
+              </div>
+            ))
+          }
+        </div>
+      </div>
     </section>
   </main>
 </AltLayout>
 
 <style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-nav a {
-  margin: 0 10px;
-  text-decoration: none;
-  color: #1b1b1b;
-}
+  nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #1b1b1b;
+  }
 
-.search-container {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-}
+  .search-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
 
-.search-container input {
-  padding: 10px;
-  width: 300px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+  .search-container input {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
 
-.search-container button {
-  padding: 10px;
-  margin-left: 10px;
-  border: none;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-  border-radius: 4px;
-}
+  .search-container button {
+    padding: 10px;
+    margin-left: 10px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+  }
 
-#map {
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  position: relative;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-}
+  #map {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
 
-.left-column, .right-column {
-  flex: 1;
-  padding: 20px;
-}
+  .left-column,
+  .right-column {
+    flex: 1;
+    padding: 20px;
+  }
 
-.left-column {
-  border-right: 1px solid #444;
-}
+  .left-column {
+    border-right: 1px solid #444;
+  }
 
-.map-container {
-  background-color: #1b1b1b;
-  display: flex;
-  height: 100%;
-}
+  .map-container {
+    background-color: #1b1b1b;
+    display: flex;
+    height: 100%;
+  }
 
-.locations-list {
-  background-color: #cecccc;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px auto;
-  border-radius: 10px;
+  .locations-list {
+    background-color: #cecccc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+    border-radius: 10px;
+  }
 
-}
+  .location {
+    background-color: #fff;
+    padding: 20px;
+    margin: 10px 0;
+    width: 80%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
 
-.location {
-  background-color: #fff;
-  padding: 20px;
-  margin: 10px 0;
-  width: 80%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-}
-
-.button {
-  border-radius: 10px;
-}
-
+  .button {
+    border-radius: 10px;
+  }
 </style>
+
+<script>
+  import { Map, View } from 'ol';
+  import TileLayer from 'ol/layer/Tile';
+  import VectorLayer from 'ol/layer/Vector';
+  import TileJSON from 'ol/source/TileJSON';
+  import VectorSource from 'ol/source/Vector';
+  import Point from 'ol/geom/Point';
+  import Feature from 'ol/Feature';
+  import Icon from 'ol/style/Icon';
+  import Style from 'ol/style/Style';
+  import { fromLonLat } from 'ol/proj';
+  import Attribution from 'ol/control/Attribution';
+  import { defaults as defaultControls } from 'ol/control';
+  const { PUBLIC_OPEN_LAYER_KEY } = import.meta.env;
+  const attribution = new Attribution({
+    collapsible: false,
+  });
+
+  const source = new TileJSON({
+    url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=${PUBLIC_OPEN_LAYER_KEY}`,
+    tileSize: 512,
+    crossOrigin: 'anonymous',
+  });
+
+  const map = new Map({
+    layers: [
+      new TileLayer({
+        source: source,
+      }),
+    ],
+    controls: defaultControls({ attribution: false }).extend([attribution]),
+    target: 'map',
+    view: new View({
+      constrainResolution: true,
+      center: fromLonLat([-81.379234, 28.538336]),
+      zoom: 15,
+    }),
+  });
+
+  const layer = new VectorLayer({
+    source: new VectorSource({
+      features: [
+        new Feature({
+          geometry: new Point(fromLonLat([-81.379234, 28.538336])),
+        }),
+      ],
+    }),
+    style: new Style({
+      image: new Icon({
+        anchor: [0.5, 1],
+        crossOrigin: 'anonymous',
+        src: 'marker-icon.png',
+      }),
+    }),
+  });
+
+  map.addLayer(layer);
+</script>
