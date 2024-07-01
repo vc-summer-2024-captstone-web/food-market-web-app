@@ -19,16 +19,11 @@ export async function sendVerifyEmail({ email, name, token }: { email: string; n
     to: email,
     from: SMTP_EMAIL,
     subject: 'Verify your email address',
+    text: stripHTML(html),
     html,
   };
 
-  return sendEmail(emailContent)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.error(err.message);
-    });
+  return sendEmail(emailContent);
 }
 
 export async function generateVerificationCode(userId: string) {
@@ -49,7 +44,7 @@ export async function generateVerificationCode(userId: string) {
 }
 
 async function sendEmail(emailContent: EmailContent): Promise<unknown> {
-  try {
+  return new Promise(async (resolve, reject) => {
     if (DEV) {
       const nodemailer = await import('nodemailer');
       const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = import.meta.env;
@@ -64,19 +59,24 @@ async function sendEmail(emailContent: EmailContent): Promise<unknown> {
       });
       return transport.sendMail(emailContent, (err, info) => {
         if (err) {
-          return err;
+          console.error(err);
+          reject(err);
         } else {
-          console.log(info);
-          return info.response;
+          console.log('Email sent: ' + info.response);
+          resolve(info);
         }
       });
     }
-
     sgMail.setApiKey(SENDGRID_API_KEY);
-    return await sgMail.send(emailContent);
-  } catch (error) {
-    return error;
-  }
+    sgMail
+      .send(emailContent)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 }
 
 interface EmailContent {
@@ -84,4 +84,8 @@ interface EmailContent {
   from: string;
   subject: string;
   html: string;
+  text: string;
+}
+function stripHTML(html: string) {
+  return html.replace(/<[^>]*>?/gm, '');
 }

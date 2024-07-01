@@ -57,24 +57,26 @@ export async function POST(context: APIContext): Promise<Response> {
       console.error('Error generating verification code:', err);
       return null;
     });
-
-  await db.insert(User).values({
-    id: userId,
-    email: email.toLowerCase().trim(),
-    name: name,
-    password: hashPass,
-    verified: false,
-  });
-
   if (token) {
-    sendVerifyEmail({ email, name, token })
-      .then(() => console.log('Verification email sent'))
-      .catch((err) => console.error('Error sending email:', err));
-    await db.insert(EmailVerification).values({
-      userId: userId,
-      token: token,
-      expiresAt: new Date(createDate(new TimeSpan(30, 'm'))).valueOf(),
-    });
+    try {
+      await sendVerifyEmail({ email, name, token });
+      console.log('Email sent');
+      await db.insert(User).values({
+        id: userId,
+        email: email.toLowerCase().trim(),
+        name: name,
+        password: hashPass,
+        verified: false,
+      });
+      await db.insert(EmailVerification).values({
+        userId: userId,
+        token: token,
+        expiresAt: new Date(createDate(new TimeSpan(30, 'm'))).valueOf(),
+      });
+    } catch (err) {
+      console.error('Error sending verification email:', err);
+      return new Response('Error sending verification email', { status: 500 });
+    }
   }
 
   const session = await lucia.createSession(userId, {});
