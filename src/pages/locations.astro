@@ -14,9 +14,67 @@ import locations from '../data/locations.json';
 
       <div class="left-column">
         <div id ="map">
-          <img src="public\images\Google_Maps_Orlando_Sample.png" alt="Sample Map" />
+        <script>
+          import { Map, View } from 'ol';
+          import TileLayer from 'ol/layer/Tile';
+          import VectorLayer from 'ol/layer/Vector';
+          import TileJSON from 'ol/source/TileJSON';
+          import VectorSource from 'ol/source/Vector';
+          import Point from 'ol/geom/Point';
+          import Feature from 'ol/Feature';
+          import Icon from 'ol/style/Icon';
+          import Style from 'ol/style/Style';
+          import { fromLonLat } from 'ol/proj';
+          import Attribution from 'ol/control/Attribution';
+          import { defaults as defaultControls } from 'ol/control';
+        
+          const key = 'Ipx9hRFcc5VDdjqPzkkj'; // not a good idea to hardcode api keys
+        
+          const attribution = new Attribution({
+            collapsible: false,
+          });
+        
+          const source = new TileJSON({
+            url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=vfUJzF21ecbY3bZi2Za0`,
+            tileSize: 512,
+            crossOrigin: 'anonymous',
+          });
+        
+          const map = new Map({
+            layers: [
+              new TileLayer({
+                source: source,
+              }),
+            ],
+            controls: defaultControls({ attribution: false }).extend([attribution]),
+            target: 'map',
+            view: new View({
+              constrainResolution: true,
+              center: fromLonLat([-81.379234, 28.538336]),
+              zoom: 15,
+            }),
+          });
+        
+          const layer = new VectorLayer({
+            source: new VectorSource({
+              features: [
+                new Feature({
+                  geometry: new Point(fromLonLat([-81.379234, 28.538336])),
+                }),
+              ],
+            }),
+            style: new Style({
+              image: new Icon({
+                anchor: [0.5, 1],
+                crossOrigin: 'anonymous',
+                src: 'marker-icon.png',
+              }),
+            }),
+          });
+        
+          map.addLayer(layer);
+        </script></div>
         </div>
-      </div>
 
       <div class="right-column">
         <div class="locations-list">
@@ -74,10 +132,14 @@ nav a {
 }
 
 #map {
-  background-color: #cecccc;
   width: 100%;
   height: 100%;
   border-radius: 10px;
+  position: relative;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
 }
 
 .left-column, .right-column {
@@ -117,4 +179,5 @@ nav a {
 .button {
   border-radius: 10px;
 }
+
 </style>
