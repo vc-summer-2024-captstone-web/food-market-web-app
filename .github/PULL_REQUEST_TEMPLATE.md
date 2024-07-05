@@ -1,4 +1,3 @@
-
 <!--
      For Work In Progress Pull Requests, please use the Draft PR feature,
      see https://github.blog/2019-02-14-introducing-draft-pull-requests/ for further details.
@@ -36,8 +35,6 @@ automatically close the issue.
 - Closes #
 
 ## [optional] Are there any post deployment tasks we need to perform?
-
-
 
 <!-- --------------------------------------------------------------------------------- -->
 <!-- PR template sourced https://github.com/forem/forem/blob/main/.github/PULL_REQUEST_TEMPLATE.md and modified to fit this project's needs. -->
