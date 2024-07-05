@@ -27,10 +27,31 @@ const EmailVerification = defineTable({
     expiresAt: column.number({ optional: false }),
   },
 });
+
+const Market = defineTable({
+  columns: {
+    Id: column.number({optional: false, unique: true}),
+    Name: column.text({optional: false}),
+    Location: column.json({}) //TODO: See if there is another way to add this that is not an untyped json code
+  
+  }
+})
+
+const Products = defineTable({
+  columns: { 
+    Id: column.number({optional: false, unique: true}),
+    MarketID: column.number({optional: false, references: () => Market.columns.Id}),
+    Price: column.number({optional: false}),
+    Description: column.text({optional: false})
+  }
+})
+
 export default defineDb({
   tables: {
     User,
     Session,
     EmailVerification,
+    Market,
+    Products
   },
 });
