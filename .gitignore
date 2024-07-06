@@ -22,3 +22,13 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Local Netlify folder
+.netlify
+
+*lighthouse.*/
+deno.lock
+netlify.toml
+netlify.toml
+
+.vscode/settings.json

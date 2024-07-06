@@ -19,7 +19,7 @@
    nvm install
    ```
 
-   than rerun:
+   then rerun:
 
    ```sh
    nvm use
@@ -32,28 +32,43 @@
    NVM for Windows: https://github.com/coreybutler/nvm-windows
 
 2. **Install dependencies**
+
    ```sh
    npm install
    ```
+
+   Also make sure you have the netlify-cli installed by running the following command:
+
+   ```sh
+   npm install -g netlify-cli
+   ```
+
 3. **Start the development server**
    ```sh
    npm run dev
+   ```
+   or if you want to start the development server with the netlify functions:
+   ```sh
+    npm run dev:netlify
    ```
 
 ## 🧞 Commands
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-| `npm run format`          | Run prettier formatter                           |
-| `npm run lint`            | Run prettier and astro linters                   |
+| Command                   | Action                                                     |
+| :------------------------ | :--------------------------------------------------------- |
+| `npm install`             | Installs dependencies                                      |
+| `npm run dev`             | Starts local dev server at `localhost:4321`                |
+| `npm run dev:netlify`     | Run a local dev server in a netlify like environment       |
+| `npm run build`           | Build production site to `./dist/`                         |
+| `npm run build:remote`    | Build production site and production database to `./dist/` |
+| `npm run build:netlify`   | Build production in a netlify like environment             |
+| `npm run preview`         | Preview your build locally, before deploying               |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check`           |
+| `npm run astro -- --help` | Get help using the Astro CLI                               |
+| `npm run format`          | Run prettier formatter                                     |
+| `npm run lint`            | Run prettier and astro linters                             |
 
 ## 📁 Project Structure
 
