@@ -26,16 +26,24 @@ export const encryptBody = (body: string): string => {
  */
 export const decipherBody =  (encryptedBody: string): string => {
   try {
-    const bodyArr: String[] = encryptedBody.split(':');
-    const iv = Buffer.from(bodyArr.shift(), 'hex');
-    const encryptedText = Buffer.from(bodyArr.shift(), 'hex');
+    const bodyArr = encryptedBody.split(':');
+    const ivString = bodyArr.shift();
+    const encryptedTextString = bodyArr.shift();
+
+    if (typeof ivString !== 'string' || typeof encryptedTextString !== 'string') {
+      throw new Error('Invalid input: expected strings');
+    }
+
+    const iv = Buffer.from(ivString, 'hex');
+    const encryptedText = Buffer.from(encryptedTextString, 'hex');
     const decipher = createDecipheriv('aes-256-cbc', Buffer.from(SECRET_KEY), iv);
 
     let decrypted = decipher.update(encryptedText);
     decrypted = Buffer.concat([decrypted, decipher.final()]);
       return JSON.parse(decrypted.toString());
   } catch (error) {
-    console.error(error);
-    throw new Error(error.message);
+    const err = error as unknown as Error
+    console.error(err);
+    throw new Error(err.message);
   }
 }

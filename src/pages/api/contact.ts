@@ -1,7 +1,7 @@
 import type { APIContext } from 'astro';
-import { db, eq, EmailLog } from 'astro:db';
+import { db, EmailLog } from 'astro:db';
 
-import { encryptBody } from '../../../db/config';
+import { encryptBody } from '@services';
 
 export async function POST(context: APIContext) {
   const formData = await context.request.formData();
@@ -14,6 +14,7 @@ export async function POST(context: APIContext) {
     });
     return new Response(JSON.stringify({ message: '' }), { status: 200 });
   } catch (error: unknown) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    const err = error as unknown as Error;
+    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
   }
 }
