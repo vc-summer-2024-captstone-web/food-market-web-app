@@ -2,11 +2,15 @@
 import '../styles/global.scss';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
-interface Props {
-  title: string;
-}
+import VerificationAlert from '@components/VerificationAlert.astro';
+
 const { title } = Astro.props;
 const isAuth = Boolean(Astro.locals.user);
+let isVerified = null;
+if (isAuth) {
+  const { verified } = Astro.locals.user;
+  isVerified = verified;
+}
 ---
 
 <!doctype html>
@@ -14,7 +18,7 @@ const isAuth = Boolean(Astro.locals.user);
   <head>
     <meta charset='UTF-8' />
     <meta name='description' content='Astro description' />
-    <meta name='viewport' content='width=device-width' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
@@ -22,6 +26,7 @@ const isAuth = Boolean(Astro.locals.user);
   <body>
     <div class='wrapper'>
       <Header isAuthenticated={isAuth} />
+      {!isVerified && isAuth && <VerificationAlert />}
       <main>
         <slot />
       </main>
