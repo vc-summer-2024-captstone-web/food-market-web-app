@@ -64,7 +64,7 @@ if (user) {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 1.5s ease-in-out;
+    //animation: fadeIn 1.5s ease-in-out;
   }
   code {
     font-family:
@@ -86,19 +86,3 @@ if (user) {
     }
   }
 </style>
-<script>
-  const signOutButton = document.getElementById('sign-out');
-  if (signOutButton) {
-    signOutButton.addEventListener('click', () => {
-      fetch('/api/auth/signout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({}),
-      }).then(() => {
-        window.location.reload();
-      });
-    });
-  }
-</script>
