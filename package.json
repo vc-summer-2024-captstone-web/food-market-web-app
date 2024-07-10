@@ -11,7 +11,7 @@
     "dev:netlify": "netlify dev",
     "start": "astro dev",
     "build": "astro check && astro build",
-    "build:remote": "astro check && astro build --remote",
+    "build:remote": "astro check && astro build --remote && cp -r src/_email-templates dist/_email-templates",
     "build:netlify": "netlify build",
     "preview": "astro preview",
     "astro": "astro",
