@@ -35,10 +35,10 @@ import Layout from '../layouts/Layout.astro';
     <div class='contact-form'>
       <h2>Questions or Concerns? Fill out the form below.</h2>
       <form id='contactForm'>
-        <input type='text' name='username' placeholder='Your Name*' required />
-        <input type='tel' name='phone' placeholder='Phone Number*' required />
-        <input type='email' name='email' placeholder='Email*' required />
-        <textarea name='message' placeholder='Enter Message Here*' required></textarea>
+        <input type='text' name='name' placeholder='Your Name' required />
+        <input type='tel' name='phone' placeholder='Phone Number' required />
+        <input type='email' name='email' placeholder='Email' required />
+        <textarea name='message' placeholder='Enter Message Here' required></textarea>
         <button type='submit'>Submit</button>
         <div class='feedback' id='feedback'>Thank you for your message! We will get back to you soon.</div>
       </form>
@@ -206,8 +206,22 @@ import Layout from '../layouts/Layout.astro';
     }
 
     function submitForm() {
-      // Logic to be added later
-      console.log('Form submitted!');
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          phone,
+          email,
+          message,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
     }
     if (feedback) {
       feedback.classList.add('show');

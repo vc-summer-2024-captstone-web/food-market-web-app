@@ -1,20 +1,41 @@
 import type { APIContext } from 'astro';
 import { db, ContactFormLog } from 'astro:db';
 
-import { encryptBody } from '@services';
+import { encryptBody, decipherBody } from '@services';
+import { response } from '@utilities';
 
-export async function POST(context: APIContext) {
+export async function POST(context: APIContext): Promise<Response> {
   const formData = await context.request.formData();
+  const name = formData.get('name') as string;
   const message = formData.get('message') as string;
-  const encryptedMessage = encryptBody(message);
+  const email = formData.get('email') as string;
+  const emailBody = JSON.stringify({
+    name,
+    email,
+    message,
+  });
+  const encryptedMessage = encryptBody(emailBody);
 
   try {
     await db.insert(ContactFormLog).values({
       body: encryptedMessage,
     });
-    return new Response(JSON.stringify({ message: '' }), { status: 200 });
+    return response({ message: 'Message sent' }, 200);
   } catch (error: unknown) {
     const err = error as unknown as Error;
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    console.error(err);
+    return response({ error: err.message }, 500);
   }
+}
+
+export async function GET(context: APIContext): Promise<Response> {
+  const messages: [] = await db.from(ContactFormLog).select('body').all();
+  const decryptedMessages = messages.map((messages: any) => {
+    const decryptedMessages = [];
+    for (const message of messages) {
+      decryptedMessages.push(decipherBody(message));
+    }
+    return decryptedMessages;
+  });
+  return response(decryptedMessages, 200);
 }
