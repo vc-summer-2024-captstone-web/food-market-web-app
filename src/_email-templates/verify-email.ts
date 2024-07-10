@@ -1,3 +1,4 @@
+export const VerifyEmail = `
 <html lang='en'>
   <body>
     <h1>Thank You For Signing Up</h1>
@@ -6,3 +7,4 @@
     <p><a href='https://food-market-web-app.netlify.app/auth/verify'>Click here to verify your email</a></p>
   </body>
 </html>
+`;

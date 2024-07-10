@@ -1,21 +1,13 @@
 import sgMail from '@sendgrid/mail';
 import Handlebars from 'handlebars';
-import { readFile } from 'fs/promises';
-import { resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { VerifyEmail } from '@email-templates';
 
 const { DEV, VITE_APP_NAME, SENDGRID_API_KEY, SMTP_EMAIL } = import.meta.env;
 
 // Convert the file URL to a file path
 
 export async function sendVerifyEmail({ email, name, token }: { email: string; name: string; token: string }) {
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = dirname(__filename);
-  const templatePath = resolve(__dirname, '../_email-templates/verify-email.hbs');
-  // const templatePath = resolve('_email-templates/verify-email.hbs');
-  console.log(templatePath);
-  const templateSource = await readFile(templatePath, 'utf-8');
-  const template = Handlebars.compile(templateSource);
+  const template = Handlebars.compile(VerifyEmail);
 
   const html = template({ name: name, token, appName: VITE_APP_NAME });
 
