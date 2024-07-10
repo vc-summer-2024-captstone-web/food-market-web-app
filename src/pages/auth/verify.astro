@@ -11,6 +11,8 @@ if (user && user.verified) {
   return Astro.redirect('/');
 }
 
+const { id } = user;
+
 if (Astro.request.method === 'POST') {
   const formData = await Astro.request.formData();
   const token = formData.get('token') as string;
