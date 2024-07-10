@@ -6,7 +6,7 @@ import { resolve } from 'path';
 const { DEV, VITE_APP_NAME, SENDGRID_API_KEY, SMTP_EMAIL } = import.meta.env;
 
 export async function sendVerifyEmail({ email, name, token }: { email: string; name: string; token: string }) {
-  const templatePath = resolve('src/_email-templates/verify-email.hbs');
+  const templatePath = resolve('./_email-templates/verify-email.hbs');
   const templateSource = await readFile(templatePath, 'utf-8');
   const template = Handlebars.compile(templateSource);
 
