@@ -3,7 +3,7 @@ import { createId } from '@paralleldrive/cuid2';
 
 // https://astro.build/db/config
 
-const EmailLog = defineTable({
+const ContactFormLog = defineTable({
   columns: {
     Id: column.text({ optional: false, primaryKey: true, default: createId() }),
     body: column.text(),
