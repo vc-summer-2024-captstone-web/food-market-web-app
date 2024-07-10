@@ -12,6 +12,8 @@ interface ImportMetaEnv {
   readonly DEV: boolean;
   readonly TIME_TO_LIVE: number;
   readonly TIME_TO_LIVE_UNIT: TimeSpanUnit;
+  readonly VERIFICATION_TOKEN_TTL: number;
+  readonly VERIFICATION_TOKEN_TTL_UNIT: TimeSpanUnit;
   readonly SESSION_SAME_SITE: String<'lax' | 'strict' | 'none'>;
   readonly SESSION_DOMAIN: string;
   readonly SESSION_SECRET: string;

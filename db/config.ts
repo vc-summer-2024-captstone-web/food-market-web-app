@@ -31,8 +31,8 @@ const Session = defineTable({
 
 const EmailVerification = defineTable({
   columns: {
-    userId: column.text({ optional: false, unique: true, references: () => User.columns.id }),
-    token: column.text({ optional: false }),
+    userId: column.text({ optional: false, unique: false, references: () => User.columns.id }),
+    token: column.text({ optional: false, unique: true, primaryKey: true }),
     expiresAt: column.number({ optional: false }),
   },
 });
