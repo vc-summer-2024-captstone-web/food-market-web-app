@@ -1,9 +1,6 @@
 import type { APIContext } from 'astro';
 import { db, eq, EmailVerification, User, and } from 'astro:db';
-import { generateVerificationCode, sendVerifyEmail } from '@services';
-import { createDate, TimeSpan } from 'oslo';
-
-const { VERIFICATION_TOKEN_TTL, VERIFICATION_TOKEN_TTL_UNIT } = import.meta.env;
+import { handleVerification, sendVerifyEmail } from '@services';
 
 export async function POST(context: APIContext) {
   return new Response(null, {
@@ -27,18 +24,18 @@ export async function PUT(context: APIContext) {
     await db
       .delete(EmailVerification)
       .where(and(eq(EmailVerification.userId, user.id), eq(EmailVerification.token, token)));
-    token = await generateVerificationCode(user.id);
-    await db.insert(EmailVerification).values({
+    await handleVerification({
       userId: user.id,
-      token: token,
-      expiresAt: new Date(createDate(new TimeSpan(VERIFICATION_TOKEN_TTL, VERIFICATION_TOKEN_TTL_UNIT))).valueOf(),
+      email: user.email,
+      name: user.name,
+    });
+  } else {
+    await sendVerifyEmail({
+      email: user.email,
+      name: user.name,
+      token,
     });
   }
-  await sendVerifyEmail({
-    email: user.email,
-    name: user.name,
-    token,
-  });
   return new Response(
     JSON.stringify({
       message: 'Verification email sent',

@@ -50,33 +50,19 @@ export async function POST(context: APIContext): Promise<Response> {
   }
   const hashPass = await new Scrypt().hash(password);
   const userId = generateId(15);
-  const token = await generateVerificationCode(userId)
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => {
-      console.error('Error generating verification code:', err);
-      return null;
+
+  try {
+    await db.insert(User).values({
+      id: userId,
+      email: email.toLowerCase().trim(),
+      name: name,
+      password: hashPass,
+      verified: false,
     });
-  if (token) {
-    try {
-      await sendVerifyEmail({ email, name, token });
-      await db.insert(User).values({
-        id: userId,
-        email: email.toLowerCase().trim(),
-        name: name,
-        password: hashPass,
-        verified: false,
-      });
-      await db.insert(EmailVerification).values({
-        userId: userId,
-        token: token,
-        expiresAt: new Date(createDate(new TimeSpan(VERIFICATION_TOKEN_TTL, VERIFICATION_TOKEN_TTL_UNIT))).valueOf(),
-      });
-    } catch (err) {
-      console.error('Error sending verification email:', err);
-      return new Response('Error sending verification email', { status: 500 });
-    }
+    await handleVerification({ userId, email, name });
+  } catch (e) {
+    console.error(e);
+    return new Response('Error sending verification email', { status: 500 });
   }
 
   const session = await lucia.createSession(userId, {});
