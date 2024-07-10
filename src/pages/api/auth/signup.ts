@@ -5,8 +5,7 @@ import { lucia, handleVerification } from '@services';
 import { response } from '@utilities';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-const { VERIFICATION_TOKEN_TTL, VERIFICATION_TOKEN_TTL_UNIT } = import.meta.env;
+const passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[A-Z])(?=.*[@$!%*#?&.\-_])([a-zA-Z0-9@$!%*#?&.\-]{8,})$/; // At least one uppercase letter, one number, and minimum 8 characters
 
 export async function POST(context: APIContext): Promise<Response> {
   const formData = await context.request.formData();
