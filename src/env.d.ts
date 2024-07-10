@@ -27,7 +27,9 @@ interface ImportMetaEnv {
   // sendgrid (PROD)
   readonly SENDGRID_API_KEY: string;
   readonly SMTP_EMAIL: string;
+
   readonly PUBLIC_OPEN_LAYER_KEY: string;
+  readonly SECRET_KEY: string;
 }
 
 interface ImportMeta {

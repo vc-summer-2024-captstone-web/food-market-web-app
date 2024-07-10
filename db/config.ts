@@ -1,6 +1,15 @@
 import { defineDb, defineTable, column } from 'astro:db';
+import { createId } from '@paralleldrive/cuid2';
 
 // https://astro.build/db/config
+
+const ContactFormLog = defineTable({
+  columns: {
+    Id: column.text({ optional: false, primaryKey: true, default: createId() }),
+    body: column.text(),
+    created: column.date({ default: new Date() }),
+  },
+});
 
 const User = defineTable({
   columns: {
@@ -32,5 +41,6 @@ export default defineDb({
     User,
     Session,
     EmailVerification,
+    ContactFormLog,
   },
 });
