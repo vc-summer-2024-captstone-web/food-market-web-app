@@ -11,7 +11,7 @@
       "@libs/*": ["src/libs/*"],
       "@services": ["src/services/"],
       "@utilities": ["src/utilities/"],
-      "@email-templates": ["src/_email-templates/"],
+      "@email-templates": ["src/_email-templates/"]
     }
   }
 }
