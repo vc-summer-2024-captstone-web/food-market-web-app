@@ -32,3 +32,5 @@ netlify.toml
 netlify.toml
 
 .vscode/settings.json
+
+netlify/dev.db

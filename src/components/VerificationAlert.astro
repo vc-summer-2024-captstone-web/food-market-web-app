@@ -1,0 +1,80 @@
+---
+interface Props {}
+---
+
+<div class='alert'>
+  <p>Your email isn't verified yet. If you didn't receive the verification email, you can request a new token.</p>
+  <div>
+    <div class='button__primary' id='requestToken'>Request New Token</div>
+    <a class='button__secondary' href='/auth/verify'>Verify Now</a>
+  </div>
+</div>
+<script lang='ts'>
+  function sendToken() {
+    fetch('/api/auth/verify', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }
+  const requestToken = document.querySelector('#requestToken');
+  requestToken.addEventListener('click', sendToken);
+</script>
+
+<style lang='scss'>
+  @use '../styles/variables';
+  .alert {
+    background: #edd135;
+    padding: 1em 2.5em;
+    max-width: 750px;
+    width: 90%;
+    margin: 1rem auto;
+    border-radius: 8px;
+    > div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+    }
+    p {
+      color: #111;
+      font-size: variables.$f-size-sm;
+    }
+  }
+  %button {
+    color: #efefef;
+    background: #323232;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0.65rem 0.95rem;
+    text-decoration: none;
+    transition: variables.$t-ease-in-out;
+    font: {
+      weight: variables.$f-weight-regular;
+    }
+    &:hover {
+      background: darken(#323232, 15%);
+      color: lighten(#efefef, 8%);
+    }
+  }
+  .button {
+    &__primary {
+      @extend %button;
+    }
+    &__secondary {
+      @extend %button;
+      color: #111;
+      background: #00bd45;
+      &:hover {
+        background: darken(#00bd45, 15%);
+        color: #fefefe;
+      }
+    }
+  }
+</style>
