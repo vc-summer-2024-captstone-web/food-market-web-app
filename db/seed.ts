@@ -1,4 +1,4 @@
-import { db, ContactTableLog, User } from 'astro:db';
+import { db, ContactFormLog, User } from 'astro:db';
 import { generateId, Scrypt } from 'lucia';
 
 import { encryptBody } from '@services';
@@ -9,11 +9,11 @@ const { DEV } = import.meta.env;
 
 export default async function seed() {
   if (DEV) {
-    await db.insert(ContactTableLog).values({
+    await db.insert(ContactFormLog).values({
       body: encryptBody(
         JSON.stringify({
           email: 'jdoe@example.com',
-          messsage: 'Sample email body content here',
+          message: 'Sample email body content here',
         })
       ),
     });
