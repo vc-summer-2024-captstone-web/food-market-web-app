@@ -1,4 +1,4 @@
-import { db, EmailLog, User } from 'astro:db';
+import { db, ContactTableLog, User } from 'astro:db';
 import { generateId, Scrypt } from 'lucia';
 
 import { encryptBody } from '@services';
@@ -9,11 +9,13 @@ const { DEV } = import.meta.env;
 
 export default async function seed() {
   if (DEV) {
-    await db.insert(EmailLog).values({
-      body: encryptBody(JSON.stringify({
-        email: 'jdoe@example.com',
-        messsage: 'Sample email body content here'
-      })),
+    await db.insert(ContactTableLog).values({
+      body: encryptBody(
+        JSON.stringify({
+          email: 'jdoe@example.com',
+          messsage: 'Sample email body content here',
+        })
+      ),
     });
     console.log('Seeding database with test user');
     await db.insert(User).values({

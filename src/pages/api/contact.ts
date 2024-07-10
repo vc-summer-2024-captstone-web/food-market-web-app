@@ -1,5 +1,5 @@
 import type { APIContext } from 'astro';
-import { db, EmailLog } from 'astro:db';
+import { db, ContactTableLog } from 'astro:db';
 
 import { encryptBody } from '@services';
 
@@ -9,7 +9,7 @@ export async function POST(context: APIContext) {
   const encryptedMessage = encryptBody(message);
 
   try {
-    await db.insert(EmailLog).values({
+    await db.insert(ContactTableLog).values({
       body: encryptedMessage,
     });
     return new Response(JSON.stringify({ message: '' }), { status: 200 });
