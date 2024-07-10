@@ -1,23 +1,26 @@
 ---
 import '../styles/global.scss';
 import 'ol/ol.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
 interface Props {
   title: string;
 }
 const { title } = Astro.props;
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+
+const isAuth = Boolean(Astro.locals.user);
 ---
 
 <!doctype html>
 <html lang='en'>
   <head>
     <meta charset='UTF-8' />
-    <meta name='viewport' content='width=device-width' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
     <title>{title}</title>
   </head>
   <body>
-    <Header />
+    <Header isAuthenticated={isAuth} />
     <slot />
     <Footer />
   </body>
