@@ -1,8 +1,8 @@
 import type { APIContext } from 'astro';
-import { db, EmailVerification, eq, User } from 'astro:db';
+import { db, eq, User } from 'astro:db';
 import { generateId, Scrypt } from 'lucia';
-import { lucia, generateVerificationCode, sendVerifyEmail } from '@services';
-import { createDate, TimeSpan } from 'oslo';
+import { lucia, handleVerification } from '@services';
+import { response } from '@utilities';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

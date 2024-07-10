@@ -10,7 +10,7 @@
       "@images/*": ["src/assets/images/*"],
       "@libs/*": ["src/libs/*"],
       "@services": ["src/services/"],
-      "@utilities": ["src/utilities/"],
+      "@utilities": ["src/utilities/"]
     }
   }
 }
