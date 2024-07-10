@@ -1,7 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
+  "include": ["src/_email-templates/**/*"],
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
       "@components/*": ["src/components/*"],
@@ -10,7 +10,7 @@
       "@images/*": ["src/assets/images/*"],
       "@libs/*": ["src/libs/*"],
       "@services": ["src/services/"],
-      "@utilities": ["src/utilities/"]
-    }
+      "@utilities": ["src/utilities/"],
+    },
   }
 }
