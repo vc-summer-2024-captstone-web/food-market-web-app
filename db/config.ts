@@ -41,6 +41,6 @@ export default defineDb({
     User,
     Session,
     EmailVerification,
-    EmailLog,
+    ContactFormLog,
   },
 });
