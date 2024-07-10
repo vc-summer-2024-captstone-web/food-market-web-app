@@ -5,7 +5,8 @@ import { lucia, generateVerificationCode, sendVerifyEmail } from '@services';
 import { createDate, TimeSpan } from 'oslo';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/; // At least one letter, one number, and minimum 8 characters
+
+const { VERIFICATION_TOKEN_TTL, VERIFICATION_TOKEN_TTL_UNIT } = import.meta.env;
 
 export async function POST(context: APIContext): Promise<Response> {
   const formData = await context.request.formData();
@@ -60,7 +61,6 @@ export async function POST(context: APIContext): Promise<Response> {
   if (token) {
     try {
       await sendVerifyEmail({ email, name, token });
-      console.log('Email sent');
       await db.insert(User).values({
         id: userId,
         email: email.toLowerCase().trim(),
@@ -71,7 +71,7 @@ export async function POST(context: APIContext): Promise<Response> {
       await db.insert(EmailVerification).values({
         userId: userId,
         token: token,
-        expiresAt: new Date(createDate(new TimeSpan(30, 'm'))).valueOf(),
+        expiresAt: new Date(createDate(new TimeSpan(VERIFICATION_TOKEN_TTL, VERIFICATION_TOKEN_TTL_UNIT))).valueOf(),
       });
     } catch (err) {
       console.error('Error sending verification email:', err);

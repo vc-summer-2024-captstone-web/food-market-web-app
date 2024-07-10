@@ -3,6 +3,8 @@ import { db, eq, EmailVerification, User, and } from 'astro:db';
 import { generateVerificationCode, sendVerifyEmail } from '@services';
 import { createDate, TimeSpan } from 'oslo';
 
+const { VERIFICATION_TOKEN_TTL, VERIFICATION_TOKEN_TTL_UNIT } = import.meta.env;
+
 export async function POST(context: APIContext) {
   return new Response(null, {
     status: 405,
@@ -29,7 +31,7 @@ export async function PUT(context: APIContext) {
     await db.insert(EmailVerification).values({
       userId: user.id,
       token: token,
-      expiresAt: new Date(createDate(new TimeSpan(1, 's'))).valueOf(),
+      expiresAt: new Date(createDate(new TimeSpan(VERIFICATION_TOKEN_TTL, VERIFICATION_TOKEN_TTL_UNIT))).valueOf(),
     });
   }
   await sendVerifyEmail({
