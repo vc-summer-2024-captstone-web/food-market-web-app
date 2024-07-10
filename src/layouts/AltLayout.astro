@@ -3,13 +3,20 @@ import '../styles/global.scss';
 import 'ol/ol.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import VerificationAlert from 'src/components/VerificationAlert.astro';
 
 interface Props {
   title: string;
 }
 const { title } = Astro.props;
 
-const isAuth = Boolean(Astro.locals.user);
+const user = Astro.locals.user;
+const isAuth = Boolean(user);
+let isVerified = null;
+if (user) {
+  const { verified } = user;
+  isVerified = verified;
+}
 ---
 
 <!doctype html>
@@ -21,6 +28,7 @@ const isAuth = Boolean(Astro.locals.user);
   </head>
   <body>
     <Header isAuthenticated={isAuth} />
+    {!isVerified && isAuth && <VerificationAlert />}
     <slot />
     <Footer />
   </body>

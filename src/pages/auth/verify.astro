@@ -5,10 +5,9 @@ import { db, eq, EmailVerification, User } from 'astro:db';
 if (!Astro.locals.user) {
   return Astro.redirect('/');
 }
-
-const { verified, id } = Astro.locals.user;
+const user = Astro.locals.user;
 let error = '';
-if (verified) {
+if (user && user.verified) {
   return Astro.redirect('/');
 }
 

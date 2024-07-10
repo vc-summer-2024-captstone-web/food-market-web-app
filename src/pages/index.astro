@@ -1,6 +1,16 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import '../styles/global.scss';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import VerificationAlert from '@components/VerificationAlert.astro';
+
+const user = Astro.locals.user;
+const isAuth = Boolean(user);
+let isVerified = null;
+if (user) {
+  const { verified } = user;
+  isVerified = verified;
+}
 ---
 
 <!doctype html>
@@ -125,7 +135,8 @@ import Footer from '../components/Footer.astro';
     </style>
   </head>
   <body>
-    <Header />
+    <Header isAuthenticated={isAuth} />
+    {!isVerified && isAuth && <VerificationAlert />}
     <main>
       <section class='step1'>
         <div class='content'>

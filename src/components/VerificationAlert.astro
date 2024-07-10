@@ -4,7 +4,7 @@ interface Props {}
 
 <div class='alert'>
   <p>Your email isn't verified yet. If you didn't receive the verification email, you can request a new token.</p>
-  <div>
+  <div class='button__wrapper'>
     <div class='button__primary' id='requestToken'>Request New Token</div>
     <a class='button__secondary' href='/auth/verify'>Verify Now</a>
   </div>
@@ -28,8 +28,9 @@ interface Props {}
 
 <style lang='scss'>
   @use '../styles/variables';
+  @use '../styles/mixins';
   .alert {
-    background: #edd135;
+    background: #ffd700;
     padding: 1em 2.5em;
     max-width: 750px;
     width: 90%;
@@ -37,9 +38,13 @@ interface Props {}
     border-radius: 8px;
     > div {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
       gap: 1rem;
+      @include mixins.breakpoint-min(md) {
+        flex-direction: row;
+      }
     }
     p {
       color: #111;
@@ -53,7 +58,10 @@ interface Props {}
     cursor: pointer;
     display: inline-block;
     padding: 0.65rem 0.95rem;
-    text-decoration: none;
+    text: {
+      align: center;
+      decoration: none;
+    }
     transition: variables.$t-ease-in-out;
     font: {
       weight: variables.$f-weight-regular;
@@ -62,8 +70,13 @@ interface Props {}
       background: darken(#323232, 15%);
       color: lighten(#efefef, 8%);
     }
+    @include mixins.breakpoint-max(md) {
+      width: 100%;
+    }
   }
   .button {
+    &__wrapper {
+    }
     &__primary {
       @extend %button;
     }
