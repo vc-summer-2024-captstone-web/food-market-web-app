@@ -183,7 +183,7 @@ import Layout from '../layouts/Layout.astro';
     const feedback = document.getElementById('feedback');
 
     // Add validation for empty fields
-    const name = (form.elements.namedItem('username') as HTMLInputElement).value.trim();
+    const name = (form.elements.namedItem('name') as HTMLInputElement).value.trim();
     const phone = (form.elements.namedItem('phone') as HTMLInputElement).value.trim();
     const email = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
     const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value.trim();
@@ -209,7 +209,7 @@ import Layout from '../layouts/Layout.astro';
       fetch('/api/contact', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: JSON.stringify({
           name,

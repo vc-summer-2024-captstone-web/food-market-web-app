@@ -2,6 +2,7 @@ import { db, ContactFormLog, User } from 'astro:db';
 import { generateId, Scrypt } from 'lucia';
 
 import { encryptBody } from '@services';
+import { createId } from '@paralleldrive/cuid2';
 
 const { DEV } = import.meta.env;
 
@@ -10,12 +11,14 @@ const { DEV } = import.meta.env;
 export default async function seed() {
   if (DEV) {
     await db.insert(ContactFormLog).values({
+      id: createId(),
       body: encryptBody(
         JSON.stringify({
           email: 'jdoe@example.com',
           message: 'Sample email body content here',
         })
       ),
+      created: new Date(),
     });
     console.log('Seeding database with test user');
     await db.insert(User).values({

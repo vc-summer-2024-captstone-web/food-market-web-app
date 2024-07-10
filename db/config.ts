@@ -5,9 +5,9 @@ import { createId } from '@paralleldrive/cuid2';
 
 const ContactFormLog = defineTable({
   columns: {
-    Id: column.text({ optional: false, primaryKey: true, default: createId() }),
+    Id: column.text({ optional: false, primaryKey: true }),
     body: column.text(),
-    created: column.date({ default: new Date() }),
+    created: column.date({ optional: false }),
   },
 });
 

@@ -3,6 +3,7 @@ import { db, ContactFormLog } from 'astro:db';
 
 import { encryptBody, decipherBody } from '@services';
 import { response } from '@utilities';
+import { createId } from '@paralleldrive/cuid2';
 
 export async function POST(context: APIContext): Promise<Response> {
   const formData = await context.request.formData();
@@ -18,7 +19,9 @@ export async function POST(context: APIContext): Promise<Response> {
 
   try {
     await db.insert(ContactFormLog).values({
+      id: createId(),
       body: encryptedMessage,
+      created: new Date(),
     });
     return response({ message: 'Message sent' }, 200);
   } catch (error: unknown) {
