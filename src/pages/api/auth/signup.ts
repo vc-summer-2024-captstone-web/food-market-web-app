@@ -16,25 +16,26 @@ export async function POST(context: APIContext): Promise<Response> {
   const confirmPassword = formData.get('confirm');
 
   if (!name || !email || !password || !confirmPassword) {
-    return new Response('Missing required fields', { status: 400 });
+    return response({ message: 'Missing required fields' }, 400);
   }
 
   if (password !== confirmPassword) {
-    return new Response('Passwords do not match', { status: 400 });
+    return response({ message: 'Passwords do not match' }, 400);
   }
 
   if (typeof password !== 'string' || !passwordRegex.test(password)) {
-    return new Response('Password must be at least 8 characters long and include at least one letter and one number', {
-      status: 400,
-    });
+    return response(
+      { message: 'Password must be at least 8 characters long and include at least one letter and one number' },
+      400
+    );
   }
 
   if (typeof email !== 'string' || !emailRegex.test(email)) {
-    return new Response('Invalid email format', { status: 400 });
+    return response({ message: 'Invalid email format' }, 400);
   }
 
   if (typeof name !== 'string' || name.length < 1) {
-    return new Response('Name must be at least 2 characters long', { status: 400 });
+    return response({ message: 'Name must be at least 2 characters long' }, 400);
   }
 
   const existingUser = await db
@@ -46,7 +47,7 @@ export async function POST(context: APIContext): Promise<Response> {
     });
 
   if (existingUser) {
-    return new Response('User Already Exists');
+    return response({ message: 'User Already Exists' }, 400);
   }
   const hashPass = await new Scrypt().hash(password);
   const userId = generateId(15);
@@ -62,7 +63,7 @@ export async function POST(context: APIContext): Promise<Response> {
     await handleVerification({ userId, email, name });
   } catch (e) {
     console.error(e);
-    return new Response('Error sending verification email', { status: 500 });
+    return response({ message: 'Error sending verification email' }, 500);
   }
 
   const session = await lucia.createSession(userId, {});

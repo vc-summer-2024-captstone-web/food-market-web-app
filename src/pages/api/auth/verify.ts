@@ -1,20 +1,15 @@
 import type { APIContext } from 'astro';
 import { db, eq, EmailVerification, User, and } from 'astro:db';
 import { handleVerification, sendVerifyEmail } from '@services';
+import { response } from '@utilities';
 
 export async function POST(context: APIContext) {
-  return new Response(null, {
-    status: 405,
-    headers: {
-      'content-type': 'application/json',
-    },
-  });
+  return response(null, 405);
 }
-
 export async function PUT(context: APIContext) {
   const user = context.locals.user;
   if (!user) {
-    return new Response(null, { status: 401 });
+    return response(null, 401);
   }
   const existingToken = await db.select().from(EmailVerification).where(eq(EmailVerification.userId, user.id));
 
@@ -36,15 +31,10 @@ export async function PUT(context: APIContext) {
       token,
     });
   }
-  return new Response(
-    JSON.stringify({
-      message: 'Verification email sent',
-    }),
+  return response(
     {
-      status: 200,
-      headers: {
-        'Content-Type': 'text/json',
-      },
-    }
+      message: 'Verification email sent',
+    },
+    201
   );
 }
