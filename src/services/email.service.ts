@@ -1,12 +1,9 @@
-import { isWithinExpirationDate } from 'oslo';
-import { alphabet, generateRandomString } from 'oslo/crypto';
-import { db, EmailVerification, eq } from 'astro:db';
 import sgMail from '@sendgrid/mail';
 import Handlebars from 'handlebars';
 import { readFile } from 'fs/promises';
 import { resolve } from 'path';
 
-const { DEV, TOKEN_LENGTH, VITE_APP_NAME, SENDGRID_API_KEY, SMTP_EMAIL } = import.meta.env;
+const { DEV, VITE_APP_NAME, SENDGRID_API_KEY, SMTP_EMAIL } = import.meta.env;
 
 export async function sendVerifyEmail({ email, name, token }: { email: string; name: string; token: string }) {
   const templatePath = resolve('src/_email-templates/verify-email.hbs');
@@ -24,23 +21,6 @@ export async function sendVerifyEmail({ email, name, token }: { email: string; n
   };
 
   return sendEmail(emailContent);
-}
-
-export async function generateVerificationCode(userId: string) {
-  const existingToken = await db
-    .select()
-    .from(EmailVerification)
-    .where(eq(EmailVerification.userId, userId))
-    .then((result) => {
-      return result[0];
-    });
-  if (existingToken && existingToken.token) {
-    const expirationDate = new Date(existingToken.expiresAt);
-    if (isWithinExpirationDate(expirationDate)) {
-      return existingToken.token;
-    }
-  }
-  return generateRandomString(TOKEN_LENGTH, alphabet('0-9', 'a-z', 'A-Z')) ?? null;
 }
 
 async function sendEmail(emailContent: EmailContent): Promise<unknown> {
