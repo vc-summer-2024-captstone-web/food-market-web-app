@@ -5,10 +5,11 @@ import Footer from '@components/Footer.astro';
 import VerificationAlert from '@components/VerificationAlert.astro';
 
 const { title } = Astro.props;
-const isAuth = Boolean(Astro.locals.user);
+const user = Astro.locals.user;
+const isAuth = Boolean(user);
 let isVerified = null;
 if (isAuth) {
-  const { verified } = Astro.locals.user;
+  const { verified } = user;
   isVerified = verified;
 }
 ---
