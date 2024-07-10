@@ -19,10 +19,11 @@ export async function POST(context: APIContext): Promise<Response> {
 
   try {
     await db.insert(ContactFormLog).values({
-      id: createId(),
+      Id: createId(),
       body: encryptedMessage,
       created: new Date(),
     });
+
     return response({ message: 'Message sent' }, 200);
   } catch (error: unknown) {
     const err = error as unknown as Error;

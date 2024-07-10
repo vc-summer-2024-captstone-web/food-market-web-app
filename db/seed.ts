@@ -11,7 +11,7 @@ const { DEV } = import.meta.env;
 export default async function seed() {
   if (DEV) {
     await db.insert(ContactFormLog).values({
-      id: createId(),
+      Id: createId(),
       body: encryptBody(
         JSON.stringify({
           email: 'jdoe@example.com',
