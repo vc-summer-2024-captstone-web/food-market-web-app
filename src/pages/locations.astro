@@ -134,17 +134,14 @@ import { locations } from '../data/locations.ts';
   const attribution = new Attribution({
     collapsible: false,
   });
-
-  const source = new TileJSON({
-    url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=${PUBLIC_OPEN_LAYER_KEY}`,
-    tileSize: 512,
-    crossOrigin: 'anonymous',
-  });
-
   const map = new Map({
     layers: [
       new TileLayer({
-        source: source,
+        source: new TileJSON({
+          url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=${PUBLIC_OPEN_LAYER_KEY}`,
+          tileSize: 512,
+          crossOrigin: 'anonymous',
+        }),
       }),
     ],
     controls: defaultControls({ attribution: false }).extend([attribution]),
@@ -156,22 +153,52 @@ import { locations } from '../data/locations.ts';
     }),
   });
 
-  const layer = new VectorLayer({
-    source: new VectorSource({
-      features: [
-        new Feature({
-          geometry: new Point(fromLonLat([-81.379234, 28.538336])),
-        }),
-      ],
-    }),
-    style: new Style({
-      image: new Icon({
-        anchor: [0.5, 1],
-        crossOrigin: 'anonymous',
-        src: '/images/marker-icon.png',
-      }),
-    }),
-  });
+  const addLocations = async () => {
+    try {
+      const locationsResponse = await fetch('/api/locations', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-  map.addLayer(layer);
+      if (!locationsResponse.ok) {
+        return new Error(`HTTP error! Status: ${locationsResponse.status}`);
+      }
+
+      const markets = await locationsResponse.json();
+      console.log('Fetched markets:', markets); // Debug log
+
+      if (markets.length === 0) {
+        console.warn('No markets found');
+        return;
+      }
+
+      const features = markets.map((market) => {
+        const { long, lat } = market;
+        console.log(`Market coordinates: longitude=${long}, latitude=${lat}`);
+        return new Feature({
+          geometry: new Point(fromLonLat([long, lat])),
+        });
+      });
+
+      const layer = new VectorLayer({
+        source: new VectorSource({
+          features,
+        }),
+        style: new Style({
+          image: new Icon({
+            anchor: [0.5, 1],
+            crossOrigin: 'anonymous',
+            src: '/images/marker-icon.png',
+          }),
+        }),
+      });
+      map.addLayer(layer);
+    } catch (error) {
+      console.error('Error fetching and processing locations:', error);
+    }
+  };
+
+  addLocations();
 </script>
