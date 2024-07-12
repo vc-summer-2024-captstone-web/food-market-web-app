@@ -1,6 +1,5 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": ["src/_email-templates/**/*"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
