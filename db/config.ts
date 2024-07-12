@@ -1,5 +1,4 @@
 import { defineDb, defineTable, column } from 'astro:db';
-import { createId } from '@paralleldrive/cuid2';
 
 // https://astro.build/db/config
 
@@ -18,6 +17,21 @@ const User = defineTable({
     email: column.text({ optional: false, unique: true }),
     password: column.text({ optional: false }),
     verified: column.boolean({ optional: false, default: false }),
+    role: column.text({
+      optional: true,
+      references: () => Role.columns.id,
+    }),
+  },
+});
+
+const Role = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true, optional: false, unique: true }),
+    name: column.text({ optional: false, unique: true }),
+    canManageUsers: column.boolean({ optional: false, default: false }),
+    canManageRoles: column.boolean({ optional: false, default: false }),
+    canManageMarkets: column.boolean({ optional: false, default: false }),
+    canViewContactFormLogs: column.boolean({ optional: false, default: false }),
   },
 });
 
@@ -62,5 +76,6 @@ export default defineDb({
     Market,
     Products,
     ContactFormLog,
+    Role,
   },
 });

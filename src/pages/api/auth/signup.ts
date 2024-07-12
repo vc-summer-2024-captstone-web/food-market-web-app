@@ -1,7 +1,7 @@
 import type { APIContext } from 'astro';
 import { db, eq, User } from 'astro:db';
 import { generateId, Scrypt } from 'lucia';
-import { lucia, handleVerification } from '@services';
+import { lucia, handleVerification, getDefaultUserRole } from '@services';
 import { response } from '@utilities';
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -58,6 +58,7 @@ export async function POST(context: APIContext): Promise<Response> {
       name: name,
       password: hashPass,
       verified: false,
+      role: await getDefaultUserRole(),
     });
     await handleVerification({ userId, email, name });
   } catch (e) {
