@@ -1,6 +1,6 @@
 import { Lucia, TimeSpan } from 'lucia';
 import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle';
-import { db, Session, User } from 'astro:db';
+import { db, eq, Session, User, Role } from 'astro:db';
 const adapter = new DrizzleSQLiteAdapter(db as any, Session, User);
 
 const { PROD, TIME_TO_LIVE, TIME_TO_LIVE_UNIT, SESSION_SAME_SITE, SESSION_DOMAIN } = import.meta.env;
@@ -33,4 +33,9 @@ interface DatabaseUserAttributes {
   name: string;
   email: string;
   verified: boolean;
+}
+
+export async function getDefaultUserRole() {
+  const userRole = await db.select().from(Role).where(eq(Role.name, 'User'));
+  return userRole[0].id;
 }
