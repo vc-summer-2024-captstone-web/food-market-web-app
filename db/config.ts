@@ -18,7 +18,7 @@ const User = defineTable({
     password: column.text({ optional: false }),
     verified: column.boolean({ optional: false, default: false }),
     role: column.text({
-      optional: true,
+      optional: false,
       references: () => Role.columns.id,
     }),
   },
