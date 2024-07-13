@@ -1,7 +1,7 @@
 import type { APIContext } from 'astro';
-import { db, ContactFormLog } from 'astro:db';
+import { ContactFormLog, db, eq, User } from 'astro:db';
 
-import { encryptBody, decipherBody } from '@services';
+import { decipherBody, encryptBody, Permission, Permissions } from '@services';
 import { response } from '@utilities';
 import { createId } from '@paralleldrive/cuid2';
 
@@ -33,6 +33,29 @@ export async function POST(context: APIContext): Promise<Response> {
 }
 
 export async function GET(context: APIContext): Promise<Response> {
+  const session = context.locals.session;
+  if (!session) {
+    return response({ error: 'Unauthorized' }, 401);
+  }
+  const results = await db
+    .select({
+      id: User.id,
+      role: User.role,
+    })
+    .from(User)
+    .where(eq(User.id, session.userId));
+  const user = await results[0];
+  if (!user) {
+    return response({ error: 'Unauthorized' }, 401);
+  }
+  const permissions = new Permission(user.role);
+  if (!permissions) {
+    return response({ error: 'Unauthorized' }, 401);
+  }
+  const canViewLogs = await permissions.hasPermission(Permissions.canViewContactFormLogs);
+  if (!canViewLogs) {
+    return response({ error: 'Unauthorized' }, 401);
+  }
   const messages = await db.select().from(ContactFormLog).all();
   if (messages.length === 0) {
     return response({ message: 'No messages found' }, 404);
