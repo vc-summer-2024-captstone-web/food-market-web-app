@@ -211,7 +211,7 @@ import Layout from '../layouts/Layout.astro';
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify({
+        body: new URLSearchParams({
           name,
           phone,
           email,

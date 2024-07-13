@@ -10,9 +10,26 @@ export async function POST(context: APIContext): Promise<Response> {
   const name = formData.get('name') as string;
   const message = formData.get('message') as string;
   const email = formData.get('email') as string;
+  const phone = formData.get('phone') as string;
+  if (!name || !message || !email || !phone) {
+    return response(
+      {
+        error: 'Missing required fields',
+        fields: {
+          name: !!name,
+          message: !!message,
+          email: !!email,
+          phone: !!phone,
+        },
+      },
+      400
+    );
+  }
+
   const emailBody = JSON.stringify({
     name,
     email,
+    phone,
     message,
   });
   const encryptedMessage = encryptBody(emailBody);
