@@ -20,6 +20,7 @@
     "generate-example-env": "npx @dotenvx/dotenvx genexample",
     "cy:open": "cypress open",
     "test": "vitest",
+    "test:serve": "cross-env TEST=true npm run dev",
     "test:watch": "vitest --watch",
     "test:e2e": "cypress run"
   },
@@ -44,6 +45,7 @@
   "devDependencies": {
     "@netlify/plugin-lighthouse": "^6.0.0",
     "@types/nodemailer": "^6.4.15",
+    "cross-env": "^7.0.3",
     "cypress": "^13.13.0",
     "prettier": "^3.3.2",
     "prettier-plugin-astro": "^0.14.0",

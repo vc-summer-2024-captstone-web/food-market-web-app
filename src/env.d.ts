@@ -10,6 +10,7 @@ declare namespace App {
 interface ImportMetaEnv {
   readonly PROD: boolean;
   readonly DEV: boolean;
+  readonly TEST: boolean;
   readonly TIME_TO_LIVE: number;
   readonly TIME_TO_LIVE_UNIT: TimeSpanUnit;
   readonly VERIFICATION_TOKEN_TTL: number;
