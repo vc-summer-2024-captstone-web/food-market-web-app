@@ -34,3 +34,5 @@ netlify.toml
 .vscode/settings.json
 
 netlify/dev.db
+
+cypress/screenshots/
