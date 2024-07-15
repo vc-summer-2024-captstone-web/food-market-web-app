@@ -173,7 +173,7 @@ import { locations } from '../data/locations.ts';
         return;
       }
 
-      const features = markets.map((market) => {
+      const features = markets.map((market: any) => {
         const { long, lat } = market;
         console.log(`Market coordinates: longitude=${long}, latitude=${lat}`);
         return new Feature({
