@@ -167,7 +167,6 @@ import { locations } from '../data/locations.ts';
       }
 
       const markets = await locationsResponse.json();
-      console.log('Fetched markets:', markets); // Debug log
 
       if (markets.length === 0) {
         console.warn('No markets found');
