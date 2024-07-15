@@ -1,4 +1,5 @@
-import { db, ContactFormLog, User, Role } from 'astro:db';
+import { db, ContactFormLog, User, Market } from 'astro:db';
+
 import { generateId, Scrypt } from 'lucia';
 
 import { encryptBody, getDefaultUserRole } from '@services';
@@ -21,7 +22,7 @@ export default async function seed() {
       ),
       created: new Date(),
     });
-    console.log('Seeding database with test user');
+
     await db.insert(User).values({
       id: generateId(15),
       name: 'Test User',
@@ -29,6 +30,30 @@ export default async function seed() {
       password: await new Scrypt().hash('P@ssw0rd'),
       verified: true,
       role: await getDefaultUserRole(),
+    });
+
+    await db.insert(Market).values({
+      id: createId(),
+      name: 'Audubon Park Farmers Market',
+      address: 'Stardust parking lot 1842 East Winter Park Road',
+      long: -81.3656,
+      lat: 28.5708,
+    });
+
+    await db.insert(Market).values({
+      id: createId(),
+      name: 'Orlando Farmers Market',
+      address: 'Lake Eola, 195 North Rosalind Avenue',
+      long: -81.3752,
+      lat: 28.544,
+    });
+
+    await db.insert(Market).values({
+      id: createId(),
+      name: 'Publix Super Market at Rio Pinar Plaza',
+      address: '409 S Chickasaw Trail, Orlando, FL 32825',
+      long: -81.2737,
+      lat: 28.538,
     });
   }
 }

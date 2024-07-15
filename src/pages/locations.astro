@@ -11,11 +11,11 @@ import { locations } from '../data/locations.ts';
     </div>
 
     <section class='map-container'>
-      <div class='left-column'>
+      <div class='column'>
         <div id='map'></div>
       </div>
 
-      <div class='right-column'>
+      <div class='column'>
         <div class='locations-list'>
           {
             locations.map((location) => (
@@ -34,41 +34,27 @@ import { locations } from '../data/locations.ts';
   </main>
 </AltLayout>
 
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  nav a {
-    margin: 0 10px;
-    text-decoration: none;
-    color: #1b1b1b;
-  }
-
+<style lang='scss'>
+  @use '../styles/mixins';
   .search-container {
     display: flex;
     justify-content: center;
     margin: 20px 0;
-  }
-
-  .search-container input {
-    padding: 10px;
-    width: 300px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  .search-container button {
-    padding: 10px;
-    margin-left: 10px;
-    border: none;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 4px;
+    input {
+      padding: 10px;
+      width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px;
+      margin-left: 10px;
+      border: none;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+    }
   }
 
   #map {
@@ -82,29 +68,39 @@ import { locations } from '../data/locations.ts';
     left: 0;
   }
 
-  .left-column,
-  .right-column {
-    flex: 1;
-    padding: 20px;
-  }
-
-  .left-column {
-    border-right: 1px solid #444;
-  }
-
   .map-container {
     background-color: #1b1b1b;
     display: flex;
     height: 100%;
+
+    flex-direction: column;
+    @include mixins.breakpoint-min(md) {
+      flex-direction: row;
+      max-height: 800px;
+    }
+  }
+  .column {
+    padding: 20px;
+    &:first-child {
+      border-right: 1px solid #444;
+      height: 500px;
+    }
+    @include mixins.breakpoint-min(md) {
+      flex: 1;
+      &:first-child {
+        height: auto;
+      }
+    }
   }
 
   .locations-list {
-    background-color: #cecccc;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px auto;
+    background-color: #cecccc;
     border-radius: 10px;
+    height: 100%;
+    overflow-y: scroll;
   }
 
   .location {
@@ -138,17 +134,14 @@ import { locations } from '../data/locations.ts';
   const attribution = new Attribution({
     collapsible: false,
   });
-
-  const source = new TileJSON({
-    url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=${PUBLIC_OPEN_LAYER_KEY}`,
-    tileSize: 512,
-    crossOrigin: 'anonymous',
-  });
-
   const map = new Map({
     layers: [
       new TileLayer({
-        source: source,
+        source: new TileJSON({
+          url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=${PUBLIC_OPEN_LAYER_KEY}`,
+          tileSize: 512,
+          crossOrigin: 'anonymous',
+        }),
       }),
     ],
     controls: defaultControls({ attribution: false }).extend([attribution]),
@@ -160,21 +153,51 @@ import { locations } from '../data/locations.ts';
     }),
   });
 
-  const layer = new VectorLayer({
-    source: new VectorSource({
-      features: [
-        new Feature({
-          geometry: new Point(fromLonLat([-81.379234, 28.538336])),
+  const addLocations = async () => {
+    try {
+      const locationsResponse = await fetch('/api/locations', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!locationsResponse.ok) {
+        return new Error(`HTTP error! Status: ${locationsResponse.status}`);
+      }
+
+      const markets = await locationsResponse.json();
+
+      if (markets.length === 0) {
+        console.warn('No markets found');
+        return;
+      }
+
+      const features = markets.map((market) => {
+        const { long, lat } = market;
+        console.log(`Market coordinates: longitude=${long}, latitude=${lat}`);
+        return new Feature({
+          geometry: new Point(fromLonLat([long, lat])),
+        });
+      });
+
+      const layer = new VectorLayer({
+        source: new VectorSource({
+          features,
         }),
-      ],
-    }),
-    style: new Style({
-      image: new Icon({
-        anchor: [0.5, 1],
-        crossOrigin: 'anonymous',
-        src: '/images/marker-icon.png',
-      }),
-    }),
-  });
-  map.addLayer(layer);
+        style: new Style({
+          image: new Icon({
+            anchor: [0.5, 1],
+            crossOrigin: 'anonymous',
+            src: '/images/marker-icon.png',
+          }),
+        }),
+      });
+      map.addLayer(layer);
+    } catch (error) {
+      console.error('Error fetching and processing locations:', error);
+    }
+  };
+
+  addLocations();
 </script>

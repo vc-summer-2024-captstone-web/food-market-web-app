@@ -53,18 +53,20 @@ const EmailVerification = defineTable({
 
 const Market = defineTable({
   columns: {
-    Id: column.number({ optional: false, unique: true }),
-    Name: column.text({ optional: false }),
-    Location: column.json({}), //TODO: See if there is another way to add this that is not an untyped json code
+    id: column.text({ primaryKey: true, optional: false, unique: true }),
+    name: column.text({ optional: false }),
+    address: column.text({ optional: false }),
+    long: column.number({ optional: false }),
+    lat: column.number({ optional: false }),
   },
 });
 
 const Products = defineTable({
   columns: {
-    Id: column.number({ optional: false, unique: true }),
-    MarketID: column.number({ optional: false, references: () => Market.columns.Id }),
-    Price: column.number({ optional: false }),
-    Description: column.text({ optional: false }),
+    id: column.text({ optional: false, unique: true }),
+    marketId: column.text({ optional: false, references: () => Market.columns.id }),
+    price: column.number({ optional: false }),
+    description: column.text({ optional: false }),
   },
 });
 

@@ -6,7 +6,7 @@ targetPort=4321
 [build]
   [context.dev]
     [build.environment]
-      ASTRO_DATABASE_FILE="./netlify/dev.db"
+      ASTRO_DATABASE_FILE="./.netlify/dev.db"
       # Ignored when a url is configured for an audit
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
