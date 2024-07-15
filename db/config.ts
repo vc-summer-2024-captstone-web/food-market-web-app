@@ -1,4 +1,5 @@
 import { defineDb, defineTable, column } from 'astro:db';
+import { createId } from '@paralleldrive/cuid2';
 
 // https://astro.build/db/config
 
@@ -9,7 +10,7 @@ const ContactFormLog = defineTable({
     created: column.date({ optional: false }),
   },
 });
-
+export const DEFAULT_ROLE_ID = createId();
 const User = defineTable({
   columns: {
     id: column.text({ primaryKey: true, optional: false, unique: true }),
