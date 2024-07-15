@@ -1,7 +1,8 @@
 import { db, ContactFormLog, User, Market } from 'astro:db';
+
 import { generateId, Scrypt } from 'lucia';
 
-import { encryptBody } from '@services';
+import { encryptBody, getDefaultUserRole } from '@services';
 import { createId } from '@paralleldrive/cuid2';
 
 const { DEV } = import.meta.env;
@@ -9,6 +10,7 @@ const { DEV } = import.meta.env;
 // https://astro.build/db/seed
 
 export default async function seed() {
+  await createRoles();
   if (DEV) {
     await db.insert(ContactFormLog).values({
       Id: createId(),
@@ -27,6 +29,7 @@ export default async function seed() {
       email: 'test.user@example.com',
       password: await new Scrypt().hash('P@ssw0rd'),
       verified: true,
+      role: await getDefaultUserRole(),
     });
 
     await db.insert(Market).values({
@@ -53,4 +56,23 @@ export default async function seed() {
       lat: 28.538,
     });
   }
+}
+
+async function createRoles() {
+  await db.insert(Role).values({
+    id: createId(),
+    name: 'Admin',
+    canManageUsers: true,
+    canManageRoles: true,
+    canManageMarkets: true,
+    canViewContactFormLogs: true,
+  });
+  await db.insert(Role).values({
+    id: createId(),
+    name: 'User',
+    canManageUsers: false,
+    canManageRoles: false,
+    canManageMarkets: false,
+    canViewContactFormLogs: false,
+  });
 }

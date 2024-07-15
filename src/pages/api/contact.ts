@@ -33,13 +33,13 @@ export async function POST(context: APIContext): Promise<Response> {
 }
 
 export async function GET(context: APIContext): Promise<Response> {
-  const messages: [] = await db.from(ContactFormLog).select('body').all();
-  const decryptedMessages = messages.map((messages: any) => {
-    const decryptedMessages = [];
-    for (const message of messages) {
-      decryptedMessages.push(decipherBody(message));
-    }
-    return decryptedMessages;
+  const messages = await db.select().from(ContactFormLog).all();
+  if (messages.length === 0) {
+    return response({ message: 'No messages found' }, 404);
+  }
+  const decryptedMessages = messages.map((message: any) => {
+    const { body, created } = message;
+    return { content: decipherBody(body), created };
   });
   return response(decryptedMessages, 200);
 }
