@@ -1,6 +1,10 @@
 {
-  "extends": "astro/tsconfigs/strict",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "./base.json",
+  "include": ["src/_email-templates/**/*"],
   "compilerOptions": {
+    "strict": true,
+    "types": ["cypress", "node", "astro"],
     "baseUrl": ".",
     "paths": {
       "@components/*": ["src/components/*"],
@@ -11,6 +15,11 @@
       "@services": ["src/services/"],
       "@utilities": ["src/utilities/"],
       "@email-templates": ["src/_email-templates/"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "@astrojs/ts-plugin"
+      },
+    ]
   }
 }
