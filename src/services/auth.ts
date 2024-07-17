@@ -6,13 +6,8 @@ const adapter = new DrizzleSQLiteAdapter(db as any, Session, User);
 
 const { PROD, TIME_TO_LIVE, TIME_TO_LIVE_UNIT, SESSION_SAME_SITE, SESSION_DOMAIN } = import.meta.env;
 
-
-
-
-
 export const lucia = new Lucia(adapter, {
-
-  sessionCookie:{
+  sessionCookie: {
     secure: PROD,
     sameSite: SESSION_SAME_SITE,
     ...(PROD && { domain: SESSION_DOMAIN }),

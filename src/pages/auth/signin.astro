@@ -10,11 +10,11 @@ if (Astro.locals.user) {
 <AuthLayout title='Sign In'>
   <div class='container'>
     <form method='POST' class='form--auth'>
-      <div id="status"></div>
+      <div id='status'></div>
       <h1>Sign In</h1>
       <FormInput type='email' name='email' required={true} label='Email' />
       <FormInput type='password' name='password' required={false} label='Password' />
-      <button type='submit' id="submit">Sign In</button>
+      <button type='submit' id='submit'>Sign In</button>
     </form>
   </div>
 </AuthLayout>
@@ -52,5 +52,4 @@ if (Astro.locals.user) {
         status.innerHTML = `<div class="alert alert-danger">An error occurred: ${error.message}</div>`;
       });
   });
-
 </script>

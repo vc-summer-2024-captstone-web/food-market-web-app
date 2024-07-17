@@ -20,10 +20,9 @@ it('Should Sign in', () => {
 });
 it('Should Fail To sign in', () => {
   cy.visit('http://localhost:4321/auth/signin');
-  cy.get('#email').type("invaliduser@example.com");
+  cy.get('#email').type('invaliduser@example.com');
   cy.get('#password').type('password');
   cy.get('#submit').click();
   cy.url().should('include', '/auth/signin');
   cy.contains('Invalid email or password').should('be.visible');
 });
-

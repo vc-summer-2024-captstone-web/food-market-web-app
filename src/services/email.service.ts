@@ -19,7 +19,7 @@ export async function sendVerifyEmail({ email, name, token }: { email: string; n
     html,
   };
   if (process.env.TEST) {
-    console.log(emailContent)
+    console.log(emailContent);
     return;
   }
   return sendEmail(emailContent);

@@ -27,7 +27,8 @@ export async function POST(context: APIContext) {
     .where(eq(User.email, email))
     .then((res: any) => {
       return res[0];
-    }).catch((err: any) => {
+    })
+    .catch((err: any) => {
       console.error(err);
       return response({ message: 'An error occurred' }, 500);
     });
