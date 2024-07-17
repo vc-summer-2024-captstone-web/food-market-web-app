@@ -9,7 +9,8 @@ if (Astro.locals.user) {
 
 <AuthLayout title='Sign In'>
   <div class='container'>
-    <form method='POST' action='/api/auth/signin' class='form--auth'>
+    <form method='POST' class='form--auth'>
+      <div id="status"></div>
       <h1>Sign In</h1>
       <FormInput type='email' name='email' required={true} label='Email' />
       <FormInput type='password' name='password' required={false} label='Password' />
@@ -17,3 +18,39 @@ if (Astro.locals.user) {
     </form>
   </div>
 </AuthLayout>
+
+<script>
+  document.getElementById('submit').addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const form = document.querySelector('.form--auth') as HTMLFormElement;
+    const formData = new FormData(form) as URLSearchParams;
+    const status = document.getElementById('status') as HTMLDivElement;
+
+    fetch('/api/auth/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams(formData),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json().then((data) => {
+            status.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+            setTimeout(() => {
+              window.location.href = '/';
+            }, 1000);
+          });
+        } else {
+          return res.json().then((data) => {
+            status.innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
+          });
+        }
+      })
+      .catch((error) => {
+        status.innerHTML = `<div class="alert alert-danger">An error occurred: ${error.message}</div>`;
+      });
+  });
+
+</script>
