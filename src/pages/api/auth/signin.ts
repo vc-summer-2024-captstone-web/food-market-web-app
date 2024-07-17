@@ -25,10 +25,12 @@ export async function POST(context: APIContext) {
     .select()
     .from(User)
     .where(eq(User.email, email))
-    .then((res) => {
+    .then((res: any) => {
       return res[0];
+    }).catch((err: any) => {
+      console.error(err);
+      return response({ message: 'An error occurred' }, 500);
     });
-
   if (!user) {
     return response({ message: 'Invalid email or password' }, 401);
   }
@@ -42,5 +44,5 @@ export async function POST(context: APIContext) {
   const sessionCookie = lucia.createSessionCookie(session.id);
   context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
-  return context.redirect('/');
+  return response({ message: 'Sign in successful' }, 200);
 }
