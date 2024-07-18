@@ -31,6 +31,8 @@ interface ImportMetaEnv {
 
   readonly PUBLIC_OPEN_LAYER_KEY: string;
   readonly SECRET_KEY: string;
+  readonly RECIPE_APPLICATION_ID: string;
+  readonly RECIPE_APPLICATION_KEY: string;
 }
 
 interface ImportMeta {

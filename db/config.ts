@@ -1,6 +1,7 @@
 import { defineDb, defineTable, column } from 'astro:db';
 import { createId } from '@paralleldrive/cuid2';
 
+
 // https://astro.build/db/config
 
 const ContactFormLog = defineTable({
@@ -71,6 +72,12 @@ const Products = defineTable({
   },
 });
 
+const Recipes = defineTable({
+  columns: {
+
+  }
+});
+
 export default defineDb({
   tables: {
     User,
@@ -80,5 +87,6 @@ export default defineDb({
     Products,
     ContactFormLog,
     Role,
+    Recipes,
   },
 });
