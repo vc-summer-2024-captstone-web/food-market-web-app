@@ -10,16 +10,20 @@ export enum Permissions {
 export class Permission {
   private permissions: { [key: string]: boolean } = {};
   private readonly roleId: string;
+  private readonly permissionsLoaded: Promise<void>;
+
   constructor(roleId: string) {
     this.roleId = roleId;
-    this.getPermissions().catch((error) => {
-      console.error(error);
-    });
+    this.permissionsLoaded = this.getPermissions();
   }
 
   private async getPermissions() {
     try {
-      const role = await db.select().from(Role).where(eq(Role.id, this.roleId))[0];
+      const role = await db
+        .select()
+        .from(Role)
+        .where(eq(Role.id, this.roleId))
+        .then((results: any[]) => results[0]);
 
       if (role) {
         this.permissions = {
@@ -34,6 +38,7 @@ export class Permission {
     }
   }
   public async hasPermission(permission: Permissions): Promise<boolean> {
+    await this.permissionsLoaded;
     return this.permissions[permission] || false;
   }
 }
