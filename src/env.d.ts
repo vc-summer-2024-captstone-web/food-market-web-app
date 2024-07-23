@@ -30,7 +30,7 @@ interface ImportMetaEnv {
   readonly SMTP_EMAIL: string;
 
   readonly PUBLIC_OPEN_LAYER_KEY: string;
-  readonly SECRET_KEY: string;
+  readonly CONTACT_ENCRYPTION_KEY: string;
 }
 
 interface ImportMeta {
