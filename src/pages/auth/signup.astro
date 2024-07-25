@@ -1,5 +1,5 @@
 ---
-import AuthLayout from '@layouts/AuthLayout.astro';
+import Layout from '@layouts/Layout.astro';
 import FormInput from 'src/components/FormInput.astro';
 
 if (Astro.locals.user) {
@@ -7,15 +7,15 @@ if (Astro.locals.user) {
 }
 ---
 
-<AuthLayout title='Sign Up'>
+<Layout title='Sign Up'>
   <div class='container'>
-    <form method='POST' action='/api/auth/signup' class='form--auth'>
-      <h1>Signup</h1>
+    <h1>Signup</h1>
+    <form method='POST' action='/api/auth/signup'>
       <FormInput type='text' name='name' required={true} label='Full Name' />
       <FormInput type='email' name='email' required={true} label='Email' />
       <FormInput type='password' name='password' required={true} label='Password' />
       <FormInput type='password' name='confirm' required={true} label='Confirm Password' />
-      <button type='submit' id='submit'>Signup</button>
+      <button type='submit'>Signup</button>
     </form>
   </div>
-</AuthLayout>
+</Layout>

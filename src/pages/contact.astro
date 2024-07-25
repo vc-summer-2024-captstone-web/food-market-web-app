@@ -35,10 +35,10 @@ import Layout from '../layouts/Layout.astro';
     <div class='contact-form'>
       <h2>Questions or Concerns? Fill out the form below.</h2>
       <form id='contactForm'>
-        <input type='text' name='name' placeholder='Your Name' required />
-        <input type='tel' name='phone' placeholder='Phone Number' required />
-        <input type='email' name='email' placeholder='Email' required />
-        <textarea name='message' placeholder='Enter Message Here' required></textarea>
+        <input type='text' name='username' placeholder='Your Name*' required />
+        <input type='tel' name='phone' placeholder='Phone Number*' required />
+        <input type='email' name='email' placeholder='Email*' required />
+        <textarea name='message' placeholder='Enter Message Here*' required></textarea>
         <button type='submit'>Submit</button>
         <div class='feedback' id='feedback'>Thank you for your message! We will get back to you soon.</div>
       </form>
@@ -183,7 +183,7 @@ import Layout from '../layouts/Layout.astro';
     const feedback = document.getElementById('feedback');
 
     // Add validation for empty fields
-    const name = (form.elements.namedItem('name') as HTMLInputElement).value.trim();
+    const name = (form.elements.namedItem('username') as HTMLInputElement).value.trim();
     const phone = (form.elements.namedItem('phone') as HTMLInputElement).value.trim();
     const email = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
     const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value.trim();
@@ -206,22 +206,8 @@ import Layout from '../layouts/Layout.astro';
     }
 
     function submitForm() {
-      fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          name,
-          phone,
-          email,
-          message,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-        });
+      // Logic to be added later
+      console.log('Form submitted!');
     }
     if (feedback) {
       feedback.classList.add('show');

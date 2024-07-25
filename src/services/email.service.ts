@@ -1,13 +1,17 @@
+import { isWithinExpirationDate } from 'oslo';
+import { alphabet, generateRandomString } from 'oslo/crypto';
+import { db, EmailVerification, eq } from 'astro:db';
 import sgMail from '@sendgrid/mail';
 import Handlebars from 'handlebars';
-import { VerifyEmail } from '@email-templates';
+import { readFile } from 'fs/promises';
+import { resolve } from 'path';
 
-const { DEV, VITE_APP_NAME, SENDGRID_API_KEY, SMTP_EMAIL } = import.meta.env;
-
-// Convert the file URL to a file path
+const { DEV, TOKEN_LENGTH, VITE_APP_NAME, SENDGRID_API_KEY, SMTP_EMAIL } = import.meta.env;
 
 export async function sendVerifyEmail({ email, name, token }: { email: string; name: string; token: string }) {
-  const template = Handlebars.compile(VerifyEmail);
+  const templatePath = resolve('src/_email-templates/verify-email.hbs');
+  const templateSource = await readFile(templatePath, 'utf-8');
+  const template = Handlebars.compile(templateSource);
 
   const html = template({ name: name, token, appName: VITE_APP_NAME });
 
@@ -18,11 +22,25 @@ export async function sendVerifyEmail({ email, name, token }: { email: string; n
     text: stripHTML(html),
     html,
   };
-  if (process.env.TEST) {
-    console.log(emailContent);
-    return;
-  }
+
   return sendEmail(emailContent);
+}
+
+export async function generateVerificationCode(userId: string) {
+  const existingToken = await db
+    .select()
+    .from(EmailVerification)
+    .where(eq(EmailVerification.userId, userId))
+    .then((result) => {
+      return result[0];
+    });
+  if (existingToken && existingToken.token) {
+    const expirationDate = new Date(existingToken.expiresAt);
+    if (isWithinExpirationDate(expirationDate)) {
+      return existingToken.token;
+    }
+  }
+  return generateRandomString(TOKEN_LENGTH, alphabet('0-9', 'a-z', 'A-Z')) ?? null;
 }
 
 async function sendEmail(emailContent: EmailContent): Promise<unknown> {
@@ -69,5 +87,5 @@ interface EmailContent {
   text: string;
 }
 function stripHTML(html: string) {
-  return html.replace(/[<>]/g, '');
+  return html.replace(/<|>/g, '');
 }
