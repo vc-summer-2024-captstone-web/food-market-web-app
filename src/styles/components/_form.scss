@@ -1,11 +1,6 @@
 @use '../variables';
 .form {
   &--auth {
-    h1 {
-      line-height: 1;
-      margin-block-start: 0;
-      padding: 0;
-    }
     background: #fefefe;
     box-shadow: variables.$drop-shadow;
     padding: 3rem 3rem;
@@ -13,6 +8,12 @@
     max-width: 700px;
     margin: 1rem auto;
     border-radius: 10px;
+    h1 {
+      line-height: 1;
+      margin-block-start: 0;
+      padding: 0;
+    }
+
     input {
       width: 100%;
     }
