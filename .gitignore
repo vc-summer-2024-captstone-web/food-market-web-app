@@ -31,4 +31,12 @@ deno.lock
 netlify.toml
 netlify.toml
 
+<<<<<<< HEAD
 .vscode/settings.json
+=======
+.vscode/settings.json
+
+netlify/dev.db
+
+cypress/screenshots/
+>>>>>>> d648b8fce85466be0f68c1d7a9ef8ce2eccc1ffd

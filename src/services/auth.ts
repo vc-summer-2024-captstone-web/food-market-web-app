@@ -1,16 +1,16 @@
+import { db, Session, User } from 'astro:db';
 import { Lucia, TimeSpan } from 'lucia';
 import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle';
-import { db, Session, User } from 'astro:db';
+
 const adapter = new DrizzleSQLiteAdapter(db as any, Session, User);
 
 const { PROD, TIME_TO_LIVE, TIME_TO_LIVE_UNIT, SESSION_SAME_SITE, SESSION_DOMAIN } = import.meta.env;
+
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
-    attributes: {
-      secure: PROD,
-      sameSite: SESSION_SAME_SITE,
-      domain: SESSION_DOMAIN,
-    },
+    secure: PROD,
+    sameSite: SESSION_SAME_SITE,
+    ...(PROD && { domain: SESSION_DOMAIN }),
   },
   getUserAttributes: (attributes) => {
     return {
@@ -29,6 +29,7 @@ declare module 'lucia' {
     DatabaseUserAttributes: DatabaseUserAttributes;
   }
 }
+
 interface DatabaseUserAttributes {
   name: string;
   email: string;

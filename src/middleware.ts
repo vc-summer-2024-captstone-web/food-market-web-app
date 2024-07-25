@@ -1,15 +1,14 @@
 import { lucia } from '@services';
 import { verifyRequestOrigin } from 'lucia';
 import { defineMiddleware } from 'astro:middleware';
+import { response } from '@utilities';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   if (context.request.method !== 'GET') {
     const originHeader = context.request.headers.get('Origin');
     const hostHeader = context.request.headers.get('Host');
     if (!originHeader || !hostHeader || !verifyRequestOrigin(originHeader, [hostHeader])) {
-      return new Response(null, {
-        status: 403,
-      });
+      return response(null, 403);
     }
   }
 

@@ -10,8 +10,11 @@ declare namespace App {
 interface ImportMetaEnv {
   readonly PROD: boolean;
   readonly DEV: boolean;
+  readonly TEST: boolean;
   readonly TIME_TO_LIVE: number;
   readonly TIME_TO_LIVE_UNIT: TimeSpanUnit;
+  readonly VERIFICATION_TOKEN_TTL: number;
+  readonly VERIFICATION_TOKEN_TTL_UNIT: TimeSpanUnit;
   readonly SESSION_SAME_SITE: String<'lax' | 'strict' | 'none'>;
   readonly SESSION_DOMAIN: string;
   readonly SESSION_SECRET: string;
@@ -25,9 +28,15 @@ interface ImportMetaEnv {
   // sendgrid (PROD)
   readonly SENDGRID_API_KEY: string;
   readonly SMTP_EMAIL: string;
+<<<<<<< HEAD
   readonly PUBLIC_OPEN_LAYER_KEY: string;
+=======
+
+  readonly PUBLIC_OPEN_LAYER_KEY: string;
+  readonly CONTACT_ENCRYPTION_KEY: string;
+>>>>>>> d648b8fce85466be0f68c1d7a9ef8ce2eccc1ffd
 }
 
 interface ImportMeta {
-  env: ImportMetaEnv;
+  readonly env: ImportMetaEnv;
 }

@@ -2,6 +2,7 @@ import type { APIContext } from 'astro';
 import { db, eq, User } from 'astro:db';
 import { Scrypt } from 'lucia';
 import { lucia } from '@services';
+import { response } from '@utilities';
 
 export async function POST(context: APIContext) {
   const formData = await context.request.formData();
@@ -9,37 +10,40 @@ export async function POST(context: APIContext) {
   const password = formData.get('password');
 
   if (!email || !password) {
-    return new Response('Missing required fields', { status: 400 });
+    return response({ message: 'Missing required fields' }, 400);
   }
 
   if (typeof email !== 'string') {
-    return new Response('Invalid email format', { status: 400 });
+    return response({ message: 'Invalid email format' }, 400);
   }
 
   if (typeof password !== 'string') {
-    return new Response('Invalid password format', { status: 400 });
+    return response({ message: 'Invalid password format' }, 400);
   }
 
   const user = await db
     .select()
     .from(User)
     .where(eq(User.email, email))
-    .then((res) => {
+    .then((res: any) => {
       return res[0];
+    })
+    .catch((err: any) => {
+      console.error(err);
+      return response({ message: 'An error occurred' }, 500);
     });
-
   if (!user) {
-    return new Response('Invalid email or password', { status: 401 });
+    return response({ message: 'Invalid email or password' }, 401);
   }
 
   const validPassword = await new Scrypt().verify(user.password, password);
   if (!validPassword) {
-    return new Response('Invalid email or password', { status: 401 });
+    return response({ message: 'Invalid email or password' }, 401);
   }
 
   const session = await lucia.createSession(user.id, {});
   const sessionCookie = lucia.createSessionCookie(session.id);
   context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
-  return context.redirect('/');
+  return response({ message: 'Sign in successful' }, 200);
 }

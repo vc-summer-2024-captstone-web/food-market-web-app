@@ -1,7 +1,16 @@
 {
+<<<<<<< HEAD
   "extends": "astro/tsconfigs/strict",  
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
+=======
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "./base.json",
+  "include": ["src/_email-templates/**/*"],
+  "compilerOptions": {
+    "strict": true,
+    "types": ["cypress", "node", "astro"],
+>>>>>>> d648b8fce85466be0f68c1d7a9ef8ce2eccc1ffd
     "baseUrl": ".",
     "paths": {
       "@components/*": ["src/components/*"],
@@ -9,7 +18,14 @@
       "@pages/*": ["src/pages/*"],
       "@images/*": ["src/assets/images/*"],
       "@libs/*": ["src/libs/*"],
-      "@services": ["src/services/"]
-    }
+      "@services": ["src/services/"],
+      "@utilities": ["src/utilities/"],
+      "@email-templates": ["src/_email-templates/"]
+    },
+    "plugins": [
+      {
+        "name": "@astrojs/ts-plugin"
+      }
+    ]
   }
 }

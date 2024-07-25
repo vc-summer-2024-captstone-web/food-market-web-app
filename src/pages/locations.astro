@@ -1,6 +1,10 @@
 ---
 import AltLayout from '../layouts/AltLayout.astro';
+<<<<<<< HEAD
 import locations from '../data/locations.json';
+=======
+import { locations } from '../data/locations.ts';
+>>>>>>> d648b8fce85466be0f68c1d7a9ef8ce2eccc1ffd
 ---
 
 <AltLayout title='Food Market App - Locations'>
@@ -11,11 +15,19 @@ import locations from '../data/locations.json';
     </div>
 
     <section class='map-container'>
+<<<<<<< HEAD
       <div class='left-column'>
         <div id='map'></div>
       </div>
 
       <div class='right-column'>
+=======
+      <div class='column'>
+        <div id='map'></div>
+      </div>
+
+      <div class='column'>
+>>>>>>> d648b8fce85466be0f68c1d7a9ef8ce2eccc1ffd
         <div class='locations-list'>
           {
             locations.map((location) => (
@@ -34,6 +46,7 @@ import locations from '../data/locations.json';
   </main>
 </AltLayout>
 
+<<<<<<< HEAD
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -48,10 +61,15 @@ import locations from '../data/locations.json';
     color: #1b1b1b;
   }
 
+=======
+<style lang='scss'>
+  @use '../styles/mixins';
+>>>>>>> d648b8fce85466be0f68c1d7a9ef8ce2eccc1ffd
   .search-container {
     display: flex;
     justify-content: center;
     margin: 20px 0;
+<<<<<<< HEAD
   }
 
   .search-container input {
@@ -69,6 +87,23 @@ import locations from '../data/locations.json';
     color: #fff;
     cursor: pointer;
     border-radius: 4px;
+=======
+    input {
+      padding: 10px;
+      width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px;
+      margin-left: 10px;
+      border: none;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+>>>>>>> d648b8fce85466be0f68c1d7a9ef8ce2eccc1ffd
   }
 
   #map {
@@ -82,6 +117,7 @@ import locations from '../data/locations.json';
     left: 0;
   }
 
+<<<<<<< HEAD
   .left-column,
   .right-column {
     flex: 1;
@@ -92,10 +128,13 @@ import locations from '../data/locations.json';
     border-right: 1px solid #444;
   }
 
+=======
+>>>>>>> d648b8fce85466be0f68c1d7a9ef8ce2eccc1ffd
   .map-container {
     background-color: #1b1b1b;
     display: flex;
     height: 100%;
+<<<<<<< HEAD
   }
 
   .locations-list {
@@ -105,6 +144,37 @@ import locations from '../data/locations.json';
     align-items: center;
     margin: 20px auto;
     border-radius: 10px;
+=======
+
+    flex-direction: column;
+    @include mixins.breakpoint-min(md) {
+      flex-direction: row;
+      max-height: 800px;
+    }
+  }
+  .column {
+    padding: 20px;
+    &:first-child {
+      border-right: 1px solid #444;
+      height: 500px;
+    }
+    @include mixins.breakpoint-min(md) {
+      flex: 1;
+      &:first-child {
+        height: auto;
+      }
+    }
+  }
+
+  .locations-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #cecccc;
+    border-radius: 10px;
+    height: 100%;
+    overflow-y: scroll;
+>>>>>>> d648b8fce85466be0f68c1d7a9ef8ce2eccc1ffd
   }
 
   .location {
@@ -138,6 +208,7 @@ import locations from '../data/locations.json';
   const attribution = new Attribution({
     collapsible: false,
   });
+<<<<<<< HEAD
 
   const source = new TileJSON({
     url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=${PUBLIC_OPEN_LAYER_KEY}`,
@@ -149,6 +220,16 @@ import locations from '../data/locations.json';
     layers: [
       new TileLayer({
         source: source,
+=======
+  const map = new Map({
+    layers: [
+      new TileLayer({
+        source: new TileJSON({
+          url: `https://api.maptiler.com/maps/streets-v2/tiles.json?key=${PUBLIC_OPEN_LAYER_KEY}`,
+          tileSize: 512,
+          crossOrigin: 'anonymous',
+        }),
+>>>>>>> d648b8fce85466be0f68c1d7a9ef8ce2eccc1ffd
       }),
     ],
     controls: defaultControls({ attribution: false }).extend([attribution]),
@@ -160,6 +241,7 @@ import locations from '../data/locations.json';
     }),
   });
 
+<<<<<<< HEAD
   const layer = new VectorLayer({
     source: new VectorSource({
       features: [
@@ -178,4 +260,53 @@ import locations from '../data/locations.json';
   });
 
   map.addLayer(layer);
+=======
+  const addLocations = async () => {
+    try {
+      const locationsResponse = await fetch('/api/locations', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!locationsResponse.ok) {
+        return new Error(`HTTP error! Status: ${locationsResponse.status}`);
+      }
+
+      const markets = await locationsResponse.json();
+
+      if (markets.length === 0) {
+        console.warn('No markets found');
+        return;
+      }
+
+      const features = markets.map((market: any) => {
+        const { long, lat } = market;
+        console.log(`Market coordinates: longitude=${long}, latitude=${lat}`);
+        return new Feature({
+          geometry: new Point(fromLonLat([long, lat])),
+        });
+      });
+
+      const layer = new VectorLayer({
+        source: new VectorSource({
+          features,
+        }),
+        style: new Style({
+          image: new Icon({
+            anchor: [0.5, 1],
+            crossOrigin: 'anonymous',
+            src: '/images/marker-icon.png',
+          }),
+        }),
+      });
+      map.addLayer(layer);
+    } catch (error) {
+      console.error('Error fetching and processing locations:', error);
+    }
+  };
+
+  addLocations();
+>>>>>>> d648b8fce85466be0f68c1d7a9ef8ce2eccc1ffd
 </script>

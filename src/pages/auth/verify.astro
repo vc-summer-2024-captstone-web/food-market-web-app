@@ -1,16 +1,17 @@
 ---
-import Layout from '@layouts/Layout.astro';
+import AuthLayout from '@layouts/AuthLayout.astro';
 import FormInput from '@components/FormInput.astro';
 import { db, eq, EmailVerification, User } from 'astro:db';
 if (!Astro.locals.user) {
   return Astro.redirect('/');
 }
-
-const { verified, id } = Astro.locals.user;
+const user = Astro.locals.user;
 let error = '';
-if (verified) {
+if (user && user.verified) {
   return Astro.redirect('/');
 }
+
+const { id } = user;
 
 if (Astro.request.method === 'POST') {
   const formData = await Astro.request.formData();
@@ -39,11 +40,38 @@ if (Astro.request.method === 'POST') {
 }
 ---
 
-<Layout title='Email Verification'>
-  {error && <p>{error}</p>}
+<AuthLayout title='Email Verification'>
+  {error && <p id='error'>{error}</p>}
+  {
+    error === 'Token expired' && (
+      <button
+        onclick="fetch('/api/auth/verify', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error('Bad status code from server.');
+            }
+            return res.json();
+          })
+          .then((data) => {
+
+            console.log(data);
+          });
+        document.querySelector('#error').remove();
+        this.remove();
+        "
+      >
+        Request a new token
+      </button>
+    )
+  }
   <h1>Email Verification</h1>
-  <form method='POST'>
+  <form method='POST' class='form--auth'>
     <FormInput type='text' label='Verification token' name='token' required={true} />
     <button type='submit'>Verify</button>
   </form>
-</Layout>
+</AuthLayout>

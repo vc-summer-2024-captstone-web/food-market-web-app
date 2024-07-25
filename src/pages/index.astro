@@ -1,6 +1,16 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import '../styles/global.scss';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import VerificationAlert from '@components/VerificationAlert.astro';
+
+const user = Astro.locals.user;
+const isAuth = Boolean(user);
+let isVerified = null;
+if (user) {
+  const { verified } = user;
+  isVerified = verified;
+}
 ---
 
 <!doctype html>
@@ -24,7 +34,7 @@ import Footer from '../components/Footer.astro';
         background-color: #000;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        animation: fadeIn 1.5s ease-in-out;
+        //animation: fadeIn 1.5s ease-in-out;
       }
       section {
         padding: 20px;
@@ -78,7 +88,7 @@ import Footer from '../components/Footer.astro';
         cursor: pointer;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        animation: fadeIn 2s ease-in-out;
+        //animation: fadeIn 2s ease-in-out;
         transition:
           background-color 0.3s,
           transform 0.3s;
@@ -101,7 +111,7 @@ import Footer from '../components/Footer.astro';
         max-width: 500px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        animation: fadeIn 2s ease-in-out;
+        //animation: fadeIn 2s ease-in-out;
       }
       .step2 {
         flex-direction: row-reverse;
@@ -125,15 +135,35 @@ import Footer from '../components/Footer.astro';
     </style>
   </head>
   <body>
-    <Header />
+    <Header isAuthenticated={isAuth} />
+    {!isVerified && isAuth && <VerificationAlert />}
     <main>
       <section class='step1'>
         <div class='content'>
           <h2>Step 1: Create an Account</h2>
           <p>Sign up for an account to start your grocery journey with us</p>
           <div class='buttons'>
-            <button>Login</button>
-            <button style='background-color: #FFD700; color: #000;'>Sign Up</button>
+            <!-- TODO: Make this buttons links! -->
+            {
+              !isAuth && (
+                <>
+                  <button onclick="window.location.href = ('./auth/signin')">Sign In</button>
+                  <button
+                    onclick="window.location.href = ('./auth/signup')"
+                    style='background-color: #FFD700; color: #000;'
+                  >
+                    Sign Up
+                  </button>
+                </>
+              )
+            }
+            {
+              isAuth && (
+                <p>
+                  <em>Congratulations! You are now signed in.</em>
+                </p>
+              )
+            }
           </div>
         </div>
         <img src='/images/market-3466906_1280.jpg' alt='Create an Account' />
