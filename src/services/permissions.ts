@@ -4,6 +4,7 @@ export enum Permissions {
   canManageUsers = 'canManageUsers',
   canManageRoles = 'canManageRoles',
   canManageMarkets = 'canManageMarkets',
+  canManageProducts = 'canManageProducts',
   canViewContactFormLogs = 'canViewContactFormLogs',
 }
 
@@ -30,6 +31,7 @@ export class Permission {
           canManageUsers: role.canManageUsers,
           canManageRoles: role.canManageRoles,
           canManageMarkets: role.canManageMarkets,
+          canManageProducts: role.canManageProducts,
           canViewContactFormLogs: role.canViewContactFormLogs,
         };
       }
