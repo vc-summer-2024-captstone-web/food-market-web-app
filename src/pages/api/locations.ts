@@ -1,7 +1,8 @@
 import type { APIContext } from 'astro';
-import { db, Market } from 'astro:db';
+import { db, eq, Market, User } from 'astro:db';
 import { response } from '@utilities';
 import { createId } from '@paralleldrive/cuid2';
+import { Permission, Permissions } from 'src/services';
 
 export async function GET(context: APIContext): Promise<Response> {
   try {
@@ -18,6 +19,30 @@ export async function GET(context: APIContext): Promise<Response> {
 }
 
 export async function POST(context: APIContext): Promise<Response> {
+  const session = context.locals.session;
+  if (!session) {
+    return response({ error: 'Unauthorized' }, 401);
+  }
+  const results = await db
+    .select({
+      id: User.id,
+      role: User.role,
+    })
+    .from(User)
+    .where(eq(User.id, session.userId));
+  const user = await results[0];
+  if (!user) {
+    return response({ error: 'Unauthorized' }, 401);
+  }
+  const permissions = new Permission(user.role);
+  if (!permissions) {
+    return response({ error: 'Unauthorized' }, 401);
+  }
+  const canManageMarkets = await permissions.hasPermission(Permissions.canManageMarkets);
+  if (!canManageMarkets) {
+    return response({ error: 'Unauthorized' }, 401);
+  }
+
   const formData = await context.request.formData();
   const name = formData.get('name') as string;
   const address = formData.get('address') as string;
@@ -55,6 +80,30 @@ export async function POST(context: APIContext): Promise<Response> {
 }
 
 export async function PUT(context: APIContext): Promise<Response> {
+  const session = context.locals.session;
+  if (!session) {
+    return response({ error: 'Unauthorized' }, 401);
+  }
+  const results = await db
+    .select({
+      id: User.id,
+      role: User.role,
+    })
+    .from(User)
+    .where(eq(User.id, session.userId));
+  const user = await results[0];
+  if (!user) {
+    return response({ error: 'Unauthorized' }, 401);
+  }
+  const permissions = new Permission(user.role);
+  if (!permissions) {
+    return response({ error: 'Unauthorized' }, 401);
+  }
+  const canManageMarkets = await permissions.hasPermission(Permissions.canManageMarkets);
+  if (!canManageMarkets) {
+    return response({ error: 'Unauthorized' }, 401);
+  }
+
   const formData = await context.request.formData();
   const id = formData.get('id') as string;
   const name = formData.get('name') as string;
@@ -95,6 +144,30 @@ export async function PUT(context: APIContext): Promise<Response> {
 }
 
 export async function DELETE(context: APIContext): Promise<Response> {
+  const session = context.locals.session;
+  if (!session) {
+    return response({ error: 'Unauthorized' }, 401);
+  }
+  const results = await db
+    .select({
+      id: User.id,
+      role: User.role,
+    })
+    .from(User)
+    .where(eq(User.id, session.userId));
+  const user = await results[0];
+  if (!user) {
+    return response({ error: 'Unauthorized' }, 401);
+  }
+  const permissions = new Permission(user.role);
+  if (!permissions) {
+    return response({ error: 'Unauthorized' }, 401);
+  }
+  const canManageMarkets = await permissions.hasPermission(Permissions.canManageMarkets);
+  if (!canManageMarkets) {
+    return response({ error: 'Unauthorized' }, 401);
+  }
+
   const formData = await context.request.formData();
   const id = formData.get('id') as string;
 
