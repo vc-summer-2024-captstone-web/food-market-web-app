@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { GET, POST, PUT, DELETE } from 'src/pages/api/locations'; // Adjust the import path as needed
+import { GET, POST, PUT, DELETE } from 'src/pages/api/locations';
 import { db, Market } from 'astro:db';
 import { response } from '@utilities';
 import { createId } from '@paralleldrive/cuid2';
@@ -25,7 +25,7 @@ vi.mock('@paralleldrive/cuid2', () => ({
   createId: vi.fn(() => 'mocked-id'),
 }));
 
-describe('API handlers', () => {
+describe('Locations API handlers', () => {
   describe('GET', () => {
     it('should return 404 if no markets are found', async () => {
       const result = await GET({} as any);
