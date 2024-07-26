@@ -68,6 +68,11 @@ const Products = defineTable({
     marketId: column.text({ optional: false, references: () => Market.columns.id }),
     price: column.number({ optional: false }),
     description: column.text({ optional: false }),
+const Recipes = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true, optional: false, unique: true }),
+    query: column.text({ optional: false }),
+    data: column.json({ optional: false }),
   },
 });
 
@@ -80,5 +85,6 @@ export default defineDb({
     Products,
     ContactFormLog,
     Role,
+    Recipes,
   },
 });
