@@ -4,6 +4,7 @@
 [![Astro Studio](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/astro-studio.yml/badge.svg?branch=master)](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/astro-studio.yml)
 [![CodeQL](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/github-code-scanning/codeql)
 [![Prettier Code Formatter](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/prettier-format.yml/badge.svg)](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/prettier-format.yml)
+[![CI](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/ci.yml/badge.svg)](https://github.com/vc-summer-2024-captstone-web/food-market-web-app/actions/workflows/ci.yml)
 
 ## 🚀 Quick start
 
