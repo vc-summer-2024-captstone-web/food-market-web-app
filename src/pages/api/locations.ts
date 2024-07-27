@@ -2,7 +2,7 @@ import type { APIContext } from 'astro';
 import { db, eq, Market, User } from 'astro:db';
 import { response } from '@utilities';
 import { createId } from '@paralleldrive/cuid2';
-import { Permission, Permissions } from 'src/services';
+import { Permission, Permissions } from '@services';
 
 export async function GET(context: APIContext): Promise<Response> {
   try {
@@ -103,7 +103,6 @@ export async function PUT(context: APIContext): Promise<Response> {
   if (!canManageMarkets) {
     return response({ error: 'Unauthorized' }, 401);
   }
-
   const formData = await context.request.formData();
   const id = formData.get('id') as string;
   const name = formData.get('name') as string;
@@ -128,14 +127,15 @@ export async function PUT(context: APIContext): Promise<Response> {
   }
 
   try {
-    db.update(Market)
+    await db
+      .update(Market)
       .set({
         name,
         address,
         lat: parseFloat(lat),
         long: parseFloat(long),
       })
-      .where({ id });
+      .where(eq(Market.id, id));
     return response({ message: 'Market updated' }, 200);
   } catch (error) {
     console.error('Database query failed:', error);
@@ -184,7 +184,7 @@ export async function DELETE(context: APIContext): Promise<Response> {
   }
 
   try {
-    db.delete(Market).where({ id });
+    await db.delete(Market).where(eq(Market.id, id));
     return response({ message: 'Market deleted' }, 200);
   } catch (error) {
     console.error('Database query failed:', error);
