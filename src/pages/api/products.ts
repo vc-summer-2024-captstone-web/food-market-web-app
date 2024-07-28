@@ -1,15 +1,20 @@
 import { db, eq, Products, User } from 'astro:db';
-import multer, { MulterError } from 'multer';
-import { response } from 'src/utilities';
 import { APIContext } from 'astro';
-import { Permission, Permissions } from 'src/services';
+import { response } from '@utilities';
+import { Permission, Permissions } from '@services';
+import { createId } from '@paralleldrive/cuid2';
 
 export async function GET(context: APIContext): Promise<Response> {
-  const products = await db.select().from(Products);
-  if (!products[0]) {
-    return response({ message: 'No products found' }, 404);
+  try {
+    const products = await db.select().from(Products).all();
+    if (!products.length > 0) {
+      return response({ message: 'No products found' }, 404);
+    }
+    return response(products, 200);
+  } catch (error) {
+    console.error('Database query failed:', error);
+    return response({ message: 'Internal Server Error' }, 500);
   }
-  return response(products[0], 200);
 }
 
 export async function POST(context: APIContext): Promise<Response> {
@@ -36,15 +41,13 @@ export async function POST(context: APIContext): Promise<Response> {
   if (!canManageProducts) {
     return response({ error: 'Unauthorized' }, 401);
   }
-
-  const formData = context.request.formData;
+  const formData = await context.request.formData();
   const name = formData.get('name');
   const price = formData.get('price');
   const description = formData.get('description');
   const image = formData.get('image');
   const marketId = formData.get('market');
-
-  if (!name || !price || !description || !image || !marketId) {
+  if (!name || !price || !description || !marketId || !image) {
     return response(
       {
         error: 'Missing required fields',
@@ -59,36 +62,28 @@ export async function POST(context: APIContext): Promise<Response> {
       400
     );
   }
+  if (image.type !== 'image/jpeg' && image.type !== 'image/png') {
+    return response({ message: 'Invalid image format' }, 400);
+  }
+  if (image.size > 2 * 1024 * 1024) {
+    return response({ message: `Image is too large. Max size is 2MB, received ${image.size}` }, 400);
+  }
+  const buffer = Array.from(new Int8Array(await image.arrayBuffer()).values());
 
-  // get the image file with multer
-  const upload = multer({
-    storage: multer.memoryStorage(),
-    limits: {
-      fileSize: 5 * 1024 * 1024, // 5 MB
-    },
-  }).single('image');
-
-  upload(context.request, context.response, async (error: MulterError) => {
-    if (error) {
-      console.error('File upload failed:', error);
-      return response({ message: 'File upload failed' }, 500);
-    }
-
-    try {
-      const image = context.request.file.buffer;
-      db.insert(Products).values({
-        name,
-        price: parseFloat(price),
-        description,
-        image,
-        marketId,
-      });
-      return response({ message: 'Product created' }, 200);
-    } catch (error) {
-      console.error('Database query failed:', error);
-      return response({ message: 'Internal Server Error' }, 500);
-    }
-  });
+  try {
+    await db.insert(Products).values({
+      id: createId(),
+      name,
+      price: parseFloat(price),
+      description,
+      image: `data:${image.type};base64,${Buffer.from(buffer).toString('base64')}`,
+      marketId,
+    });
+    return response({ message: 'Product created' }, 200);
+  } catch (error) {
+    console.error('Database query failed:', error);
+    return response({ message: 'Internal Server Error' }, 500);
+  }
 }
 
 export async function PUT(context: APIContext): Promise<Response> {
@@ -115,7 +110,7 @@ export async function PUT(context: APIContext): Promise<Response> {
   if (!canManageProducts) {
     return response({ error: 'Unauthorized' }, 401);
   }
-  const formData = context.request.formData;
+  const formData = await context.request.formData();
   const id = formData.get('id');
   const name = formData.get('name');
   const price = formData.get('price');
@@ -139,17 +134,25 @@ export async function PUT(context: APIContext): Promise<Response> {
       400
     );
   }
-
+  if (image.type !== 'image/jpeg' && image.type !== 'image/png') {
+    return response({ message: 'Invalid image format' }, 400);
+  }
+  if (image.size > 2 * 1024 * 1024) {
+    return response({ message: `Image is too large. Max size is 2MB, received ${image.size}` }, 400);
+  }
+  const buffer = Array.from(new Int8Array(await image.arrayBuffer()).values());
   try {
-    db.update(Products)
+    await db
+      .update(Products)
       .set({
         name,
         price: parseFloat(price),
         description,
-        image,
+        image: `data:${image.type};base64,${Buffer.from(buffer).toString('base64')}`,
         marketId,
       })
       .where(eq(Products.id, id));
+
     return response({ message: 'Product updated' }, 200);
   } catch (error) {
     console.error('Database query failed:', error);
@@ -181,15 +184,15 @@ export async function DELETE(context: APIContext): Promise<Response> {
   if (!canManageProducts) {
     return response({ error: 'Unauthorized' }, 401);
   }
-
-  const id = context.request.formData.get('id');
+  const formData = await context.request.formData();
+  const id = formData.get('id');
 
   if (!id) {
     return response({ error: 'Missing required fields' }, 400);
   }
 
   try {
-    db.delete(Products).where(eq(Products.id, id));
+    await db.delete(Products).where(eq(Products.id, id)).then();
     return response({ message: 'Product deleted' }, 200);
   } catch (error) {
     console.error('Database query failed:', error);
