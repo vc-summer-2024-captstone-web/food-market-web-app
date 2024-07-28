@@ -1,8 +1,6 @@
 ---
 import '../styles/global.scss';
-import Header from '@components/Header.astro';
-import Footer from '@components/Footer.astro';
-import VerificationAlert from '@components/VerificationAlert.astro';
+import Layout from '../layouts/Layout.astro';
 
 const user = Astro.locals.user;
 const isAuth = Boolean(user);
@@ -13,179 +11,59 @@ if (user) {
 }
 ---
 
-<!doctype html>
-<html lang='en'>
-  <head>
-    <meta charset='UTF-8' />
-    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <title>Food Market Web App</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #000;
-        color: #fff;
-      }
-      main {
-        max-width: 1200px;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #000;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        //animation: fadeIn 1.5s ease-in-out;
-      }
-      section {
-        padding: 20px;
-        border-bottom: 1px solid #444;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-      }
-      section h2 {
-        margin-top: 0;
-      }
-      .step1,
-      .step2,
-      .step3 {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-      }
-      .step1 .content,
-      .step2 .content,
-      .step3 .content {
-        flex: 1;
-        padding: 20px;
-        max-width: 500px;
-      }
-      .step1 .content h2,
-      .step2 .content h2,
-      .step3 .content h2 {
-        font-size: 24px;
-        margin-bottom: 10px;
-      }
-      .step1 .content p,
-      .step2 .content p,
-      .step3 .content p {
-        margin-bottom: 20px;
-      }
-      .step1 .buttons,
-      .step3 .buttons {
-        display: flex;
-        flex-direction: column;
-      }
-      .step1 .buttons button,
-      .step3 .buttons button {
-        background-color: #555;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        margin-bottom: 10px;
-        cursor: pointer;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        //animation: fadeIn 2s ease-in-out;
-        transition:
-          background-color 0.3s,
-          transform 0.3s;
-      }
-      .step1 .buttons button:hover,
-      .step3 .buttons button:hover {
-        background-color: #777;
-        transform: scale(1.05);
-      }
-      .step1 .buttons button:active,
-      .step3 .buttons button:active {
-        background-color: #999;
-        transform: scale(0.95);
-      }
-      .step1 img,
-      .step2 img,
-      .step3 img {
-        width: 100%;
-        height: auto;
-        max-width: 500px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        //animation: fadeIn 2s ease-in-out;
-      }
-      .step2 {
-        flex-direction: row-reverse;
-      }
-      .search input {
-        padding: 10px;
-        width: 100%;
-        box-sizing: border-box;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        animation: fadeIn 2s ease-in-out;
-      }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <Header isAuthenticated={isAuth} />
-    {!isVerified && isAuth && <VerificationAlert />}
-    <main>
-      <section class='step1'>
-        <div class='content'>
-          <h2>Step 1: Create an Account</h2>
-          <p>Sign up for an account to start your grocery journey with us</p>
-          <div class='buttons'>
-            <!-- TODO: Make this buttons links! -->
-            {
-              !isAuth && (
-                <>
-                  <button onclick="window.location.href = ('./auth/signin')">Sign In</button>
-                  <button
-                    onclick="window.location.href = ('./auth/signup')"
-                    style='background-color: #FFD700; color: #000;'
-                  >
-                    Sign Up
-                  </button>
-                </>
-              )
-            }
-            {
-              isAuth && (
-                <p>
-                  <em>Congratulations! You are now signed in.</em>
-                </p>
-              )
-            }
-          </div>
+<Layout title='Home - Food Market App'>
+  <div id='home'>
+    <section class='step grid'>
+      <div class='content column__md--6'>
+        <h2>Step 1: Create an Account</h2>
+        <p>Sign up for an account to start your grocery journey with us</p>
+        <div class='buttons'>
+          {
+            !isAuth && (
+              <>
+                <button onclick="window.location.href = ('./auth/signin')">Sign In</button>
+                <button
+                  onclick="window.location.href = ('./auth/signup')"
+                  style='background-color: #FFD700; color: #000;'
+                >
+                  Sign Up
+                </button>
+              </>
+            )
+          }
+          {
+            isAuth && (
+              <p>
+                <em>Congratulations! You are now signed in.</em>
+              </p>
+            )
+          }
         </div>
-        <img src='/images/market-3466906_1280.jpg' alt='Create an Account' />
-      </section>
-      <section class='step2'>
-        <div class='content'>
-          <h2>Step 2: Explore our Products</h2>
-          <p>Browse through a wide range of quality groceries</p>
-          <div class='search'>
-            <input type='text' placeholder='Search Products' />
-          </div>
+      </div>
+      <div class='image column__md--6'>
+        <img src='/images/market-3466906_1280.jpg?v=2' alt='Create an Account' />
+      </div>
+    </section>
+    <section class='step grid'>
+      <div class='content column__md--6 order__md--2'>
+        <h2>Step 2: Explore our Products</h2>
+        <p>Browse through a wide range of quality groceries</p>
+        <div class='search'>
+          <input type='text' placeholder='Search Products' />
         </div>
-        <img src='/images/fruits-4728754_1280.jpg' alt='Explore Products' />
-      </section>
-      <section class='step3'>
-        <div class='content'>
-          <h2>Step 3: Visit our Participant Stores</h2>
-          <p>Browse through a wide range of quality stores through Orlando</p>
-        </div>
-        <img src='/images/bowl-1844894_1280.jpg' alt='Visit Stores' />
-      </section>
-    </main>
-    <Footer />
-  </body>
-</html>
+      </div>
+      <div class='image column__md--6 order__md--1'>
+        <img src='/images/fruits-4728754_1280.jpg?v=2' alt='Explore Products' />
+      </div>
+    </section>
+    <section class='step grid'>
+      <div class='content image column__md--6'>
+        <h2>Step 3: Visit our Participant Stores</h2>
+        <p>Browse through a wide range of quality stores through Orlando</p>
+      </div>
+      <div class='image column__md--6'>
+        <img src='/images/bowl-1844894_1280.jpg?v=2' alt='Visit Stores' />
+      </div>
+    </section>
+  </div>
+</Layout>
