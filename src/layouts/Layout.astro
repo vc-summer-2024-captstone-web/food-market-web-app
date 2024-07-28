@@ -28,7 +28,7 @@ if (user) {
     <div class='wrapper'>
       <Header isAuthenticated={isAuth} />
       {!isVerified && isAuth && <VerificationAlert />}
-      <main>
+      <main class='container'>
         <slot />
       </main>
       <Footer />

@@ -1,0 +1,14 @@
+@use '../mixins/breakpoints';
+.container {
+  display: flex;
+  width: 96%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  flex-direction: column;
+
+  @include breakpoints.breakpoint-min(md) {
+    padding: 0 10px;
+  }
+}

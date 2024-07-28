@@ -1,0 +1,63 @@
+@use 'mixins';
+//main {
+//  width: 96%;
+//  max-width: 1200px;
+//  margin: 1.25rem auto;
+//  border-radius: 10px;
+//}
+.step {
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  @include mixins.breakpoint-min(lg) {
+    flex-direction: row;
+    justify-content: space-between;
+    &:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+  }
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  h2 {
+    //font-size: ;
+    margin-bottom: 10px;
+  }
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    button {
+      background-color: #555;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background-color 0.3s, transform 0.3s;
+      &:hover {
+        background-color: #777;
+        transform: scale(1.05);
+      }
+      &:active {
+        background-color: #999;
+        transform: scale(0.95);
+      }
+    }
+
+  }
+}
+.search input {
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 2s ease-in-out;
+}

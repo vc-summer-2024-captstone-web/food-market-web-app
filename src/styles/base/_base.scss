@@ -13,4 +13,9 @@ html {
 body {
   font: variables.$f-weight-regular variables.$f-size-sm variables.$f-family-inter;
   line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+.debug * {
+  outline: solid 1px pink;
 }
