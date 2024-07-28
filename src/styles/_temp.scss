@@ -40,7 +40,9 @@
       margin-bottom: 10px;
       cursor: pointer;
       border-radius: 10px;
-      transition: background-color 0.3s, transform 0.3s;
+      transition:
+        background-color 0.3s,
+        transform 0.3s;
       &:hover {
         background-color: #777;
         transform: scale(1.05);
@@ -50,7 +52,6 @@
         transform: scale(0.95);
       }
     }
-
   }
 }
 .search input {
