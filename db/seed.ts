@@ -66,6 +66,7 @@ async function createRoles() {
     canManageUsers: true,
     canManageRoles: true,
     canManageMarkets: true,
+    canManageProducts: true,
     canViewContactFormLogs: true,
   });
   await db.insert(Role).values({
@@ -74,6 +75,7 @@ async function createRoles() {
     canManageUsers: false,
     canManageRoles: false,
     canManageMarkets: false,
+    canManageProducts: false,
     canViewContactFormLogs: false,
   });
 }

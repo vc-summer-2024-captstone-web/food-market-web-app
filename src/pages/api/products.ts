@@ -1,17 +1,16 @@
-import type { APIContext } from 'astro';
-import { db, eq, Market, User } from 'astro:db';
+import { db, eq, Products, User } from 'astro:db';
+import { APIContext } from 'astro';
 import { response } from '@utilities';
-import { createId } from '@paralleldrive/cuid2';
 import { Permission, Permissions } from '@services';
+import { createId } from '@paralleldrive/cuid2';
 
 export async function GET(context: APIContext): Promise<Response> {
   try {
-    const results = await db.select().from(Market).all();
-    if (results.length === 0) {
-      return response({ message: 'No markets found' }, 404);
+    const products = await db.select().from(Products).all();
+    if (!products.length > 0) {
+      return response({ message: 'No products found' }, 404);
     }
-    const markets = results.map(({ id, ...market }) => market);
-    return response(markets, 200);
+    return response(products, 200);
   } catch (error) {
     console.error('Database query failed:', error);
     return response({ message: 'Internal Server Error' }, 500);
@@ -38,41 +37,49 @@ export async function POST(context: APIContext): Promise<Response> {
   if (!permissions) {
     return response({ error: 'Unauthorized' }, 401);
   }
-  const canManageMarkets = await permissions.hasPermission(Permissions.canManageMarkets);
-  if (!canManageMarkets) {
+  const canManageProducts = await permissions.hasPermission(Permissions.canManageProducts);
+  if (!canManageProducts) {
     return response({ error: 'Unauthorized' }, 401);
   }
-
   const formData = await context.request.formData();
-  const name = formData.get('name') as string;
-  const address = formData.get('address') as string;
-  const lat = formData.get('lat') as number;
-  const long = formData.get('long') as number;
-
-  if (!name || !address || !lat || !long) {
+  const name = formData.get('name');
+  const price = formData.get('price');
+  const description = formData.get('description');
+  const image = formData.get('image');
+  const marketId = formData.get('market');
+  if (!name || !price || !description || !marketId || !image) {
     return response(
       {
         error: 'Missing required fields',
         fields: {
           name: !!name,
-          address: !!address,
-          lat: !!lat,
-          long: !!long,
+          price: !!price,
+          description: !!description,
+          image: !!image,
+          market: !!marketId,
         },
       },
       400
     );
   }
+  if (image.type !== 'image/jpeg' && image.type !== 'image/png') {
+    return response({ message: 'Invalid image format' }, 400);
+  }
+  if (image.size > 2 * 1024 * 1024) {
+    return response({ message: `Image is too large. Max size is 2MB, received ${image.size}` }, 400);
+  }
+  const buffer = Array.from(new Int8Array(await image.arrayBuffer()).values());
 
   try {
-    db.insert(Market).values({
+    await db.insert(Products).values({
       id: createId(),
       name,
-      address,
-      lat: parseFloat(lat),
-      long: parseFloat(long),
+      price: parseFloat(price),
+      description,
+      image: `data:${image.type};base64,${Buffer.from(buffer).toString('base64')}`,
+      marketId,
     });
-    return response({ message: 'Market created' }, 200);
+    return response({ message: 'Product created' }, 200);
   } catch (error) {
     console.error('Database query failed:', error);
     return response({ message: 'Internal Server Error' }, 500);
@@ -99,44 +106,54 @@ export async function PUT(context: APIContext): Promise<Response> {
   if (!permissions) {
     return response({ error: 'Unauthorized' }, 401);
   }
-  const canManageMarkets = await permissions.hasPermission(Permissions.canManageMarkets);
-  if (!canManageMarkets) {
+  const canManageProducts = await permissions.hasPermission(Permissions.canManageProducts);
+  if (!canManageProducts) {
     return response({ error: 'Unauthorized' }, 401);
   }
   const formData = await context.request.formData();
-  const id = formData.get('id') as string;
-  const name = formData.get('name') as string;
-  const address = formData.get('address') as string;
-  const lat = formData.get('lat') as number;
-  const long = formData.get('long') as number;
+  const id = formData.get('id');
+  const name = formData.get('name');
+  const price = formData.get('price');
+  const description = formData.get('description');
+  const image = formData.get('image');
+  const marketId = formData.get('market');
 
-  if (!id || !name || !address || !lat || !long) {
+  if (!id || !name || !price || !description || !image || !marketId) {
     return response(
       {
         error: 'Missing required fields',
         fields: {
           id: !!id,
           name: !!name,
-          address: !!address,
-          lat: !!lat,
-          long: !!long,
+          price: !!price,
+          description: !!description,
+          image: !!image,
+          market: !!marketId,
         },
       },
       400
     );
   }
-
+  if (image.type !== 'image/jpeg' && image.type !== 'image/png') {
+    return response({ message: 'Invalid image format' }, 400);
+  }
+  if (image.size > 2 * 1024 * 1024) {
+    return response({ message: `Image is too large. Max size is 2MB, received ${image.size}` }, 400);
+  }
+  const buffer = Array.from(new Int8Array(await image.arrayBuffer()).values());
   try {
     await db
-      .update(Market)
+      .update(Products)
       .set({
         name,
-        address,
-        lat: parseFloat(lat),
-        long: parseFloat(long),
+        price: parseFloat(price),
+        description,
+        image: `data:${image.type};base64,${Buffer.from(buffer).toString('base64')}`,
+        marketId,
       })
-      .where(eq(Market.id, id));
-    return response({ message: 'Market updated' }, 200);
+      .where(eq(Products.id, id));
+
+    return response({ message: 'Product updated' }, 200);
   } catch (error) {
     console.error('Database query failed:', error);
     return response({ message: 'Internal Server Error' }, 500);
@@ -163,29 +180,20 @@ export async function DELETE(context: APIContext): Promise<Response> {
   if (!permissions) {
     return response({ error: 'Unauthorized' }, 401);
   }
-  const canManageMarkets = await permissions.hasPermission(Permissions.canManageMarkets);
-  if (!canManageMarkets) {
+  const canManageProducts = await permissions.hasPermission(Permissions.canManageProducts);
+  if (!canManageProducts) {
     return response({ error: 'Unauthorized' }, 401);
   }
-
   const formData = await context.request.formData();
-  const id = formData.get('id') as string;
+  const id = formData.get('id');
 
   if (!id) {
-    return response(
-      {
-        error: 'Missing required fields',
-        fields: {
-          id: !!id,
-        },
-      },
-      400
-    );
+    return response({ error: 'Missing required fields' }, 400);
   }
 
   try {
-    await db.delete(Market).where(eq(Market.id, id));
-    return response({ message: 'Market deleted' }, 200);
+    await db.delete(Products).where(eq(Products.id, id)).then();
+    return response({ message: 'Product deleted' }, 200);
   } catch (error) {
     console.error('Database query failed:', error);
     return response({ message: 'Internal Server Error' }, 500);

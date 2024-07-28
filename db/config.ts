@@ -32,6 +32,7 @@ const Role = defineTable({
     canManageUsers: column.boolean({ optional: false, default: false }),
     canManageRoles: column.boolean({ optional: false, default: false }),
     canManageMarkets: column.boolean({ optional: false, default: false }),
+    canManageProducts: column.boolean({ optional: false, default: false }),
     canViewContactFormLogs: column.boolean({ optional: false, default: false }),
   },
 });
@@ -64,10 +65,19 @@ const Market = defineTable({
 
 const Products = defineTable({
   columns: {
-    id: column.text({ optional: false, unique: true }),
-    marketId: column.text({ optional: false, references: () => Market.columns.id }),
+    id: column.text({ primaryKey: true, optional: false, unique: true }),
+    name: column.text({ optional: false }),
     price: column.number({ optional: false }),
     description: column.text({ optional: false }),
+    image: column.text({ optional: false }),
+    marketId: column.text({ optional: false, references: () => Market.columns.id }),
+  },
+});
+const Recipes = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true, optional: false, unique: true }),
+    query: column.text({ optional: false }),
+    data: column.json({ optional: false }),
   },
 });
 
@@ -80,5 +90,6 @@ export default defineDb({
     Products,
     ContactFormLog,
     Role,
+    Recipes,
   },
 });
