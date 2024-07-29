@@ -17,7 +17,6 @@ interface ImportMetaEnv {
   readonly VERIFICATION_TOKEN_TTL_UNIT: TimeSpanUnit;
   readonly SESSION_SAME_SITE: String<'lax' | 'strict' | 'none'>;
   readonly SESSION_DOMAIN: string;
-  readonly SESSION_SECRET: string;
   readonly TOKEN_LENGTH: number;
   readonly VITE_APP_NAME: String;
   // nodemailer (DEV)
