@@ -45,7 +45,7 @@
     "vitest": "^2.0.4"
   },
   "devDependencies": {
-    "@astrojs/ts-plugin": "^1.9.0",
+    "@astrojs/ts-plugin": "^1.9.1",
     "@netlify/plugin-lighthouse": "^6.0.0",
     "@types/nodemailer": "^6.4.15",
     "@vitest/coverage-v8": "^2.0.4",
