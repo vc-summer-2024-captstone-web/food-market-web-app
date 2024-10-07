@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.3",
-    "@astrojs/db": "^0.11.7",
+    "@astrojs/db": "^0.14.2",
     "@astrojs/netlify": "^5.5.1",
     "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@netlify/functions": "^2.8.1",
