@@ -36,3 +36,7 @@ netlify.toml
 netlify/dev.db
 
 cypress/screenshots/
+
+coverage/
+
+
