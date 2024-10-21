@@ -30,7 +30,7 @@
     "@astrojs/check": "^0.9.3",
     "@astrojs/db": "^0.14.2",
     "@astrojs/netlify": "^5.5.1",
-    "@lucia-auth/adapter-drizzle": "^1.0.7",
+    "@lucia-auth/adapter-drizzle": "^1.1.0",
     "@netlify/functions": "^2.8.1",
     "@paralleldrive/cuid2": "^2.2.2",
     "@sendgrid/mail": "^8.1.3",
