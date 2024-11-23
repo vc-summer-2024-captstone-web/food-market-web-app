@@ -1,7 +1,7 @@
 ---
 import '../styles/global.scss';
-import Header from 'src/components/Header.astro';
-import Footer from 'src/components/Footer.astro';
+import Navigation from '@components/Navigation.astro';
+import Footer from '@components/Footer.astro';
 
 interface Props {
   title: string;
@@ -17,7 +17,7 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <Header isAuthenticated={false} />
+    <Navigation isAuthenticated={false} />
     <main>
       <slot />
     </main>

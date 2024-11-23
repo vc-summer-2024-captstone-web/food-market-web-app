@@ -1,9 +1,9 @@
 ---
 import '../styles/global.scss';
 import 'ol/ol.css';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import VerificationAlert from 'src/components/VerificationAlert.astro';
+import Navigation from '@components/Navigation.astro';
+import Footer from '@components/Footer.astro';
+import VerificationAlert from '@components/VerificationAlert.astro';
 
 interface Props {
   title: string;
@@ -27,7 +27,7 @@ if (user) {
     <title>{title}</title>
   </head>
   <body>
-    <Header isAuthenticated={isAuth} />
+    <Navigation isAuthenticated={isAuth} />
     {!isVerified && isAuth && <VerificationAlert />}
     <slot />
     <Footer />

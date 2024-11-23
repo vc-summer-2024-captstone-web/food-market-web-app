@@ -1,0 +1,36 @@
+---
+interface Props {
+  isAuthenticated?: boolean | false;
+}
+const { isAuthenticated }: Props = Astro.props;
+---
+
+<nav>
+  <div class='logo'>
+    <img src='/logo.svg' />
+  </div>
+  <ul>
+    <li><a href='/'>Home</a></li>
+    <li><a href='/locations'>Locations</a></li>
+    <li><a href='/about'>About Us</a></li>
+    <li><a href='/contact'>Contact Us</a></li>
+    {isAuthenticated && <button id='sign-out'>Sign Out</button>}
+  </ul>
+</nav>
+
+<script>
+  const signOutButton = document.getElementById('sign-out');
+  if (signOutButton) {
+    signOutButton.addEventListener('click', () => {
+      fetch('/api/auth/signout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({}),
+      }).then(() => {
+        window.location.reload();
+      });
+    });
+  }
+</script>
