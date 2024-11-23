@@ -5,8 +5,6 @@ import { join } from 'path';
 import { GET, POST, PUT, DELETE } from 'src/pages/api/products';
 import { Permission } from '@services';
 import { response } from '@utilities';
-import { createId } from '@paralleldrive/cuid2';
-import { idText } from 'typescript';
 
 vi.mock('astro:db', () => {
   return {
