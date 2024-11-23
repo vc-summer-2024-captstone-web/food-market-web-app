@@ -1,12 +1,13 @@
 @use '../mixins';
+@use '../variables';
 nav {
   display: flex;
   justify-content: space-between;
-  background: #fff;
-  color: #000;
+  background: variables.$background-light;
+  color: variables.$text-color-dark;
   padding: 0.5rem 2%;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px variables.$box-shadow-color;
   flex-direction: column;
   width: 100%;
   @include mixins.breakpoint-min(md) {
@@ -25,22 +26,22 @@ nav {
     }
   }
   li {
-    margin-right: 10px;
+    margin-right: 0.75rem;
     display: flex;
     align-items: center;
   }
   a {
-    color: #000;
+    color: variables.$text-color-dark;
     text-decoration: none;
-    font-size: 16px;
-    padding: 5px 10px;
+    font-size: 1rem;
+    line-height: 0;
+    padding: 0.6125rem 0.75rem;
     transition:
       background-color 0.3s,
       color 0.3s;
     &:hover,
     &:focus {
-      background-color: #f0f0f0;
-      color: #555;
+      background-color: variables.$secondary-color;
       border-radius: 5px;
     }
   }
