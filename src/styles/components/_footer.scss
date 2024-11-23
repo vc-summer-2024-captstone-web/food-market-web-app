@@ -1,0 +1,59 @@
+@use '../variables/colors';
+
+.footer {
+  background: colors.$background-light;
+  color: colors.$text-color-dark;
+  text-align: center;
+  padding: 1.25rem 0;
+  border-top: 1px solid colors.$border-color;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  p {
+    margin: 0;
+    padding: 0;
+  }
+  svg {
+    stroke: currentColor;
+  }
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align items at the top of the flex container */
+    max-width: 1200px;
+    margin: 0 auto 0.75rem;
+    padding: 0 20px;
+    flex-wrap: wrap;
+  }
+  &__links {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    a {
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+  }
+
+  &__social {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    a {
+      margin-right: 1.5rem;
+      display: flex;
+      align-items: center;
+      transition: transform 0.3s;
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+  a {
+    color: colors.$link-color;
+    &:hover {
+      color: colors.$link-color-hover;
+    }
+  }
+}

@@ -1,4 +1,22 @@
-$black: #252525;
-$white: #f9f9f9;
+$black: #1F271B;
+$white: #FBFEFB;
 $silver: #c0c0c0;
-$gray: #808080;
+$gray: #5D595F;
+$orange: #F68837;
+$green: #80C144;
+
+$background-dark: $black;
+$background-light: $white;
+
+$primary-color: $orange;
+$secondary-color: $green;
+
+$text-color-dark: $black;
+$text-color-light: $white;
+$text-color-accent: $secondary-color;
+
+$link-color: $black;
+$link-color-hover: $primary-color;
+
+$border-color: $silver;
+$box-shadow-color: rgba($black, 0.2);
