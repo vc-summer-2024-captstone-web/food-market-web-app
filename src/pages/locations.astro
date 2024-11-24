@@ -1,5 +1,5 @@
 ---
-import AltLayout from '../layouts/AltLayout.astro';
+import AltLayout from '@layouts/AltLayout.astro';
 import { locations } from '../data/locations.ts';
 ---
 
@@ -36,6 +36,7 @@ import { locations } from '../data/locations.ts';
 
 <style lang='scss'>
   @use '../styles/mixins';
+  @use '../styles/variables';
   .search-container {
     display: flex;
     justify-content: center;
@@ -43,17 +44,22 @@ import { locations } from '../data/locations.ts';
     input {
       padding: 10px;
       width: 300px;
-      border: 1px solid #ccc;
+      border: 1px solid variables.$colors-border-light;
       border-radius: 4px;
     }
     button {
       padding: 10px;
       margin-left: 10px;
       border: none;
-      background-color: #007bff;
-      color: #fff;
+      background-color: variables.$colors-secondary;
+      color: variables.$colors-text-dark;
       cursor: pointer;
       border-radius: 4px;
+      transition: background-color variables.$t-ease-in-out;
+      &:hover {
+        background-color: variables.$colors-background-dark;
+        color: variables.$colors-text-light;
+      }
     }
   }
 
@@ -69,7 +75,7 @@ import { locations } from '../data/locations.ts';
   }
 
   .map-container {
-    background-color: #1b1b1b;
+    background-color: variables.$colors-background-dark;
     display: flex;
     height: 100%;
 
@@ -82,7 +88,7 @@ import { locations } from '../data/locations.ts';
   .column {
     padding: 20px;
     &:first-child {
-      border-right: 1px solid #444;
+      border-right: 1px solid variables.$colors-border-dark;
       height: 500px;
     }
     @include mixins.breakpoint-min(md) {
@@ -97,18 +103,18 @@ import { locations } from '../data/locations.ts';
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #cecccc;
+    background-color: variables.$colors-silver;
     border-radius: 10px;
     height: 100%;
     overflow-y: scroll;
   }
 
   .location {
-    background-color: #fff;
+    background-color: variables.$colors-background-light;
     padding: 20px;
     margin: 10px 0;
     width: 80%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px variables.$colors-box-shadow;
     border-radius: 10px;
   }
 

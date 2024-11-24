@@ -1,9 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { GET, POST, PUT, DELETE } from 'src/pages/api/locations';
-import { db, Market, User, eq, Role } from 'astro:db';
-import { Permission, Permissions } from '@services';
-import { response } from '@utilities';
-import { createId } from '@paralleldrive/cuid2';
+import { db, Market, User } from 'astro:db';
+import { Permission } from '@services';
 
 vi.mock('astro:db', async () => {
   return {

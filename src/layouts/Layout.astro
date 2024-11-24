@@ -1,6 +1,6 @@
 ---
 import '../styles/global.scss';
-import Header from '@components/Header.astro';
+import Navigation from '@components/Navigation.astro';
 import Footer from '@components/Footer.astro';
 import VerificationAlert from '@components/VerificationAlert.astro';
 
@@ -18,7 +18,10 @@ if (user) {
 <html lang='en'>
   <head>
     <meta charset='UTF-8' />
-    <meta name='description' content='Astro description' />
+    <meta
+      name='description'
+      content='NourishMap allows you to find the food markets near you and encurage healthy eating habits.'
+    />
     <meta name='viewport' content='width=device-width, initial-scale=1' />
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
     <meta name='generator' content={Astro.generator} />
@@ -26,7 +29,7 @@ if (user) {
   </head>
   <body>
     <div class='wrapper'>
-      <Header isAuthenticated={isAuth} />
+      <Navigation isAuthenticated={isAuth} />
       {!isVerified && isAuth && <VerificationAlert />}
       <main class='container'>
         <slot />
@@ -36,19 +39,20 @@ if (user) {
   </body>
 </html>
 <style is:global>
+  // TODO: See if there is any overlap with global.scss and remove these styles
   :root {
     --accent: 136, 58, 234;
     --accent-light: 224, 204, 250;
     --accent-dark: 49, 10, 101;
-    --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60%);
+    --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, #FBFEFB 60%);
   }
   html,
   body {
-    font-family: system-ui, sans-serif;
-    background: #13151a;
+    //font-family: system-ui, sans-serif;
+    background: #1f271b;
     background-size: 224px;
-    margin: 0;
-    padding: 0;
+    //margin: 0;
+    //padding: 0;
     height: 100%;
   }
   .wrapper {
@@ -61,22 +65,22 @@ if (user) {
     max-width: 1200px;
     margin: 20px auto;
     padding: 40px;
-    background-color: #fff;
+    background-color: #fbfefb;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(31, 39, 27, 0.2);
     //animation: fadeIn 1.5s ease-in-out;
   }
-  code {
-    font-family:
-      Menlo,
-      Monaco,
-      Lucida Console,
-      Liberation Mono,
-      DejaVu Sans Mono,
-      Bitstream Vera Sans Mono,
-      Courier New,
-      monospace;
-  }
+  //code {
+  //  font-family:
+  //    Menlo,
+  //    Monaco,
+  //    Lucida Console,
+  //    Liberation Mono,
+  //    DejaVu Sans Mono,
+  //    Bitstream Vera Sans Mono,
+  //    Courier New,
+  //    monospace;
+  //}
   @keyframes fadeIn {
     from {
       opacity: 0;

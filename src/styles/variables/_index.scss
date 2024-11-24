@@ -1,5 +1,5 @@
 @forward 'breakpoints';
-@forward 'colors';
+@forward 'colors' as colors-*;
 @forward 'grid';
 @forward 'shadows';
 @forward 'transitions';
