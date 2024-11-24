@@ -14,6 +14,11 @@ export default defineConfig({
         project: process.env.SENTRY_PROJECT_ID,
         authToken: process.env.SENTRY_AUTH_TOKEN,
       },
+      enabled: {
+        client: true,
+        //todo: find a solution to fix issues with drizzle-orm to re-enable server side sentry
+        server: false,
+      }
     }),
   ],
   output: 'server',

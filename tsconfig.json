@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "./base.json",
-  "include": ["src/_email-templates/**/*"],
+  "include": ["src/_email-templates/**/*", "src/**/*.d.ts", "src/components/*.astro", "src/layouts/*.astro"],
   "compilerOptions": {
     "strict": true,
     "types": ["cypress", "node", "astro"],
@@ -16,6 +16,7 @@
       "@utilities": ["src/utilities/"],
       "@email-templates": ["src/_email-templates/"]
     },
+    "typeRoots": ["./node_modules/@types", "./src/types"],
     "plugins": [
       {
         "name": "@astrojs/ts-plugin"

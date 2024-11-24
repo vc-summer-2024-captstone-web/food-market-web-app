@@ -9,22 +9,6 @@ interface Props {}
     <a class='button__secondary' href='/auth/verify'>Verify Now</a>
   </div>
 </div>
-<script lang='ts'>
-  function sendToken() {
-    fetch('/api/auth/verify', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
-  }
-  const requestToken = document.querySelector('#requestToken');
-  requestToken.addEventListener('click', sendToken);
-</script>
 
 <style lang='scss'>
   @use '../styles/variables';
@@ -91,3 +75,22 @@ interface Props {}
     }
   }
 </style>
+
+<script>
+  function sendToken() {
+    fetch('/api/auth/verify', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }
+  const requestToken = document.querySelector('#requestToken');
+  if (requestToken) {
+    requestToken.addEventListener('click', sendToken);
+  }
+</script>
