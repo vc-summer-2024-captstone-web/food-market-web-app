@@ -30,7 +30,7 @@ nav {
     display: flex;
     align-items: center;
   }
-  a {
+  a:not(.logo) {
     border-radius: 5px;
     color: variables.$colors-text-dark;
     text-decoration: none;
