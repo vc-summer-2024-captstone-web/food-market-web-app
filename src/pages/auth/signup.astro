@@ -1,13 +1,13 @@
 ---
 import AuthLayout from '@layouts/AuthLayout.astro';
-import FormInput from 'src/components/FormInput.astro';
+import FormInput from '@components/FormInput.astro';
 
 if (Astro.locals.user) {
   return Astro.redirect('/');
 }
 ---
 
-<AuthLayout title='Sign Up'>
+<AuthLayout title='NourishMap | Sign Up'>
   <div class='container'>
     <form method='POST' action='/api/auth/signup' class='form--auth'>
       <h1>Signup</h1>
