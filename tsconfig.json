@@ -16,6 +16,7 @@
       "@utilities": ["src/utilities/"],
       "@email-templates": ["src/_email-templates/"]
     },
+    "typeRoots": ["./node_modules/@types", "./src/types"],
     "plugins": [
       {
         "name": "@astrojs/ts-plugin"
