@@ -1,12 +1,12 @@
-@use '../variables/colors';
+@use '../variables';
 
 .footer {
-  background: colors.$background-light;
-  color: colors.$text-color-dark;
+  background: variables.$colors-background-light;
+  color: variables.$colors-text-light;
   text-align: center;
   padding: 1.25rem 0;
-  border-top: 1px solid colors.$border-color;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  border-top: 1px solid variables.$colors-border-light;
+  box-shadow: 0 -2px 5px variables.$colors-box-shadow;
   p {
     margin: 0;
     padding: 0;
@@ -51,9 +51,9 @@
     }
   }
   a {
-    color: colors.$link-color;
+    color: variables.$colors-link;
     &:hover {
-      color: colors.$link-color-hover;
+      color: variables.$colors-link-hover;
     }
   }
 }

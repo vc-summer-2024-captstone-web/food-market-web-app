@@ -12,32 +12,30 @@ import Layout from '@layouts/Layout.astro';
   </div>
 </Layout>
 
-<style>
+<style lang='scss'>
+  @use '../styles/variables';
+  //TODO: Migrate to global SCSS partials code is duplicated between faqs, privacy, and terms
   .content-container {
     flex: 1;
     max-width: 1200px;
     margin: 20px auto;
     padding: 40px;
-    background-color: #fff;
+    background-color: variables.$colors-background-light;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px variables.$colors-box-shadow;
     //animation: fadeIn 1.5s ease-in-out;
   }
   h1 {
-    font-size: 36px;
+    font-size: variables.$f-size-xxl;
     margin-bottom: 20px;
-    color: #333;
   }
   h2 {
-    font-size: 24px;
+    font-size: variables.$f-size-lg;
     margin-top: 20px;
-    color: #333;
   }
   p {
-    font-size: 16px;
     line-height: 1.5;
     margin-bottom: 20px;
-    color: #555;
   }
   @keyframes fadeIn {
     from {

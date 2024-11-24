@@ -3,11 +3,11 @@
 nav {
   display: flex;
   justify-content: space-between;
-  background: variables.$background-light;
-  color: variables.$text-color-dark;
+  background: variables.$colors-background-light;
+  color: variables.$colors-text-dark;
   padding: 0.5rem 2%;
   align-items: center;
-  box-shadow: 0 4px 8px variables.$box-shadow-color;
+  box-shadow: 0 4px 8px variables.$colors-box-shadow;
   flex-direction: column;
   width: 100%;
   @include mixins.breakpoint-min(md) {
@@ -31,18 +31,17 @@ nav {
     align-items: center;
   }
   a {
-    color: variables.$text-color-dark;
+    border-radius: 5px;
+    color: variables.$colors-text-dark;
     text-decoration: none;
     font-size: 1rem;
-    line-height: 0;
     padding: 0.6125rem 0.75rem;
     transition:
-      background-color 0.3s,
-      color 0.3s;
+      background-color variables.$t-ease-in-out,
+      color variables.$t-ease-in-out;
     &:hover,
     &:focus {
-      background-color: variables.$secondary-color;
-      border-radius: 5px;
+      background-color: variables.$colors-secondary;
     }
   }
   .logo {

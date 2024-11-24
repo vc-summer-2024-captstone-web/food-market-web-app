@@ -8,15 +8,16 @@ $green: #80C144;
 $background-dark: $black;
 $background-light: $white;
 
-$primary-color: $orange;
-$secondary-color: $green;
+$primary: $orange;
+$secondary: $green;
 
-$text-color-dark: $black;
-$text-color-light: $white;
-$text-color-accent: $secondary-color;
+$text-dark: $black;
+$text-light: $white;
+$text-accent: $secondary;
 
-$link-color: $black;
-$link-color-hover: $primary-color;
+$link: $black;
+$link-hover: $primary;
 
-$border-color: $silver;
-$box-shadow-color: rgba($black, 0.2);
+$border-light: $silver;
+$border-dark: $gray;
+$box-shadow: rgba($black, 0.2);
