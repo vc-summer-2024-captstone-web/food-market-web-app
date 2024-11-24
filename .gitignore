@@ -29,7 +29,6 @@ pnpm-debug.log*
 *lighthouse.*/
 deno.lock
 netlify.toml
-netlify.toml
 
 .vscode/settings.json
 
@@ -39,4 +38,4 @@ cypress/screenshots/
 
 coverage/
 
-
+*.sql
