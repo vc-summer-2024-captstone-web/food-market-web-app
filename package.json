@@ -44,7 +44,7 @@
     "ol": "^10.0.0",
     "oslo": "^1.2.1",
     "typescript": "^5.5.3",
-    "vitest": "^2.0.4"
+    "vitest": "^2.1.8"
   },
   "devDependencies": {
     "@astrojs/ts-plugin": "^1.10.4",
